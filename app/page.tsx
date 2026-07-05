@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -13,6 +13,10 @@ import {
   getCareerProfileTags,
   getWarningTeaser,
 } from "@/lib/career-display";
+import {
+  readPremiumUnlocked,
+  verifyUnlockCode,
+} from "@/lib/premium-unlock";
 import {
   recommendCareers,
   type CareerRecommendation,
@@ -121,6 +125,119 @@ function WarningTeaser({ warningZh }: { warningZh: string }) {
   );
 }
 
+function PremiumUnlockPanel({
+  unlocked,
+  onUnlocked,
+}: {
+  unlocked: boolean;
+  onUnlocked: () => void;
+}) {
+  const [code, setCode] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  const handleUnlock = useCallback(async () => {
+    setError(null);
+    setLoading(true);
+
+    const result = await verifyUnlockCode(code);
+    setLoading(false);
+
+    if (result.valid) {
+      onUnlocked();
+      setCode("");
+      return;
+    }
+
+    setError(result.error ?? "解锁码无效，请核对后重试");
+  }, [code, onUnlocked]);
+
+  return (
+    <section className="rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-50 to-white p-5 shadow-sm">
+      <div className="space-y-3">
+        <div className="flex items-center justify-between gap-3">
+          <h3 className="text-lg font-semibold text-slate-900">高级职业报告</h3>
+          {unlocked && (
+            <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-medium text-emerald-700">
+              已解锁
+            </span>
+          )}
+        </div>
+        <p className="text-sm leading-relaxed text-slate-600">
+          {unlocked
+            ? "你已解锁完整报告：每个职业包含岗位画像、入行分析与完整风险提示。"
+            : "免费版含 Top 5 与推荐理由。输入解锁码后可查看完整高级报告。"}
+        </p>
+        {!unlocked && (
+          <>
+            <ul className="space-y-2 text-sm text-slate-600">
+              <li className="flex items-start gap-2">
+                <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-emerald-500" />
+                6 项岗位画像标签（体力、夜班、英语等）
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-emerald-500" />
+                职业简介、适合人群与下一步建议
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-emerald-500" />
+                完整风险提示（免费版仅显示摘要）
+              </li>
+            </ul>
+            <div className="space-y-2 pt-1">
+              <label
+                htmlFor="unlock-code"
+                className="text-xs font-medium text-slate-500"
+              >
+                输入解锁码
+              </label>
+              <input
+                id="unlock-code"
+                type="text"
+                value={code}
+                onChange={(event) => {
+                  setCode(event.target.value);
+                  if (error) {
+                    setError(null);
+                  }
+                }}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" && !loading) {
+                    void handleUnlock();
+                  }
+                }}
+                placeholder="例如 CANADA-9X7K2M"
+                autoComplete="off"
+                className={cn(
+                  "h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-900 shadow-sm",
+                  "placeholder:text-slate-400",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/40",
+                )}
+              />
+              {error && (
+                <p className="text-xs text-red-600" role="alert">
+                  {error}
+                </p>
+              )}
+              <Button
+                size="lg"
+                className="h-11 w-full"
+                disabled={loading || !code.trim()}
+                onClick={() => void handleUnlock()}
+              >
+                {loading ? "验证中…" : "解锁高级报告"}
+              </Button>
+              <p className="text-center text-xs text-slate-400">
+                在小红书购买后，自动发货消息中会提供解锁码
+              </p>
+            </div>
+          </>
+        )}
+      </div>
+    </section>
+  );
+}
+
 export default function Home() {
   const [phase, setPhase] = useState<Phase>("home");
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -129,6 +246,33 @@ export default function Home() {
   >({});
   const [results, setResults] = useState<CareerRecommendation[]>([]);
   const [premiumUnlocked, setPremiumUnlocked] = useState(false);
+
+  useEffect(() => {
+    if (readPremiumUnlocked()) {
+      setPremiumUnlocked(true);
+      return;
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const codeFromUrl = params.get("unlock");
+    if (!codeFromUrl) {
+      return;
+    }
+
+    void verifyUnlockCode(codeFromUrl).then((result) => {
+      if (!result.valid) {
+        return;
+      }
+
+      setPremiumUnlocked(true);
+      params.delete("unlock");
+      const nextQuery = params.toString();
+      const nextUrl = nextQuery
+        ? `${window.location.pathname}?${nextQuery}`
+        : window.location.pathname;
+      window.history.replaceState({}, "", nextUrl);
+    });
+  }, []);
 
   const currentQuestion = QUESTIONS[currentIndex];
   const progress = ((currentIndex + 1) / QUESTIONS.length) * 100;
@@ -147,7 +291,6 @@ export default function Home() {
     setCurrentIndex(0);
     setSelections({});
     setResults([]);
-    setPremiumUnlocked(false);
   };
 
   const handleSelect = (optionId: string) => {
@@ -171,7 +314,6 @@ export default function Home() {
     setCurrentIndex(0);
     setSelections({});
     setResults([]);
-    setPremiumUnlocked(false);
   };
 
   return (
@@ -203,7 +345,7 @@ export default function Home() {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="mt-1 size-1.5 shrink-0 rounded-full bg-emerald-500" />
-                  无需注册，结果仅在本地生成
+                  免费查看 Top 5；解锁码可开启完整高级报告
                 </li>
               </ul>
             </div>
@@ -347,54 +489,10 @@ export default function Home() {
               ))}
             </div>
 
-            <section className="rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-50 to-white p-5 shadow-sm">
-              <div className="space-y-3">
-                <div className="flex items-center justify-between gap-3">
-                  <h3 className="text-lg font-semibold text-slate-900">
-                    高级职业报告
-                  </h3>
-                  {premiumUnlocked && (
-                    <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-medium text-emerald-700">
-                      已解锁
-                    </span>
-                  )}
-                </div>
-                <p className="text-sm leading-relaxed text-slate-600">
-                  {premiumUnlocked
-                    ? "你已解锁完整报告：每个职业包含岗位画像、入行分析与完整风险提示。"
-                    : "解锁后可查看岗位画像（体力、夜班、英语等）、完整入行分析与风险提示。"}
-                </p>
-                {!premiumUnlocked && (
-                  <ul className="space-y-2 text-sm text-slate-600">
-                    <li className="flex items-start gap-2">
-                      <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-emerald-500" />
-                      6 项岗位画像标签（体力、夜班、英语等）
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-emerald-500" />
-                      职业简介、适合人群与下一步建议
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-emerald-500" />
-                      完整风险提示（免费版仅显示摘要）
-                    </li>
-                  </ul>
-                )}
-                {!premiumUnlocked ? (
-                  <Button
-                    size="lg"
-                    className="h-11 w-full"
-                    onClick={() => setPremiumUnlocked(true)}
-                  >
-                    模拟解锁高级报告
-                  </Button>
-                ) : (
-                  <p className="text-center text-xs text-slate-400">
-                    当前为演示模式，正式版将支持在线支付解锁
-                  </p>
-                )}
-              </div>
-            </section>
+            <PremiumUnlockPanel
+              unlocked={premiumUnlocked}
+              onUnlocked={() => setPremiumUnlocked(true)}
+            />
 
             <Button
               variant="outline"
