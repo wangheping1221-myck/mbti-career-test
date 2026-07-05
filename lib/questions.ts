@@ -35,6 +35,10 @@ export const CATEGORY_LABELS: Record<CareerCategory, string> = {
   security: "安保",
   logistics: "仓储物流",
   "office-construction": "工程协调与估算",
+  hospitality: "餐饮酒店",
+  education: "教育幼教",
+  "sales-service": "销售与客户服务",
+  creative: "创意设计",
 };
 
 const CATEGORY_OPTIONS: QuestionOption[] = (
@@ -145,6 +149,10 @@ export const QUESTIONS: Question[] = [
       { id: "healthcare", label: "从事医疗照护", description: "PSW 等照护岗位" },
       { id: "logistics", label: "从事仓储物流", description: "仓库管理与运营" },
       { id: "office-construction", label: "从事工程协调或估算", description: "项目协调、造价估算" },
+      { id: "hospitality", label: "从事餐饮烹饪", description: "餐厅、中央厨房等" },
+      { id: "education", label: "从事教育幼教", description: "幼儿园、daycare 等" },
+      { id: "sales-service", label: "从事销售或客服", description: "房产经纪、客服等" },
+      { id: "creative", label: "从事创意设计", description: "平面设计、视觉设计等" },
       { id: "security", label: "先从安保岗位入手", description: "入行快、作为过渡" },
     ],
   },

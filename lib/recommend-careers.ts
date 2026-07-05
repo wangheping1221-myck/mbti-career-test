@@ -6,6 +6,11 @@ import {
   FACILITIES_STABLE_COMBO_BONUSES,
   FIELD_TRADE_NO_TECH_BOOST_IDS,
   HIGH_ENGLISH_CAREER_IDS,
+  HOSPITALITY_COOK_COMBO_BONUSES,
+  HOSPITALITY_FACILITIES_DEMOTE_PENALTIES,
+  HOSPITALITY_OFFICE_DEMOTE_PENALTIES,
+  HOSPITALITY_SERVICE_DEMOTE_PENALTIES,
+  HOSPITALITY_STABILITY_BOOST_SKIP_IDS,
   INDUSTRIAL_FIELD_MISMATCH_IDS,
   LOW_PHYSICAL_HARD_BLOCK_IDS,
   LOW_PHYSICAL_MATCH_PERCENT_CAPS,
@@ -146,6 +151,22 @@ const CAREER_SIGNATURE_REASONS: Record<string, string> = {
     "保安培训短、上岗快，但夜班多、收入上限低，更适合短期过渡，不适合作为主要职业路线。",
   "warehouse-supervisor":
     "仓库主管偏现场管理，需要协调团队和排班，部分仓库会有早晚班，申请前建议问清楚。",
+  bookkeeper:
+    "簿记员以办公室记账为主，适合想先进稳定文职、英语中等的人，不少华人会从小企业簿记起步。",
+  "early-childhood-educator":
+    "幼教老师在 daycare 和幼儿园需求稳定，但需完成 ECE 课程并考取省级注册。",
+  "customer-service-representative":
+    "客服代表入行相对快，是积累本地办公室经验和英语沟通的常见过渡岗位。",
+  "local-delivery-driver":
+    "本地配送比长途卡车更偏短途路线，入行较快，但旺季和平台岗位收入会有波动。",
+  "commercial-cook":
+    "商业厨师可走餐饮技工路线，但厨房环境辛苦、晚班多，适合能吃苦的人。",
+  "real-estate-agent":
+    "房产经纪收入上限高，但依赖成交和英语营销能力，前期通常不稳定。",
+  "graphic-designer":
+    "平面设计师以作品集为核心，可进公司也可接单，适合有审美和软件基础的人。",
+  "personal-trainer":
+    "健身教练需要自身体能和证照，客户积累决定收入，适合热爱健身的人。",
 };
 
 function rejectsNightShift(answers: UserAnswers): boolean {
@@ -174,6 +195,7 @@ function prefersOfficeTechDataWork(answers: UserAnswers): boolean {
   return (
     categories.includes("technology") ||
     categories.includes("office-construction") ||
+    categories.includes("creative") ||
     answers.preferredWorkStyle === "independent"
   );
 }
@@ -206,6 +228,15 @@ function prefersTechnicalWork(answers: UserAnswers): boolean {
 
 function prefersFacilities(answers: UserAnswers): boolean {
   return answers.preferredCategories?.includes("facilities") ?? false;
+}
+
+function prefersHospitality(answers: UserAnswers): boolean {
+  return answers.preferredCategories?.includes("hospitality") ?? false;
+}
+
+/** 餐饮酒店 + 能接受中等以上体力（含 kitchen helper 快速入行） */
+function matchesHospitalityCookProfile(answers: UserAnswers): boolean {
+  return prefersHospitality(answers) && answers.maxPhysicalLevel >= 3;
 }
 
 function isWelderCandidate(answers: UserAnswers): boolean {
@@ -451,6 +482,83 @@ function scoreFacilitiesStableComboBoost(
   return FACILITIES_STABLE_COMBO_BONUSES[career.id] ?? 0;
 }
 
+/** 设施稳定画像下，非核心设施岗应降权 */
+function scoreFacilitiesStableNonCoreDemote(
+  career: Career,
+  answers: UserAnswers,
+): number {
+  if (!matchesFacilitiesStableProfile(answers)) {
+    return 0;
+  }
+
+  const demotes: Partial<Record<string, number>> = {
+    bookkeeper: 20,
+    "early-childhood-educator": 18,
+    "customer-service-representative": 16,
+    "graphic-designer": 14,
+  };
+
+  const penalty = demotes[career.id];
+  return penalty ? -penalty : 0;
+}
+
+function scoreHospitalityCookComboBoost(
+  career: Career,
+  answers: UserAnswers,
+): number {
+  if (!matchesHospitalityCookProfile(answers)) {
+    return 0;
+  }
+
+  const bonus = HOSPITALITY_COOK_COMBO_BONUSES[career.id] ?? 0;
+  if (!bonus) {
+    return 0;
+  }
+
+  // 希望尽快上岗时仍推荐厨师，但加成略低（prep cook / kitchen helper 路线）
+  if (answers.availableStudyTime === "short") {
+    return Math.round(bonus * 0.75);
+  }
+
+  return bonus;
+}
+
+function scoreHospitalityFacilitiesDemote(
+  career: Career,
+  answers: UserAnswers,
+): number {
+  if (!matchesHospitalityCookProfile(answers)) {
+    return 0;
+  }
+
+  const penalty = HOSPITALITY_FACILITIES_DEMOTE_PENALTIES[career.id];
+  return penalty ? -penalty : 0;
+}
+
+function scoreHospitalityServiceDemote(
+  career: Career,
+  answers: UserAnswers,
+): number {
+  if (!matchesHospitalityCookProfile(answers)) {
+    return 0;
+  }
+
+  const penalty = HOSPITALITY_SERVICE_DEMOTE_PENALTIES[career.id];
+  return penalty ? -penalty : 0;
+}
+
+function scoreHospitalityOfficeDemote(
+  career: Career,
+  answers: UserAnswers,
+): number {
+  if (!matchesHospitalityCookProfile(answers)) {
+    return 0;
+  }
+
+  const penalty = HOSPITALITY_OFFICE_DEMOTE_PENALTIES[career.id];
+  return penalty ? -penalty : 0;
+}
+
 function scoreTechnicalIncomeTradeComboBoost(
   career: Career,
   answers: UserAnswers,
@@ -666,6 +774,13 @@ function scoreStabilityBoost(career: Career, answers: UserAnswers): number {
     return 0;
   }
 
+  if (
+    matchesHospitalityCookProfile(answers) &&
+    HOSPITALITY_STABILITY_BOOST_SKIP_IDS.has(career.id)
+  ) {
+    return 0;
+  }
+
   if (STABILITY_BOOST_CAREER_IDS.has(career.id)) {
     return BONUS_WEIGHTS.stabilityBoost;
   }
@@ -824,11 +939,19 @@ function scorePlumberBlock(career: Career, answers: UserAnswers): number {
 }
 
 function scoreTruckDriverBlock(career: Career, answers: UserAnswers): number {
-  if (career.id !== "truck-driver" || !prefersLowPhysical(answers)) {
+  if (!prefersLowPhysical(answers)) {
     return 0;
   }
 
-  return -PENALTY_WEIGHTS.truckDriverBlock;
+  if (career.id === "truck-driver") {
+    return -PENALTY_WEIGHTS.truckDriverBlock;
+  }
+
+  if (career.id === "local-delivery-driver") {
+    return -Math.round(PENALTY_WEIGHTS.truckDriverBlock * 0.55);
+  }
+
+  return 0;
 }
 
 function scoreTradeBlockPenalties(career: Career, answers: UserAnswers): number {
@@ -953,6 +1076,10 @@ function buildStabilityReason(career: Career, answers: UserAnswers): string | nu
       "医院属于大型机构，设施维护岗在稳定性和福利上通常优于一般小公司。",
     "building-operator":
       "商业地产和公寓物业持续需要运行维护人员，你重视稳定的话，这个方向值得认真了解。",
+    bookkeeper:
+      "簿记员属于办公室文职，节奏相对稳定，适合重视稳定、想先进常规公司环境的人。",
+    "early-childhood-educator":
+      "幼教岗位在 daycare 和幼儿园需求持续，机构工作通常比零工更稳定。",
   };
 
   return notes[career.id] ?? null;
@@ -1008,6 +1135,8 @@ function buildTechnicalReason(career: Career, answers: UserAnswers): string | nu
       "汽车维修偏车间动手技术，适合能接受站立弯腰、愿意从 helper 做起的人。",
     welder:
       "焊工上手相对快，适合想尽快靠手艺吃饭、能接受高温和现场环境的人。",
+    "commercial-cook":
+      "你选了餐饮方向、也能接受厨房体力强度，商业厨师是入行路径比较清晰的选项，但晚班和周末班要心里有数。",
   };
 
   return notes[career.id] ?? null;
@@ -1043,6 +1172,10 @@ function buildOfficeTechReason(career: Career, answers: UserAnswers): string | n
       "估算员偏办公室与图纸报价，和你想走脑力型、高收入路线比较合拍，但读英文图纸和核对数字的细心程度很重要。",
     "project-coordinator":
       "项目协调员多在办公室处理排期、资料和多方沟通，适合英语好、做事有条理、愿意在工程行业里做协调角色的人。",
+    "graphic-designer":
+      "你偏好电脑和创意方向，平面设计以作品集为核心，适合愿意持续打磨视觉作品的人。",
+    bookkeeper:
+      "簿记员偏办公室和数字处理，和你想走脑力型、稳定路线比较合拍，适合英语中等以上的人。",
   };
 
   return notes[career.id] ?? null;
@@ -1099,6 +1232,11 @@ function scoreCareer(
     scoreTechnicalBoost(career, answers) +
     scoreProfileBoost(career, answers) +
     scoreFacilitiesStableComboBoost(career, answers) +
+    scoreFacilitiesStableNonCoreDemote(career, answers) +
+    scoreHospitalityCookComboBoost(career, answers) +
+    scoreHospitalityFacilitiesDemote(career, answers) +
+    scoreHospitalityServiceDemote(career, answers) +
+    scoreHospitalityOfficeDemote(career, answers) +
     scoreTechnicalIncomeTradeComboBoost(career, answers) +
     scoreTechnicalIncomeFacilitiesDemote(career, answers) +
     scoreOfficeTechDataComboBoost(career, answers) +

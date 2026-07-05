@@ -17,7 +17,11 @@ export type CareerCategory =
   | "healthcare"
   | "security"
   | "logistics"
-  | "office-construction";
+  | "office-construction"
+  | "hospitality"
+  | "education"
+  | "sales-service"
+  | "creative";
 
 export interface Career {
   id: string;
@@ -52,6 +56,10 @@ export const CATEGORY_LABELS_ZH: Record<CareerCategory, string> = {
   security: "安保",
   logistics: "仓储物流",
   "office-construction": "工程协调与估算",
+  hospitality: "餐饮酒店",
+  education: "教育幼教",
+  "sales-service": "销售与客户服务",
+  creative: "创意设计",
 };
 
 /** 用户不接受夜班时需明显扣分 */
@@ -64,6 +72,7 @@ export const STRICT_NIGHT_SHIFT_REJECT_IDS = new Set([
 export const MILD_NIGHT_SHIFT_REJECT_IDS = new Set([
   "building-operator",
   "hospital-facilities-technician",
+  "customer-service-representative",
 ]);
 
 /** 用户偏好低体力时需明显扣分 */
@@ -75,6 +84,8 @@ export const LOW_PHYSICAL_REJECT_IDS = new Set([
   "millwright",
   "auto-mechanic",
   "truck-driver",
+  "commercial-cook",
+  "personal-trainer",
 ]);
 
 /** 低体力用户扣分最重（现场技工） */
@@ -86,6 +97,7 @@ export const EXTREME_LOW_PHYSICAL_REJECT_IDS = new Set([
   "auto-mechanic",
   "millwright",
   "truck-driver",
+  "commercial-cook",
 ]);
 
 /** 低体力用户需硬性拦截、不应进前五的现场技工 */
@@ -97,6 +109,8 @@ export const LOW_PHYSICAL_HARD_BLOCK_IDS = new Set([
   "hvac-technician",
   "electrician",
   "truck-driver",
+  "commercial-cook",
+  "personal-trainer",
 ]);
 
 /** 低体力时即使偏好技术动手也不应加分的现场技工 */
@@ -148,6 +162,11 @@ export const TECHNICAL_INCOME_FACILITIES_DEMOTE_PENALTIES: Record<string, number
     "hospital-facilities-technician": 14,
     "warehouse-supervisor": 22,
     "security-guard": 32,
+    "bookkeeper": 14,
+    "early-childhood-educator": 12,
+    "customer-service-representative": 16,
+    "commercial-cook": 12,
+    "personal-trainer": 10,
   };
 
 /** 技术动手 + 收入优先时，不应获得稳定性加分的设施类岗位 */
@@ -165,7 +184,44 @@ export const OFFICE_TECH_DATA_COMBO_BONUSES: Record<string, number> = {
   estimator: 14,
   "project-coordinator": 12,
   "warehouse-supervisor": 10,
+  "graphic-designer": 12,
+  "bookkeeper": 10,
 };
+
+/** 餐饮酒店 + 能接受体力 组合强加分 */
+export const HOSPITALITY_COOK_COMBO_BONUSES: Record<string, number> = {
+  "commercial-cook": 22,
+};
+
+/** 餐饮导向时，设施/后勤岗应降权（扣分值） */
+export const HOSPITALITY_FACILITIES_DEMOTE_PENALTIES: Record<string, number> = {
+  "government-maintenance-worker": 24,
+  "school-custodian": 22,
+  "building-operator": 16,
+  "hospital-facilities-technician": 14,
+};
+
+/** 餐饮导向时，其他服务岗降权（避免盖过厨师） */
+export const HOSPITALITY_SERVICE_DEMOTE_PENALTIES: Record<string, number> = {
+  psw: 18,
+  "personal-trainer": 14,
+  "early-childhood-educator": 12,
+};
+
+/** 餐饮导向时，办公室/估算岗降权 */
+export const HOSPITALITY_OFFICE_DEMOTE_PENALTIES: Record<string, number> = {
+  bookkeeper: 16,
+  estimator: 14,
+  "project-coordinator": 12,
+};
+
+/** 餐饮导向时，不应因「重视稳定」给设施岗额外加分 */
+export const HOSPITALITY_STABILITY_BOOST_SKIP_IDS = new Set([
+  "government-maintenance-worker",
+  "school-custodian",
+  "hospital-facilities-technician",
+  "building-operator",
+]);
 
 /** 电脑/数据导向时，设施运维岗应降权（扣分值） */
 export const OFFICE_TECH_FACILITIES_DEMOTE_PENALTIES: Record<string, number> = {
@@ -192,6 +248,9 @@ export const LOW_PHYSICAL_MATCH_PERCENT_CAPS: Record<string, number> = {
   "truck-driver": 58,
   "hvac-technician": 68,
   electrician: 65,
+  "commercial-cook": 58,
+  "personal-trainer": 62,
+  "local-delivery-driver": 65,
 };
 
 /** 不接受夜班用户匹配度硬性封顶（%） */
@@ -200,6 +259,8 @@ export const NIGHT_SHIFT_REJECT_MATCH_PERCENT_CAPS: Record<string, number> = {
   "power-engineer": 65,
   "hospital-facilities-technician": 75,
   "building-operator": 78,
+  "customer-service-representative": 72,
+  "commercial-cook": 68,
 };
 
 /** 稳定 + 低体力 + 不要夜班时的核心设施运维岗 */
@@ -225,6 +286,8 @@ export const LOW_STABILITY_FIT_FOR_SEEKERS_IDS = new Set([
   "instrumentation-technician",
   "millwright",
   "plumber",
+  "real-estate-agent",
+  "commercial-cook",
 ]);
 
 /** 对英语要求较高的办公类职业 */
@@ -233,6 +296,7 @@ export const HIGH_ENGLISH_CAREER_IDS = new Set([
   "software-developer",
   "project-coordinator",
   "estimator",
+  "real-estate-agent",
 ]);
 
 /** 英语较低时几乎不应推荐的办公类职业 */
@@ -240,6 +304,7 @@ export const STRICT_LOW_ENGLISH_BLOCK_IDS = new Set([
   "data-analyst",
   "software-developer",
   "project-coordinator",
+  "real-estate-agent",
 ]);
 
 /** 偏好稳定时明显加分 */
@@ -679,5 +744,173 @@ export const CAREERS: Career[] = [
       "适合有物流或仓储经验、能带团队、愿意从 supervisor 助理做起的人。",
     nextStepZh:
       "先从 warehouse associate 或 team lead 做起，积累 WMS 系统和排班管理经验。",
+  },
+  {
+    id: "bookkeeper",
+    title: "Bookkeeper",
+    titleZh: "簿记员",
+    category: "office-construction",
+    physicalLevel: 1,
+    nightShiftLevel: 1,
+    englishLevel: 3,
+    studyTime: "medium",
+    workStyle: "structured",
+    incomePotential: 3,
+    stability: 4,
+    descriptionZh:
+      "负责日常记账、发票、银行对账和基础财务报表，多在办公室完成。",
+    warningZh:
+      "需要数字敏感度和一定英语读写，部分岗位会要求 QuickBooks 或相关证书。",
+    pathZh:
+      "适合细心、英语中等、希望做稳定办公室工作的人，不少华人会从兼职或小公司簿记起步。",
+    nextStepZh:
+      "学习 QuickBooks 或 Sage，考取 bookkeeping certificate，并积累本地小企业记账案例。",
+  },
+  {
+    id: "early-childhood-educator",
+    title: "Early Childhood Educator",
+    titleZh: "幼教老师",
+    category: "education",
+    physicalLevel: 2,
+    nightShiftLevel: 1,
+    englishLevel: 3,
+    studyTime: "medium",
+    workStyle: "service",
+    incomePotential: 3,
+    stability: 4,
+    descriptionZh:
+      "在幼儿园、daycare 负责幼儿照护与早期教育，加拿大各省均需相应证照。",
+    warningZh:
+      "需要耐心和情绪管理，英语要能和家长沟通，部分岗位对本地经验有要求。",
+    pathZh:
+      "适合喜欢孩子、重视稳定、愿意读 college 课程并考取 ECE 证照的人。",
+    nextStepZh:
+      "查询所在省份 ECE 注册要求，报名 college 的 Early Childhood Education 文凭课程。",
+  },
+  {
+    id: "customer-service-representative",
+    title: "Customer Service Representative",
+    titleZh: "客服代表",
+    category: "sales-service",
+    physicalLevel: 1,
+    nightShiftLevel: 3,
+    englishLevel: 3,
+    studyTime: "short",
+    workStyle: "service",
+    incomePotential: 2,
+    stability: 3,
+    descriptionZh:
+      "通过电话、邮件或在线聊天处理客户咨询，常见于银行、电信、电商等机构。",
+    warningZh:
+      "部分呼叫中心有早晚班，重复性较高，英语口语和听力要求不能太低。",
+    pathZh:
+      "适合想先进办公室、英语中等、愿意从基础客服岗位积累本地工作经验的人。",
+    nextStepZh:
+      "优化英文电话沟通表达，投递 bank、telecom、retail 等公司的 customer service 岗位。",
+  },
+  {
+    id: "local-delivery-driver",
+    title: "Local Delivery Driver",
+    titleZh: "本地配送司机",
+    category: "transportation",
+    physicalLevel: 2,
+    nightShiftLevel: 3,
+    englishLevel: 2,
+    studyTime: "short",
+    workStyle: "independent",
+    incomePotential: 3,
+    stability: 3,
+    descriptionZh:
+      "负责本地包裹、食品或建材配送，比长途卡车更偏城市短途路线。",
+    warningZh:
+      "旺季和恶劣天气工作强度会上升，部分平台岗位按单计酬，收入会有波动。",
+    pathZh:
+      "适合需要较快上岗、能接受开车跑腿、不想做长途跨城运输的人。",
+    nextStepZh:
+      "确认 G 牌或更高驾照要求，可先从 courier、food delivery 或 local delivery 公司入行。",
+  },
+  {
+    id: "commercial-cook",
+    title: "Commercial Cook",
+    titleZh: "商业厨师",
+    category: "hospitality",
+    physicalLevel: 4,
+    nightShiftLevel: 4,
+    englishLevel: 2,
+    studyTime: "medium",
+    workStyle: "technical",
+    incomePotential: 3,
+    stability: 3,
+    descriptionZh:
+      "在餐厅、食堂或中央厨房负责备餐和烹饪，可走 Red Seal 厨师路线。",
+    warningZh:
+      "厨房高温、站立时间长，晚班和周末班常见，对体力要求不低。",
+    pathZh:
+      "适合能吃苦、喜欢餐饮、愿意从 kitchen helper 或 prep cook 做起的人。",
+    nextStepZh:
+      "报名 culinary 基础课程，寻找 commercial kitchen 的 prep cook 岗位积累工时。",
+  },
+  {
+    id: "real-estate-agent",
+    title: "Real Estate Agent",
+    titleZh: "房产经纪",
+    category: "sales-service",
+    physicalLevel: 2,
+    nightShiftLevel: 2,
+    englishLevel: 4,
+    studyTime: "medium",
+    workStyle: "independent",
+    incomePotential: 5,
+    stability: 2,
+    descriptionZh:
+      "帮助客户买卖或租赁房产，收入与成交挂钩，在华人社区有一定市场需求。",
+    warningZh:
+      "收入波动大，几乎全程英文沟通和营销，考证和前期获客都需要时间。",
+    pathZh:
+      "适合英语较好、沟通能力强、能承受业绩压力、对本地房市有兴趣的人。",
+    nextStepZh:
+      "了解所在省份 real estate licensing 课程，完成 pre-registration 培训并准备执照考试。",
+  },
+  {
+    id: "graphic-designer",
+    title: "Graphic Designer",
+    titleZh: "平面设计师",
+    category: "creative",
+    physicalLevel: 1,
+    nightShiftLevel: 1,
+    englishLevel: 3,
+    studyTime: "medium",
+    workStyle: "independent",
+    incomePotential: 3,
+    stability: 3,
+    descriptionZh:
+      "为品牌、网站或营销物料做视觉设计，可进公司也可自由接单。",
+    warningZh:
+      "作品集比学历更重要，自由职业收入不稳定，客户沟通通常需要英文。",
+    pathZh:
+      "适合有审美、会用设计软件、愿意持续更新作品集的人。",
+    nextStepZh:
+      "整理 Behance 或个人网站作品集，学习 Figma/Adobe 套件，并投递 junior designer 岗位。",
+  },
+  {
+    id: "personal-trainer",
+    title: "Personal Trainer",
+    titleZh: "健身教练",
+    category: "healthcare",
+    physicalLevel: 4,
+    nightShiftLevel: 2,
+    englishLevel: 3,
+    studyTime: "medium",
+    workStyle: "service",
+    incomePotential: 3,
+    stability: 3,
+    descriptionZh:
+      "在健身房或工作室指导客户训练，需考取相应 fitness certification。",
+    warningZh:
+      "需要自身体能和示范能力，部分岗位早晚班都有，客户积累影响收入。",
+    pathZh:
+      "适合热爱健身、体能不错、愿意考证并慢慢积累客户的人。",
+    nextStepZh:
+      "考取 CPR/First Aid 和 personal training certification，先从 gym floor staff 或 assistant trainer 做起。",
   },
 ];
