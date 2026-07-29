@@ -18,12 +18,13 @@
 
 - [x] 建立 `app/tools/`、`components/tools/`、`lib/calculators|salary|clb|oinp/` 目录占位
 - [x] 实现 ToolCard / CalculatorLayout / ResultCard / FAQ 公共组件（Salary 页首用）
+- [x] V2.2.1 落地 Universal Tool Template（ToolLayout / Hero / Panel / Formula / Related / Disclaimer / LastUpdated 等）
 - [ ] 设计新版首页
 - [ ] 创建 `/tools` 工具中心页面（目前仅空目录 + salary 子路由）
 - [ ] 规划并实施 `/career-test` 路由迁移（**禁止在未确认前执行**）
 - [ ] 建立导航栏
 - [ ] 建立页脚
-- [ ] 按 Design System 为工具页补齐统一 Last Updated 组件
+- [x] 按 Design System 为工具页补齐统一 Last Updated 组件
 
 ## Priority 3：Salary Calculator
 
@@ -35,7 +36,7 @@
 - [x] 增加 SEO 和 FAQ
 - [x] 完成核心用例验证与 production build
 - [ ] 真机 / 浏览器手机端视觉复核（上线前建议再扫一眼）
-- [ ] 按 Design System 补齐 Last Updated 显示（小改，待排期）
+- [x] 按 Design System 补齐 Last Updated 显示（V2.2.1）
 
 ## Priority 4：CLB Calculator
 

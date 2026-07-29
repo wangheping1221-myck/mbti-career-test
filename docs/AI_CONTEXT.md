@@ -41,6 +41,7 @@ http://localhost:3000
 - 测试结果页面
 - 本地高级报告解锁逻辑
 - **Salary Calculator**（`/tools/salary-calculator`，V2.1）
+- **Universal Tool Template**（`components/tools/*`，V2.2.1）
 
 修改代码前必须检查项目当前真实结构，不得根据本文件猜测文件名称。
 
@@ -61,8 +62,9 @@ http://localhost:3000
 平台化进行中。第一批工具进度：
 
 1. ~~Salary Calculator~~ → **已完成（V2.1）**
-2. CLB Calculator → 待做
-3. OINP EOI Calculator → 待做
+2. ~~Universal Tool Template~~ → **已完成（V2.2.1）**
+3. CLB Calculator → 待做
+4. OINP EOI Calculator → 待做
 
 ## 推荐路由规划
 

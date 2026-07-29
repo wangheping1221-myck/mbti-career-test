@@ -1,24 +1,36 @@
 # components/tools
 
-工具相关的**共用 UI 组件**目录。
+工具相关的共用 UI 组件目录（**Universal Tool Template**，V2.2.1）。
 
-以后所有工具页面必须尽量复用本目录组件，避免每个计算器各写一套布局。
-
-## 规划中的组件（尚未实现）
+## Universal Template（所有工具复用）
 
 | 组件 | 用途 |
 |------|------|
-| `ToolLayout` | 工具页外层布局（标题、说明、主内容区） |
-| `CalculatorLayout` | 计算器表单 + 结果区布局 |
-| `ResultCard` | 展示计算结果 / 分项明细 |
-| `InputField` | 统一输入框（校验、标签、错误提示） |
-| `FAQ` | 工具页常见问题 |
-| `ToolCard` | 工具中心卡片入口 |
-| `ShareButton` | 分享结果（未来） |
+| `tool-layout.tsx` | 页面外壳（背景 + max-width） |
+| `tool-hero.tsx` | Hero：标题 / 介绍 / 特点 |
+| `calculator-panel.tsx` | 输入区外层卡片 |
+| `result-panel.tsx` | 结果区外壳（含错误态与操作区） |
+| `result-card.tsx` | 单项 Result Data；`highlighted` = Primary Result |
+| `calculation-details.tsx` | 本次推演明细 |
+| `formula-section.tsx` | 通用公式 / 规则摘要 |
+| `related-tools.tsx` | 相关工具区块 |
+| `tool-card.tsx` | 单个工具入口 / Coming Soon |
+| `faq-section.tsx` | FAQ 折叠列表 |
+| `disclaimer.tsx` | 免责声明 |
+| `last-updated.tsx` | 最后更新日期 |
+
+兼容：`calculator-layout.tsx` → 重新导出 `CalculatorPanel`（旧名）。
+
+## 领域特有
+
+| 组件 | 用途 |
+|------|------|
+| `salary-calculator.tsx` | 年薪时薪转换器客户端（调用 `lib/salary`） |
 
 ## 原则
 
-1. 目前**不要实现**上述组件，仅作架构预留。
-2. 实现时优先 Server Component；仅交互部分使用 `"use client"`。
-3. 视觉与交互应适配手机端。
-4. 不在此目录编写政策规则或计算公式。
+1. 页面只负责组装；算法在 `lib/`。
+2. 优先 Server Component；仅交互使用 `"use client"`。
+3. Universal 组件 API 保持领域无关。
+4. 适配手机端。
+5. 规范见 `docs/TOOL_DESIGN_SYSTEM.md`。

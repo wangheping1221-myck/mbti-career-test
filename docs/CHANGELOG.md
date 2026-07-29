@@ -117,3 +117,32 @@
 
 - 未修改业务代码
 - 未补齐 Salary Last Updated UI（仍在 TODO）
+
+---
+
+## 2026-07-29 — Version 2.2.1 Universal Tool Template
+
+### 目标
+
+- 将 Tool Design System 落地为可复用 Universal Tool Template
+- 不开发新工具；业务逻辑不变
+
+### 新增共用组件（`components/tools/`）
+
+- `tool-layout.tsx` / `tool-hero.tsx`
+- `calculator-panel.tsx`（`calculator-layout.tsx` 改为兼容重导出）
+- `result-panel.tsx` / `calculation-details.tsx`
+- `formula-section.tsx` / `related-tools.tsx`
+- `disclaimer.tsx` / `last-updated.tsx`
+
+### 改造
+
+- Salary 页面与客户端改为组装 Universal 组件（外观与计算公式不变）
+- `TOOL_DESIGN_SYSTEM.md` 提升为 Tool 级抽象（Primary Result / Result Data / Calculation Details 等）
+- 同步 `ARCHITECTURE.md` / `TODO.md` / `components/tools/README.md`
+
+### 明确未做
+
+- 未开发 CLB / OINP / CRS / Tax / EI
+- 未修改 Landing Page、Career Test、Marketing
+- 未 Commit / 未 Push

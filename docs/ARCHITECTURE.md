@@ -1,6 +1,6 @@
 # Career Navigator Canada — 架构说明
 
-最后更新：2026-07-29（文档审阅同步：规范文档 + V2.1 状态）
+最后更新：2026-07-29（V2.2.1 Universal Tool Template）
 
 本文档区分「当前真实结构」与「Version 2 规划结构」。  
 规划内容未经确认前不得盲目移动现有文件。
@@ -77,12 +77,21 @@ app/
 components/
 ├── landing/                      # 已存在
 ├── ui/                           # 已存在
-└── tools/                        # ✅ V2.1 已实现部分组件
-    ├── calculator-layout.tsx
+└── tools/                        # ✅ V2.2.1 Universal Tool Template
+    ├── tool-layout.tsx
+    ├── tool-hero.tsx
+    ├── calculator-panel.tsx
+    ├── calculator-layout.tsx     # 兼容：重导出 CalculatorPanel
+    ├── result-panel.tsx
     ├── result-card.tsx
+    ├── calculation-details.tsx
+    ├── formula-section.tsx
+    ├── related-tools.tsx
     ├── tool-card.tsx
     ├── faq-section.tsx
-    ├── salary-calculator.tsx     # 客户端计算器
+    ├── disclaimer.tsx
+    ├── last-updated.tsx
+    ├── salary-calculator.tsx     # 领域客户端（Salary）
     └── README.md
 
 lib/
@@ -131,7 +140,7 @@ docs/
 |------|------|------|
 | `components/ui/` | 已存在 | shadcn：button / card / badge |
 | `components/landing/` | 已存在 | 落地页组件（可能仍未 git 跟踪） |
-| `components/tools/` | ✅ V2.1 | 共用工具 UI + `salary-calculator.tsx` |
+| `components/tools/` | ✅ V2.2.1 | Universal Tool Template + `salary-calculator.tsx` |
 
 UI 细节以 [`TOOL_DESIGN_SYSTEM.md`](./TOOL_DESIGN_SYSTEM.md) 为准。
 
