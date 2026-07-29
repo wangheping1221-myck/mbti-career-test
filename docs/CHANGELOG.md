@@ -20,6 +20,13 @@
 - CLB calculator
 - CLB types
 - lib/clb README
+- CLB Calculator UI (/tools/clb-calculator)
+- CLB Calculator page route
+- Universal Tool Template integration
+- FAQ
+- Formula section
+- Related tools
+- Responsive calculator UI
 
 ### 文档
 
