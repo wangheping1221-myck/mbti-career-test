@@ -1,6 +1,6 @@
 # Career Navigator Canada — 开发规范（Development Rules）
 
-**版本**：1.2  
+**版本**：1.3  
 **生效日期**：2026-07-29  
 **适用范围**：本仓库全部功能开发（工具、职业测试维护、文档、营销素材入库）  
 **相关文档**：
@@ -34,6 +34,7 @@
 11. [Quality Rules](#11-quality-rules)
 12. [AI Collaboration Rules](#12-ai-collaboration-rules)
 13. [Feature Development Workflow](#13-feature-development-workflow)
+14. [Official Data Human Verification](#14-official-data-human-verification)
 
 ---
 
@@ -394,13 +395,33 @@ AI 容易「顺手重构」。显式门禁保护职业测试与政策合规边�
 ## 13. Feature Development Workflow
 
 **默认流程**：以后每一个工具 / 功能都必须按本节执行。  
-细节 Tag / 发版检查见 [`RELEASE_PROCESS.md`](./RELEASE_PROCESS.md)。
+细节 Tag / 发版检查见 [`RELEASE_PROCESS.md`](./RELEASE_PROCESS.md)。  
+依赖官方外部数据的功能还须遵守 [§14 Official Data Human Verification](#14-official-data-human-verification)。
 
 推荐链路：
 
 ```text
-PRD → Review → Plan → Review → Phase 1 → Review → Phase 2 → Review → … → Release
+PRD
+→ Review
+→ Plan
+→ Review
+→ Phase Development
+→ Review
+→ Release Review
+→ Human Verify (if required)
+→ Human Verify Sign-off
+→ Commit
+→ Push
+→ CHANGELOG
+→ Commit
+→ Push
+→ Release Tag
 ```
+
+说明：
+
+- **Human Verify / Sign-off** 仅在功能依赖官方外部数据时强制（见 §14）；纯数学或格式化工具（如 Salary Calculator）可跳过。  
+- 中间 Phase 仍须遵循 End-of-Phase Rule；上图是到 **Release Tag** 的完整门禁顺序。  
 
 **禁止**在未拆 Phase、未获批准的情况下一次性实现整个大功能。
 
@@ -412,7 +433,8 @@ PRD → Review → Plan → Review → Phase 1 → Review → Phase 2 → Review
 2. **不写代码**。  
 3. **等待 Review**；未批准不得进入 Implementation Plan。  
 
-PRD 至少包含：产品目标、Scope / Out of Scope、用户场景、验收标准。
+PRD 至少包含：产品目标、Scope / Out of Scope、用户场景、验收标准。  
+若功能依赖官方外部数据，PRD / Plan 中须标明 **Human Verify 为 Release 前置条件**。
 
 ---
 
@@ -422,7 +444,8 @@ PRD 至少包含：产品目标、Scope / Out of Scope、用户场景、验收�
 2. **不写代码**。  
 3. **等待 Review**；未批准不得开始写业务代码。  
 
-大功能必须在 Plan 中拆成多个可独立 Review 的 Phase，再开始编码。
+大功能必须在 Plan 中拆成多个可独立 Review 的 Phase，再开始编码。  
+涉及官方对照表时，Plan 须包含 Human Verify 与 Sign-off Phase（或等价检查项）。
 
 ---
 
@@ -439,11 +462,11 @@ PRD 至少包含：产品目标、Scope / Out of Scope、用户场景、验收�
 
 ### 13.4 Release Process（阶段完成后的发布动作）
 
-某一 Phase（或完整功能）在 Review 通过并允许入库后，默认顺序：
+完整功能在 **Release Review** 通过后，若依赖官方数据，须先完成 **Human Verify** 与 **Human Verify Sign-off**（§14），再按下列顺序入库与打 Tag：
 
-1. **只 Commit 相关文件**  
+1. **只 Commit 相关文件**（含 Sign-off 元数据，若适用）  
 2. **Push** 到 `origin/main`（或约定分支）  
-3. 更新 `docs/CHANGELOG.md`（通常写 **[Unreleased]**）  
+3. 更新 `docs/CHANGELOG.md`（通常写 **[Unreleased]** 或 Released 版本条目）  
 4. **单独 Commit** CHANGELOG 更新（不与业务代码混 commit）  
 5. **再 Push**  
 6. **仅在发版里程碑**创建 Annotated Git Tag，并只 Push 该 Tag  
@@ -452,6 +475,7 @@ PRD 至少包含：产品目标、Scope / Out of Scope、用户场景、验收�
 
 - 中间 Phase 可以 Commit / Push，但通常**不打 Tag**。  
 - **只有完整可用的版本**才打 Tag。  
+- **未完成 Human Verify（如适用）不得打 Release Tag**。  
 - 小型 Bug Fix 或纯文档更新通常**不打 Tag**。  
 - Tag 操作细则见 [`RELEASE_PROCESS.md`](./RELEASE_PROCESS.md)。  
 
@@ -472,7 +496,7 @@ PRD 至少包含：产品目标、Scope / Out of Scope、用户场景、验收�
 
 ### 13.6 Why
 
-统一流程避免：无 PRD 直接写 UI、大功能一次做完无法 Review、Changelog 与代码混 commit、半成品乱打 Tag、AI 擅自进入下一阶段。
+统一流程避免：无 PRD 直接写 UI、大功能一次做完无法 Review、Changelog 与代码混 commit、半成品乱打 Tag、官方数据未核对就发版、AI 擅自进入下一阶段。
 
 ### 13.7 Example（CLB V2.3）
 
@@ -480,7 +504,87 @@ PRD 至少包含：产品目标、Scope / Out of Scope、用户场景、验收�
 PRD → Review
 → Implementation Plan → Review
 → Phase 1 lib/clb → End-of-Phase 汇报 → Review → Commit/Push → Changelog 单独 Commit/Push（不打 tag）
-→ Phase 2 UI → … → 完整可用后再 Tag
+→ Phase 2 UI → … → Release Review
+→ Human Verify（官方 IRCC 表）→ Human Verify Sign-off → Commit/Push
+→ CHANGELOG → Commit/Push → Release Tag
+```
+
+---
+
+## 14. Official Data Human Verification
+
+本节正式固化：**依赖官方外部数据的功能，在 Release 前必须完成 Human Verify 与 Sign-off。**
+
+### 14.1 When Human Verify is required
+
+Human Verify is **REQUIRED** before Release for any feature that depends on official external data, including but not limited to:
+
+- Immigration rules  
+- IRCC language tables  
+- CRS scoring  
+- OINP scoring  
+- Tax brackets  
+- Government benefits  
+- EI rules  
+- Salary standards published by government  
+- Any official thresholds or regulatory data  
+
+Pure mathematical or formatting tools (for example Salary Calculator) may skip this phase.
+
+### 14.2 Human Verify requirements
+
+- Use primary official sources whenever available.  
+- Cross-check with another official source if possible.  
+- Never rely on AI memory or third-party websites as the authoritative source.  
+- Verify every value one by one.  
+- Record:  
+  - official source URLs  
+  - verification date  
+  - verification status  
+
+### 14.3 Human Verify Sign-off
+
+After verification:
+
+- Update verification metadata.  
+- Remove temporary TODO markers.  
+- Do not modify business logic.  
+- Do not modify verified values.  
+
+### 14.4 Release Rule
+
+A Release Tag may only be created after:
+
+```text
+PRD
+→ Review
+→ Plan
+→ Review
+→ Phase Development
+→ Review
+→ Release Review
+→ Human Verify (if required)
+→ Human Verify Sign-off
+→ Commit
+→ Push
+→ CHANGELOG
+→ Commit
+→ Push
+→ Release Tag
+```
+
+### 14.5 Why
+
+官方对照表与法规阈值直接决定用户可信结果。未人工核对即发版属于合规与产品风险；Sign-off 只改元数据，避免在核对阶段误改已核对数值或业务逻辑。
+
+### 14.6 Example（CLB）
+
+```text
+Open Canada.ca IRCC tables → compare every CLB floor one by one
+→ record source URLs + retrievedOn + verified status
+→ replace HUMAN_VERIFY_TODO with HUMAN_VERIFIED metadata
+→ do not change IELTS_GT_CLB_MINIMUMS values
+→ Commit / Push Sign-off → then CHANGELOG → Tag
 ```
 
 ---
@@ -494,8 +598,9 @@ PRD → Review
 | 工具视觉与页面骨架 | `TOOL_DESIGN_SYSTEM.md` | UI 争议以它为准 |
 | 产品阶段目标 | `PROJECT_ROADMAP.md` | 优先级以它 + TODO 为准 |
 | 单次决策 | `DECISIONS.md` | 新决策追加，不改写历史条目含义 |
-| 版本 Tag / 发版检查 | `RELEASE_PROCESS.md` | 与本文件 §13 Release 步骤配合 |
-| 功能级流程 | 本文件 §13 | PRD → Plan → 分 Phase → End-of-Phase 汇报 → Release |
+| 版本 Tag / 发版检查 | `RELEASE_PROCESS.md` | 与本文件 §13 Release 步骤配合；官方数据另受 §14 约束 |
+| 功能级流程 | 本文件 §13 | PRD → Plan → 分 Phase → Release Review →（Human Verify）→ Release |
+| 官方数据人工核对 | 本文件 §14 | Release Tag 前置条件（适用时） |
 
 若发现两处文档过时不一致：**不要静默删改历史**；在 CHANGELOG 记录，并更新过时段落或加「已由 xxx 取代」链接。
 
@@ -509,3 +614,4 @@ PRD → Review
 | 2026-07-29 | 1.0.1 | 审阅：Metadata 节改为引用 Design System，减少重复 |
 | 2026-07-29 | 1.1 | 新增 §13 Feature Development Workflow（PRD → Plan → Changelog → Release） |
 | 2026-07-29 | 1.2 | §13 正式固化：分 Phase、Release 顺序、End-of-Phase Rule（须停下等批准） |
+| 2026-07-29 | 1.3 | 新增 §14 Official Data Human Verification；§13 默认流程纳入 Human Verify / Sign-off |
