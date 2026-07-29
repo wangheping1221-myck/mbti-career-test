@@ -1,6 +1,6 @@
 # Career Navigator Canada — 开发规范（Development Rules）
 
-**版本**：1.1  
+**版本**：1.2  
 **生效日期**：2026-07-29  
 **适用范围**：本仓库全部功能开发（工具、职业测试维护、文档、营销素材入库）  
 **相关文档**：
@@ -393,59 +393,94 @@ AI 容易「顺手重构」。显式门禁保护职业测试与政策合规边�
 
 ## 13. Feature Development Workflow
 
-从现在开始，每个新功能统一遵循以下流程。细节发布步骤见 [`RELEASE_PROCESS.md`](./RELEASE_PROCESS.md)；本节是功能级总流程。
+**默认流程**：以后每一个工具 / 功能都必须按本节执行。  
+细节 Tag / 发版检查见 [`RELEASE_PROCESS.md`](./RELEASE_PROCESS.md)。
 
-### 13.1 PRD
+推荐链路：
 
-先写产品需求（如 `docs/PRD_<FEATURE>.md`），至少明确：
+```text
+PRD → Review → Plan → Review → Phase 1 → Review → Phase 2 → Review → … → Release
+```
 
-- 产品目标  
-- Scope / Out of Scope  
-- 用户场景  
-- 验收标准  
+**禁止**在未拆 Phase、未获批准的情况下一次性实现整个大功能。
 
-### 13.2 Implementation
+---
 
-1. 先写 Implementation Plan（如 `docs/IMPLEMENTATION_PLAN_*.md`）  
-2. 再按阶段开发（Phase 1 / Phase 2 …）  
-3. 业务逻辑与 UI 分离（算法在 `lib/`，页面只组装）  
-4. 阶段或功能完成后执行 lint / typecheck / build  
+### 13.1 Product Design（PRD）
 
-### 13.3 Changelog
+1. 先创建 PRD 文档（如 `docs/PRD_<FEATURE>.md`）。  
+2. **不写代码**。  
+3. **等待 Review**；未批准不得进入 Implementation Plan。  
 
-1. 功能（或阶段性可交付）完成并 **Push** 后，更新 `docs/CHANGELOG.md` 的 **[Unreleased]**  
-2. Changelog **单独 Commit**  
-3. **不把** Changelog 与业务代码混在同一个 Commit  
+PRD 至少包含：产品目标、Scope / Out of Scope、用户场景、验收标准。
 
-### 13.4 Release
+---
 
-完整功能通过 Review 后再发布：
+### 13.2 Implementation Plan
 
-1. Commit（若尚有待提交的发版收尾）  
-2. Push  
-3. 创建 Annotated Git Tag  
-4. **只 Push 对应 Tag**（不要默认 `git push --tags`）  
-5. 按 [`RELEASE_PROCESS.md`](./RELEASE_PROCESS.md) 检查发布结果  
+1. 基于已批准的 PRD 编写 Implementation Plan（如 `docs/IMPLEMENTATION_PLAN_*.md`）。  
+2. **不写代码**。  
+3. **等待 Review**；未批准不得开始写业务代码。  
 
-### 13.5 补充规则
+大功能必须在 Plan 中拆成多个可独立 Review 的 Phase，再开始编码。
 
-- **PRD** 和 **Implementation Plan** 属于开发准备文档。  
-- 中间 Phase 可以 Commit 和 Push，但**不需要**每个 Phase 都打 Tag。  
+---
+
+### 13.3 Incremental Development（分阶段开发）
+
+1. 按小 Phase 实现；每个 Phase 须可独立 Review。  
+2. **当前 Phase 获批准前，不得进入下一 Phase**。  
+3. 业务逻辑与 UI 分离（算法在 `lib/`，页面只组装）。  
+4. Phase 结束前执行 lint / typecheck / build（以项目实际 scripts 为准）。  
+5. Commit 保持小而专注；**不把无关改动混进同一 Commit**。  
+6. **Commit / Push 前等待 Review**（用户明确要求时可例外）。  
+
+---
+
+### 13.4 Release Process（阶段完成后的发布动作）
+
+某一 Phase（或完整功能）在 Review 通过并允许入库后，默认顺序：
+
+1. **只 Commit 相关文件**  
+2. **Push** 到 `origin/main`（或约定分支）  
+3. 更新 `docs/CHANGELOG.md`（通常写 **[Unreleased]**）  
+4. **单独 Commit** CHANGELOG 更新（不与业务代码混 commit）  
+5. **再 Push**  
+6. **仅在发版里程碑**创建 Annotated Git Tag，并只 Push 该 Tag  
+
+补充：
+
+- 中间 Phase 可以 Commit / Push，但通常**不打 Tag**。  
 - **只有完整可用的版本**才打 Tag。  
 - 小型 Bug Fix 或纯文档更新通常**不打 Tag**。  
-- **每一步完成后等待 Review**，再进入下一步。  
+- Tag 操作细则见 [`RELEASE_PROCESS.md`](./RELEASE_PROCESS.md)。  
+
+---
+
+### 13.5 End-of-Phase Rule（每个 Phase 结束时强制）
+
+每个 Phase 结束后，**必须停下**并向用户汇报：
+
+1. **Current phase completed**（当前 Phase 已完成）  
+2. **Next recommended phase**（建议的下一 Phase）  
+3. **Whether Review is required**（是否需要 Review）  
+4. **Whether Commit / Push is recommended**（是否建议 Commit / Push）  
+
+**在用户明确批准前，不得自动继续下一 Phase 或自动 Commit / Push / Tag。**
+
+---
 
 ### 13.6 Why
 
-统一流程后，CLB / OINP / CRS 等工具会按同一节奏推进，避免「无 PRD 直接写 UI」「Changelog 与代码混 commit」「半成品乱打 tag」。
+统一流程避免：无 PRD 直接写 UI、大功能一次做完无法 Review、Changelog 与代码混 commit、半成品乱打 Tag、AI 擅自进入下一阶段。
 
 ### 13.7 Example（CLB V2.3）
 
 ```text
-PRD_CLB_CALCULATOR → IMPLEMENTATION_PLAN_V2.3_CLB
-→ Phase 1 lib/clb（commit/push，不打 tag）
-→ Changelog Unreleased（单独 docs commit）
-→ Phase 2 UI… → Review → 完整版本再 Tag
+PRD → Review
+→ Implementation Plan → Review
+→ Phase 1 lib/clb → End-of-Phase 汇报 → Review → Commit/Push → Changelog 单独 Commit/Push（不打 tag）
+→ Phase 2 UI → … → 完整可用后再 Tag
 ```
 
 ---
@@ -460,7 +495,7 @@ PRD_CLB_CALCULATOR → IMPLEMENTATION_PLAN_V2.3_CLB
 | 产品阶段目标 | `PROJECT_ROADMAP.md` | 优先级以它 + TODO 为准 |
 | 单次决策 | `DECISIONS.md` | 新决策追加，不改写历史条目含义 |
 | 版本 Tag / 发版检查 | `RELEASE_PROCESS.md` | 与本文件 §13 Release 步骤配合 |
-| 功能级流程 | 本文件 §13 | PRD → Plan → 分阶段实现 → Changelog → Release |
+| 功能级流程 | 本文件 §13 | PRD → Plan → 分 Phase → End-of-Phase 汇报 → Release |
 
 若发现两处文档过时不一致：**不要静默删改历史**；在 CHANGELOG 记录，并更新过时段落或加「已由 xxx 取代」链接。
 
@@ -473,3 +508,4 @@ PRD_CLB_CALCULATOR → IMPLEMENTATION_PLAN_V2.3_CLB
 | 2026-07-29 | 1.0 | 首版正式开发规范 |
 | 2026-07-29 | 1.0.1 | 审阅：Metadata 节改为引用 Design System，减少重复 |
 | 2026-07-29 | 1.1 | 新增 §13 Feature Development Workflow（PRD → Plan → Changelog → Release） |
+| 2026-07-29 | 1.2 | §13 正式固化：分 Phase、Release 顺序、End-of-Phase Rule（须停下等批准） |
