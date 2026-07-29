@@ -8,22 +8,28 @@
 
 ## 当前版本
 
-Version 2.0
+Version 2.1（Salary Calculator 已上线）
 
-启动日期：2026-07-29
+启动日期：2026-07-29（Version 2.0 平台化启动）
+
+规范文档：
+
+- [`TOOL_DESIGN_SYSTEM.md`](./TOOL_DESIGN_SYSTEM.md)
+- [`DEVELOPMENT_RULES.md`](./DEVELOPMENT_RULES.md)
 
 ## 第一阶段：网站平台化
 
-- [ ] 将网站定位从单一职业测试升级为 Career Navigator Canada
+- [ ] 将网站定位从单一职业测试升级为 Career Navigator Canada（品牌/首页仍待完成）
 - [ ] 设计新版首页
-- [ ] 建立工具中心页面
+- [ ] 建立工具中心页面（`/tools` 列表页）
 - [ ] 建立统一导航栏
-- [ ] 将现有职业测试保留为独立模块
-- [ ] 建立可复用的计算器组件
+- [ ] 将现有职业测试保留为独立模块（规划 `/career-test`，尚未迁移）
+- [x] 建立可复用的计算器组件（V2.1：`components/tools/*`）
+- [x] 建立工具设计规范与开发规范
 
 ## 第一批核心工具
 
-- [ ] 年薪 / 时薪转换计算器
+- [x] 年薪 / 时薪转换计算器（`/tools/salary-calculator`）
 - [ ] CLB 语言成绩转换计算器
 - [ ] OINP EOI 打分计算器
 

@@ -11,30 +11,31 @@
 - [x] 检查当前项目目录和现有页面
 - [x] 确认现有职业测试首页结构（`app/page.tsx` 三合一）
 - [x] 建立 Version 2 基础架构文档与空目录（`ARCHITECTURE.md` + tools/calculators 占位）
+- [x] 建立 `TOOL_DESIGN_SYSTEM.md` 与 `DEVELOPMENT_RULES.md` 正式规范
 - [ ] 制定 Version 2.0 页面迁移方案（首页 / career-test；待确认后执行）
 
 ## Priority 2：网站架构
 
 - [x] 建立 `app/tools/`、`components/tools/`、`lib/calculators|salary|clb|oinp/` 目录占位
+- [x] 实现 ToolCard / CalculatorLayout / ResultCard / FAQ 公共组件（Salary 页首用）
 - [ ] 设计新版首页
-- [ ] 创建 `/tools` 工具中心页面（目前仅空目录）
+- [ ] 创建 `/tools` 工具中心页面（目前仅空目录 + salary 子路由）
 - [ ] 规划并实施 `/career-test` 路由迁移（**禁止在未确认前执行**）
 - [ ] 建立导航栏
 - [ ] 建立页脚
-- [ ] 实现 ToolCard 公共组件（规划已写入 `components/tools/README.md`）
-- [ ] 实现 CalculatorLayout 公共组件
-- [ ] 实现 ResultCard 公共组件
-- [ ] 实现 FAQ 公共组件
+- [ ] 按 Design System 为工具页补齐统一 Last Updated 组件
 
 ## Priority 3：Salary Calculator
 
-- [ ] 确定输入字段
-- [ ] 确定年薪与时薪计算公式
-- [ ] 支持每周 35、37.5、40 小时和自定义小时数
-- [ ] 输出时薪、年薪、周薪、双周薪和月薪
-- [ ] 增加免责声明
-- [ ] 增加 SEO 和 FAQ
-- [ ] 完成手机端测试
+- [x] 确定输入字段
+- [x] 确定年薪与时薪计算公式
+- [x] 支持每周 35、37.5、40 小时和自定义小时数
+- [x] 输出时薪、年薪、周薪、双周薪和月薪
+- [x] 增加免责声明
+- [x] 增加 SEO 和 FAQ
+- [x] 完成核心用例验证与 production build
+- [ ] 真机 / 浏览器手机端视觉复核（上线前建议再扫一眼）
+- [ ] 按 Design System 补齐 Last Updated 显示（小改，待排期）
 
 ## Priority 4：CLB Calculator
 
@@ -68,4 +69,5 @@
 - 不要使用移民中介文章代替政府官方规则。
 - 不要在测试通过前上线政策计算器。
 - 不要宣传“保证获邀”或“保证移民成功”。
-- 本阶段不要实现 Calculator UI / 算法；不要建立 `app/career-test`。
+- 未经确认不要创建 `/career-test` 或迁移首页。
+- 新工具必须遵循 `TOOL_DESIGN_SYSTEM.md` 与 `DEVELOPMENT_RULES.md`。

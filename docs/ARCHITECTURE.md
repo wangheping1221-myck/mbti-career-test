@@ -1,6 +1,6 @@
 # Career Navigator Canada — 架构说明
 
-最后更新：2026-07-29
+最后更新：2026-07-29（文档审阅同步：规范文档 + V2.1 状态）
 
 本文档区分「当前真实结构」与「Version 2 规划结构」。  
 规划内容未经确认前不得盲目移动现有文件。
@@ -47,10 +47,11 @@ MBTI-Career-Test/
 | 路由 | 状态 | 说明 |
 |------|------|------|
 | `/` | 已存在 | 职业测试（home / quiz / results 同页） |
-| `/canada-career-test` | 已存在 | 营销落地页 |
+| `/canada-career-test` | 已存在 | 营销落地页（可能仍为未跟踪文件） |
 | `/api/verify-unlock` | 已存在 | 解锁码 API |
+| `/tools/salary-calculator` | ✅ V2.1 已上线 | 年薪 / 时薪转换器 |
 | `/career-test` | **未建立** | 规划中，暂不迁移 |
-| `/tools` 及子路由 | **未建立** | 规划中 |
+| `/tools` 工具中心 | **未建立页面** | 仅有目录；子路由已有 salary |
 
 ---
 
@@ -62,35 +63,50 @@ MBTI-Career-Test/
 app/
 ├── page.tsx                      # 未来：平台首页（暂不改）
 ├── career-test/                  # 未来：迁入现有测试（暂不建）
-├── tools/                        # ✅ 已建空目录（本阶段）
+├── tools/                        # ✅ 已建
+│   ├── README.md
+│   ├── salary-calculator/        # ✅ V2.1
+│   │   ├── layout.tsx            # SEO metadata
+│   │   └── page.tsx
 │   ├── page.tsx                  # 未来：工具中心
-│   ├── salary-calculator/
-│   ├── clb-calculator/
-│   └── oinp-eoi-calculator/
+│   ├── clb-calculator/           # 未来
+│   └── oinp-eoi-calculator/      # 未来
 ├── canada-career-test/           # 已存在：落地页
 └── api/
 
 components/
 ├── landing/                      # 已存在
 ├── ui/                           # 已存在
-└── tools/                        # ✅ 已建（本阶段仅 README）
-    # 未来：ToolLayout / CalculatorLayout / ResultCard 等
+└── tools/                        # ✅ V2.1 已实现部分组件
+    ├── calculator-layout.tsx
+    ├── result-card.tsx
+    ├── tool-card.tsx
+    ├── faq-section.tsx
+    ├── salary-calculator.tsx     # 客户端计算器
+    └── README.md
 
 lib/
 ├── …现有职业测试模块…            # 已存在，继续保留
-├── calculators/                  # ✅ 已建（本阶段仅 README）
-├── salary/                       # ✅ 已建空目录
-├── clb/                          # ✅ 已建空目录
-└── oinp/                         # ✅ 已建空目录
+├── calculators/                  # README 规范
+├── salary/                       # ✅ V2.1 算法与格式化
+│   ├── calculator.ts
+│   ├── types.ts
+│   ├── constants.ts
+│   ├── format.ts
+│   └── README.md
+├── clb/                          # 占位
+└── oinp/                         # 占位
 
 docs/
-├── PROJECT_ROADMAP.md            # 已存在
-├── CHANGELOG.md                  # 已存在
-├── TODO.md                       # 已存在
-├── DECISIONS.md                  # 已存在
-├── AI_CONTEXT.md                 # 已存在
-├── PROJECT_NOTES.md              # 已存在（MVP 记录）
-└── ARCHITECTURE.md               # ✅ 本文件（本阶段新增）
+├── PROJECT_ROADMAP.md
+├── CHANGELOG.md
+├── TODO.md
+├── DECISIONS.md
+├── AI_CONTEXT.md
+├── PROJECT_NOTES.md              # MVP 历史记录
+├── ARCHITECTURE.md               # 本文件
+├── TOOL_DESIGN_SYSTEM.md         # 工具 UI 规范
+└── DEVELOPMENT_RULES.md          # 开发规范
 ```
 
 ---
@@ -100,11 +116,12 @@ docs/
 | 路径 | 状态 | 说明 |
 |------|------|------|
 | `app/layout.tsx` | 已存在 | 全局布局 |
-| `app/page.tsx` | 已存在 | **禁止本阶段修改**；职业测试入口 |
-| `app/canada-career-test/` | 已存在 | 落地页 |
+| `app/page.tsx` | 已存在 | 当前职业测试入口；**未经确认勿改职责 / 勿迁走** |
+| `app/canada-career-test/` | 已存在 | 落地页（可能仍未 git 跟踪） |
 | `app/api/verify-unlock/` | 已存在 | 解锁 API |
-| `app/tools/` | ✅ 本阶段新建 | 空目录 + README；未来工具中心与子工具页 |
-| `app/career-test/` | 未建立 | 规划迁移目标；**本阶段禁止建立** |
+| `app/tools/` | 已存在 | 工具路由根；含 README |
+| `app/tools/salary-calculator/` | ✅ V2.1 | 年薪 / 时薪转换器 |
+| `app/career-test/` | 未建立 | 规划迁移目标；确认前禁止创建 |
 
 ---
 
@@ -112,9 +129,11 @@ docs/
 
 | 路径 | 状态 | 说明 |
 |------|------|------|
-| `components/ui/` | 已存在 | shadcn 基础组件 |
-| `components/landing/` | 已存在 | `/canada-career-test` 落地页组件 |
-| `components/tools/` | ✅ 本阶段新建 | 仅 README；未来工具共用 UI 组件 |
+| `components/ui/` | 已存在 | shadcn：button / card / badge |
+| `components/landing/` | 已存在 | 落地页组件（可能仍未 git 跟踪） |
+| `components/tools/` | ✅ V2.1 | 共用工具 UI + `salary-calculator.tsx` |
+
+UI 细节以 [`TOOL_DESIGN_SYSTEM.md`](./TOOL_DESIGN_SYSTEM.md) 为准。
 
 ---
 
@@ -122,11 +141,13 @@ docs/
 
 | 路径 | 状态 | 说明 |
 |------|------|------|
-| `lib/career-*.ts` 等 | 已存在 | 职业测试算法与数据；本阶段不改 |
-| `lib/calculators/` | ✅ 本阶段新建 | 算法层 README；禁止算法写在 page.tsx |
-| `lib/salary/` | ✅ 本阶段新建 | 空目录；未来年薪/时薪逻辑 |
-| `lib/clb/` | ✅ 本阶段新建 | 空目录；未来 CLB 对照与转换 |
-| `lib/oinp/` | ✅ 本阶段新建 | 空目录；未来 OINP EOI 规则与计分 |
+| `lib/career-*.ts` 等 | 已存在 | 职业测试算法与数据 |
+| `lib/calculators/` | 已存在 | 算法层 README |
+| `lib/salary/` | ✅ V2.1 | 年薪时薪算法 / 类型 / 格式化 |
+| `lib/clb/` | 占位 | 未来 CLB |
+| `lib/oinp/` | 占位 | 未来 OINP |
+
+分层规则以 [`DEVELOPMENT_RULES.md`](./DEVELOPMENT_RULES.md) §4 为准。
 
 ---
 
@@ -134,13 +155,12 @@ docs/
 
 | 文件 | 状态 |
 |------|------|
-| `AI_CONTEXT.md` | 已存在 |
-| `TODO.md` | 已存在 |
-| `CHANGELOG.md` | 已存在 |
-| `DECISIONS.md` | 已存在 |
-| `PROJECT_ROADMAP.md` | 已存在 |
-| `PROJECT_NOTES.md` | 已存在（MVP） |
-| `ARCHITECTURE.md` | ✅ 本阶段新增 |
+| `AI_CONTEXT.md` | AI 短上下文 |
+| `ARCHITECTURE.md` | 本文件：真实结构 |
+| `TOOL_DESIGN_SYSTEM.md` | 工具设计规范 |
+| `DEVELOPMENT_RULES.md` | 开发规范 |
+| `TODO.md` / `CHANGELOG.md` / `DECISIONS.md` / `PROJECT_ROADMAP.md` | 任务与产品 |
+| `PROJECT_NOTES.md` | MVP 历史 |
 
 ---
 
@@ -165,15 +185,13 @@ docs/
 ## 8. 后续扩展规划（未实施）
 
 - 将 `/` 改为平台首页；职业测试迁至 `/career-test`（需单独确认）
-- `/tools` 工具中心 + Salary / CLB / OINP 三个计算器
+- `/tools` 工具中心页 + CLB / OINP 等计算器
 - 统一导航栏与页脚
 - 中英文双语结构预留
 - Blog / 学习中心、职业数据库、PDF 报告等（见 `PROJECT_ROADMAP.md`）
 
-### 本阶段明确不做
+### 当前仍需确认后才可做
 
-- 不修改 `app/page.tsx`
-- 不迁移职业测试
-- 不建立 `app/career-test`
-- 不实现任何 Calculator UI 或算法
-- 不修改 SEO / 现有业务逻辑
+- 修改 `app/page.tsx` 职责或迁移职业测试
+- 建立 `app/career-test`
+- 上线未核实规则的政策计算器正式算法
