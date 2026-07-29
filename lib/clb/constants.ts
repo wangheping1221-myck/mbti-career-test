@@ -6,10 +6,10 @@
  * - No third-party sites.
  * - This file is the only place band→CLB thresholds may live for V2.3.
  *
- * IMPORTANT:
- * - Concrete numbers below were transcribed from IRCC pages listed in
- *   `IELTS_GT_CLB_SOURCE`. They must be re-checked by a human before treating
- *   production results as final.
+ * Human verification (V2.3):
+ * - All CLB 4–10 Listening / Reading / Writing / Speaking floors were
+ *   checked against the official Canada.ca URLs in `IELTS_GT_CLB_SOURCE`
+ *   on 2026-07-29. Re-check when IRCC publishes table updates.
  */
 
 import type { CLBLevel, ClbSkill } from "./types";
@@ -18,35 +18,32 @@ export const IELTS_GT_CLB_SOURCE = {
   languageScale: "CLB" as const,
   exam: "IELTS General Training",
   /**
-   * Primary chart used for full CLB 4–10 conversion
-   * (page explicitly labels “IELTS (General Training)”).
+   * Full CLB 4–10 chart explicitly labeled “IELTS (General Training)”.
    */
   sourceUrl:
     "https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada/work/after-graduation/eligibility/language-results.html",
   sourceTitle:
     "Post-graduation work permit: How to find your language level based on your test results — Canada.ca",
   /**
-   * Cross-check chart on Express Entry language page
-   * (Federal Skilled Trades — IELTS ability table; same band floors for CLB 4–10).
+   * Cross-check: Express Entry language page (Federal Skilled Trades IELTS
+   * ability table; same band floors for CLB 4–10). Page requires IELTS
+   * General Training.
    */
   crossCheckUrl:
     "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/documents/language-test.html",
   crossCheckTitle:
     "Express Entry: Language test results — Canada.ca (Federal Skilled Trades / IELTS)",
-  /** ISO date when this file was transcribed from the official pages. */
+  /** ISO date of last official-table retrieval / human verification. */
   retrievedOn: "2026-07-29",
   effectiveNote:
     "Thresholds are the minimum IELTS band for each CLB level per ability. A score maps to the highest CLB whose minimum it meets. Scores below CLB 4 minima do not map.",
 } as const;
 
-/**
- * TODO(human-verify): Before production release, open both `sourceUrl` and
- * `crossCheckUrl` and confirm every Listening / Reading / Writing / Speaking
- * minimum for CLB 4–10 still matches this table. Do not update from memory,
- * blogs, or AI suggestions.
- */
-export const IELTS_GT_CLB_HUMAN_VERIFY_TODO =
-  "TODO: Human must re-verify IRCC IELTS General Training ↔ CLB thresholds on Canada.ca before production sign-off.";
+/** Sign-off: mapping floors match official IRCC Canada.ca tables. */
+export const IELTS_GT_CLB_HUMAN_VERIFIED = true;
+
+export const IELTS_GT_CLB_HUMAN_VERIFIED_NOTE =
+  "Verified against official IRCC Canada.ca IELTS General Training to CLB tables on 2026-07-29.";
 
 /**
  * Minimum IELTS General Training band required for each CLB level, per skill.

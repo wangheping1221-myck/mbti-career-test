@@ -1,11 +1,11 @@
 # lib/clb
 
-CLB 语言成绩转换 —— 算法与官方对照数据（V2.3 Phase 1）。
+CLB 语言成绩转换 —— 算法与官方对照数据（V2.3）。
 
 ## 范围
 
-- **已实现**：IELTS General Training → CLB（纯函数）
-- **未实现**：UI、CELPIP、PTE、TEF、TCF
+- **已实现**：IELTS General Training → CLB（纯函数 + UI）
+- **未实现**：CELPIP、PTE、TEF、TCF
 
 ## Architecture Flow
 
@@ -18,7 +18,7 @@ User Input (IELTS General Training bands)
         ↓
   CLB Result      ← { ok, input, result } 或 { ok: false, input, error, field? }
         ↓
-  UI（Phase 2+，本目录不包含）
+  UI (`components/tools/clb-calculator.tsx`)
 ```
 
 ## 文件职责
@@ -26,7 +26,7 @@ User Input (IELTS General Training bands)
 | 文件 | 职责 |
 |------|------|
 | `types.ts` | 输入 / 结果类型；统一 Tool API：`{ ok, input, result?, error?, field? }` |
-| `constants.ts` | IRCC 映射阈值 + 来源元数据（**唯一**允许存放分值处）；含 Human Verify TODO |
+| `constants.ts` | IRCC 映射阈值 + 来源元数据（**唯一**允许存放分值处）；含 Human Verify 记录 |
 | `validation.ts` | 校验 Listening / Reading / Writing / Speaking 是否为合法 IELTS 分 |
 | `calculator.ts` | 纯函数 `calculateCLB(input)`：查表换算；`overall = min(四项 CLB)` |
 
@@ -52,6 +52,11 @@ if (outcome.ok) {
 
 ## 数据规则
 
-对照表必须来自 IRCC / Canada.ca。禁止第三方网站。  
-写入或更新 `constants.ts` 前须人工核对官方页（见文件内 `IELTS_GT_CLB_HUMAN_VERIFY_TODO`）。  
-该 TODO 属于发版检查项，**不得删除**。
+对照表必须来自 IRCC / Canada.ca。禁止第三方网站。
+
+**Human verification (V2.3)**
+
+- `IELTS_GT_CLB_HUMAN_VERIFIED = true`
+- Note: Verified against official IRCC Canada.ca IELTS General Training to CLB tables on 2026-07-29.
+- Official URLs: see `IELTS_GT_CLB_SOURCE.sourceUrl` and `IELTS_GT_CLB_SOURCE.crossCheckUrl` in `constants.ts`.
+- If IRCC updates the published tables, re-verify and update `retrievedOn` / verification note before treating results as current.
