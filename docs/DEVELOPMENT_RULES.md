@@ -1,6 +1,6 @@
 # Career Navigator Canada — 开发规范（Development Rules）
 
-**版本**：1.0  
+**版本**：1.1  
 **生效日期**：2026-07-29  
 **适用范围**：本仓库全部功能开发（工具、职业测试维护、文档、营销素材入库）  
 **相关文档**：
@@ -12,6 +12,7 @@
 - 变更日志 → [`CHANGELOG.md`](./CHANGELOG.md)
 - 决策记录 → [`DECISIONS.md`](./DECISIONS.md)
 - 路线图 → [`PROJECT_ROADMAP.md`](./PROJECT_ROADMAP.md)
+- 发布流程 → [`RELEASE_PROCESS.md`](./RELEASE_PROCESS.md)
 
 > **Why（为什么）**  
 > 项目正从单一职业测试升级为平台。没有统一开发规范，会出现：算法写进页面、路由随意增殖、文档与代码脱节、误改职业测试核心。本文件是 **强制约定**，与 `AI_CONTEXT.md` 互补：后者偏「给 AI 的上下文」，本文件偏「人与 AI 共同遵守的工程法」。
@@ -32,6 +33,7 @@
 10. [Documentation Rules](#10-documentation-rules)
 11. [Quality Rules](#11-quality-rules)
 12. [AI Collaboration Rules](#12-ai-collaboration-rules)
+13. [Feature Development Workflow](#13-feature-development-workflow)
 
 ---
 
@@ -389,6 +391,65 @@ AI 容易「顺手重构」。显式门禁保护职业测试与政策合规边�
 
 ---
 
+## 13. Feature Development Workflow
+
+从现在开始，每个新功能统一遵循以下流程。细节发布步骤见 [`RELEASE_PROCESS.md`](./RELEASE_PROCESS.md)；本节是功能级总流程。
+
+### 13.1 PRD
+
+先写产品需求（如 `docs/PRD_<FEATURE>.md`），至少明确：
+
+- 产品目标  
+- Scope / Out of Scope  
+- 用户场景  
+- 验收标准  
+
+### 13.2 Implementation
+
+1. 先写 Implementation Plan（如 `docs/IMPLEMENTATION_PLAN_*.md`）  
+2. 再按阶段开发（Phase 1 / Phase 2 …）  
+3. 业务逻辑与 UI 分离（算法在 `lib/`，页面只组装）  
+4. 阶段或功能完成后执行 lint / typecheck / build  
+
+### 13.3 Changelog
+
+1. 功能（或阶段性可交付）完成并 **Push** 后，更新 `docs/CHANGELOG.md` 的 **[Unreleased]**  
+2. Changelog **单独 Commit**  
+3. **不把** Changelog 与业务代码混在同一个 Commit  
+
+### 13.4 Release
+
+完整功能通过 Review 后再发布：
+
+1. Commit（若尚有待提交的发版收尾）  
+2. Push  
+3. 创建 Annotated Git Tag  
+4. **只 Push 对应 Tag**（不要默认 `git push --tags`）  
+5. 按 [`RELEASE_PROCESS.md`](./RELEASE_PROCESS.md) 检查发布结果  
+
+### 13.5 补充规则
+
+- **PRD** 和 **Implementation Plan** 属于开发准备文档。  
+- 中间 Phase 可以 Commit 和 Push，但**不需要**每个 Phase 都打 Tag。  
+- **只有完整可用的版本**才打 Tag。  
+- 小型 Bug Fix 或纯文档更新通常**不打 Tag**。  
+- **每一步完成后等待 Review**，再进入下一步。  
+
+### 13.6 Why
+
+统一流程后，CLB / OINP / CRS 等工具会按同一节奏推进，避免「无 PRD 直接写 UI」「Changelog 与代码混 commit」「半成品乱打 tag」。
+
+### 13.7 Example（CLB V2.3）
+
+```text
+PRD_CLB_CALCULATOR → IMPLEMENTATION_PLAN_V2.3_CLB
+→ Phase 1 lib/clb（commit/push，不打 tag）
+→ Changelog Unreleased（单独 docs commit）
+→ Phase 2 UI… → Review → 完整版本再 Tag
+```
+
+---
+
 ## 与现有文档的关系（避免冲突）
 
 | 主题 | 权威文档 | 说明 |
@@ -398,6 +459,8 @@ AI 容易「顺手重构」。显式门禁保护职业测试与政策合规边�
 | 工具视觉与页面骨架 | `TOOL_DESIGN_SYSTEM.md` | UI 争议以它为准 |
 | 产品阶段目标 | `PROJECT_ROADMAP.md` | 优先级以它 + TODO 为准 |
 | 单次决策 | `DECISIONS.md` | 新决策追加，不改写历史条目含义 |
+| 版本 Tag / 发版检查 | `RELEASE_PROCESS.md` | 与本文件 §13 Release 步骤配合 |
+| 功能级流程 | 本文件 §13 | PRD → Plan → 分阶段实现 → Changelog → Release |
 
 若发现两处文档过时不一致：**不要静默删改历史**；在 CHANGELOG 记录，并更新过时段落或加「已由 xxx 取代」链接。
 
@@ -409,3 +472,4 @@ AI 容易「顺手重构」。显式门禁保护职业测试与政策合规边�
 |------|------|------|
 | 2026-07-29 | 1.0 | 首版正式开发规范 |
 | 2026-07-29 | 1.0.1 | 审阅：Metadata 节改为引用 Design System，减少重复 |
+| 2026-07-29 | 1.1 | 新增 §13 Feature Development Workflow（PRD → Plan → Changelog → Release） |
