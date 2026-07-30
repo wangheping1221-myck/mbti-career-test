@@ -63,13 +63,13 @@ const FAQ_ITEMS = [
 const RELATED_TOOLS = [
   {
     title: "CLB 转换计算器",
-    description: "将 IELTS、CELPIP 等成绩转换为 CLB 等级。",
-    comingSoon: true,
+    description: "将 IELTS General Training 成绩转换为 CLB 等级。",
+    href: "/tools/clb-calculator",
   },
   {
-    title: "OINP EOI 打分计算器",
-    description: "按安省移民项目规则估算 EOI 分数。",
-    comingSoon: true,
+    title: "安省 OWP EOI 打分计算器",
+    description: "按 Ontario Workforce Priority 公开评分因素估算 EOI 分数。",
+    href: "/tools/oinp-eoi-calculator",
   },
 ] as const;
 

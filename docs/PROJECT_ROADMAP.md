@@ -8,7 +8,7 @@
 
 ## 当前版本
 
-Version 2.1（Salary Calculator 已上线）
+Version 2.3 进行中（Salary + CLB 已上线；OINP/OWP 引擎已就绪，UI 未上线）
 
 启动日期：2026-07-29（Version 2.0 平台化启动）
 
@@ -30,8 +30,11 @@ Version 2.1（Salary Calculator 已上线）
 ## 第一批核心工具
 
 - [x] 年薪 / 时薪转换计算器（`/tools/salary-calculator`）
-- [ ] CLB 语言成绩转换计算器
-- [ ] OINP EOI 打分计算器
+- [x] CLB 语言成绩转换计算器（`/tools/clb-calculator`）
+- [ ] OINP / OWP EOI 打分计算器（`/tools/oinp-eoi-calculator`）
+  - [x] V2.4 数据 HV + Sign-off；`lib/oinp` 计分引擎（P2–P3）
+  - [x] P4.1 UI Design Review（只读评审；**未**实现 UI）
+  - [ ] **P4.2 UI Implementation**（下一步）
 
 ## 第二阶段工具
 

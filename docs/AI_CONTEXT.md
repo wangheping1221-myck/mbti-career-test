@@ -42,6 +42,8 @@ http://localhost:3000
 - 本地高级报告解锁逻辑
 - **Salary Calculator**（`/tools/salary-calculator`，V2.1）
 - **Universal Tool Template**（`components/tools/*`，V2.2.1）
+- **CLB Calculator**（`/tools/clb-calculator`，V2.3）
+- **OINP / OWP scoring engine**（`lib/oinp`：HV 表 + `calculateOwpEoi`；**尚无** `/tools/oinp-eoi-calculator` UI）
 
 修改代码前必须检查项目当前真实结构，不得根据本文件猜测文件名称。
 
@@ -63,8 +65,12 @@ http://localhost:3000
 
 1. ~~Salary Calculator~~ → **已完成（V2.1）**
 2. ~~Universal Tool Template~~ → **已完成（V2.2.1）**
-3. CLB Calculator → 待做
-4. OINP EOI Calculator → 待做
+3. ~~CLB Calculator~~ → **已完成（V2.3）**
+4. **OINP / OWP EOI Calculator（V2.4）**
+   - ~~P2 Human Verify + Sign-off~~ → **已完成**（`OINP_OWP_HUMAN_VERIFIED = true`）
+   - ~~P3 scoring types / validation / factor scorers~~ → **已完成**（`lib/oinp`）
+   - ~~P4.1 UI Design Review~~ → **已完成**（只读评审；**未**开始 UI 实现）
+   - **下一步：P4.2 UI Implementation**（`/tools/oinp-eoi-calculator`；尚未开工）
 
 ## 推荐路由规划
 
@@ -119,17 +125,18 @@ docs/               # 含 TOOL_DESIGN_SYSTEM、DEVELOPMENT_RULES 等
 
 ## OINP 工具特别要求
 
-开发前必须明确：
+现行产品：**Ontario Workforce Priority（OWP）Job Offer 路径**（非已关闭的旧 EJO 多流）。
 
-- 支持哪个 OINP stream
-- 当前规则生效日期
-- 申请资格与 EOI 得分的区别
-- 工资如何换算
-- 不同字段的评分逻辑
-- 是否存在条件依赖
-- 官方来源地址
+开发 / 改 UI 前必须明确：
 
-未核实规则前，只允许搭建 UI，不允许完成正式评分算法。
+- 仅 Job Offer MVP；医师路径不在 MVP
+- 评分仅经 `calculateOwpEoi`；UI 提交 **verified option IDs**（`OwpScoringInput`）
+- 不得改 HV 表分值 / ID；不得在组件内硬编码分数
+- 得分 ≠ 申请资格 ≠ 获邀保证
+- 不得做城市→地区、职业标题→NOC、自由文本学历推断（P4.1 已确认延后）
+- 官方来源：Ontario.ca OWP Scoring factors；Portal 状态以 Updates 为准
+
+P4.1 UI Design Review 已完成；**P4.2 之前不得声称工具页已上线。**
 
 ## CLB 工具特别要求
 

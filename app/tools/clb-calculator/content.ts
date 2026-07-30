@@ -53,9 +53,9 @@ export const CLB_RELATED_TOOLS = [
     href: "/tools/salary-calculator",
   },
   {
-    title: "Ontario EOI Calculator",
-    description: "按安省移民项目规则估算 EOI 分数。",
-    comingSoon: true,
+    title: "安省 OWP EOI 打分计算器",
+    description: "按 Ontario Workforce Priority 公开评分因素估算 EOI 分数。",
+    href: "/tools/oinp-eoi-calculator",
   },
   {
     title: "CRS Calculator",

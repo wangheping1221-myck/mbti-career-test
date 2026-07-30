@@ -27,19 +27,21 @@
 - Formula section
 - Related tools
 - Responsive calculator UI
+- OINP / OWP `lib/oinp` Human-Verified scoring tables + package sign-off
+- OINP / OWP `OwpScoringInput` validation + factor scorers + `calculateOwpEoi`
 
 ### 文档
 
 - 将本文件调整为 `Unreleased` + `Released Versions` 结构
 - 新增 `docs/RELEASE_PROCESS.md`（版本发布流程）
+- **V2.4 P4.1 UI Design Review 完成**（OWP EOI Calculator 只读产品/UX/路由评审；下一步为 P4.2 UI Implementation；**尚未**创建工具页或 UI 代码）
 
 ### 计划中（尚未完成）
 
-- CLB Calculator
-- OINP EOI Calculator
+- OINP / OWP EOI Calculator **UI**（P4.2：`/tools/oinp-eoi-calculator`）
 - `/tools` 工具中心页
 - `/career-test` 路由迁移（需单独确认）
-- ToolConfig 文案配置层（建议等 CLB 时再抽象）
+- ToolConfig 文案配置层（按需再抽象）
 
 ### 仍在仓库外 / 未入库（按需单独发布）
 
