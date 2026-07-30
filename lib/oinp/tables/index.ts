@@ -36,7 +36,10 @@ export {
 
 export { OINP_JOB_TABLE, OINP_JOB_TABLE_OPTIONS } from "./job";
 export { OINP_WAGE_TABLE, OINP_WAGE_TABLE_OPTIONS } from "./wage";
-export { OINP_ONTARIO_WORK_EXPERIENCE_TABLE } from "./ontario-work-experience";
+export {
+  OINP_ONTARIO_WORK_EXPERIENCE_TABLE,
+  OINP_ONTARIO_WORK_EXPERIENCE_TABLE_OPTIONS,
+} from "./ontario-work-experience";
 export { OINP_EARNINGS_TABLE } from "./earnings";
 export { OINP_STATUS_TABLE } from "./status";
 export { OINP_EDUCATION_TABLE } from "./education";
