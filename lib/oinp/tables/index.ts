@@ -41,8 +41,8 @@ export {
   OINP_ONTARIO_WORK_EXPERIENCE_TABLE_OPTIONS,
 } from "./ontario-work-experience";
 export { OINP_EARNINGS_TABLE, OINP_EARNINGS_TABLE_OPTIONS } from "./earnings";
-export { OINP_STATUS_TABLE } from "./status";
-export { OINP_EDUCATION_TABLE } from "./education";
+export { OINP_STATUS_TABLE, OINP_STATUS_TABLE_OPTIONS } from "./status";
+export { OINP_EDUCATION_TABLE, OINP_EDUCATION_TABLE_OPTIONS } from "./education";
 export { OINP_CANADIAN_CREDENTIAL_TABLE } from "./canadian-credential";
 export { OINP_LANGUAGE_TABLE } from "./language";
 export { OINP_REGION_TABLE } from "./region";
