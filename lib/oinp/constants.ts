@@ -32,22 +32,25 @@ export const OINP_OWP_SOURCE = {
   /** ISO date of P2.2 official source collection (not value verification). */
   retrievedOn: OWP_SOURCE_COLLECTION_RETRIEVED_ON,
   effectiveNote:
-    "Single Ontario Workforce Priority stream; former Employer Job Offer multi-stream pages are historical-do-not-score. Official Scoring factors primary URL is the OWP stream page. EOI / e-Filing availability is time-sensitive — see Updates and OINP_OWP_PORTAL_STATUS_CONTEXT. Scoring option points not entered until P2.3 Human Verify.",
+    "Single Ontario Workforce Priority stream; former Employer Job Offer multi-stream pages are historical-do-not-score. Official Scoring factors primary URL is the OWP stream page. EOI / e-Filing availability is time-sensitive — see Updates and OINP_OWP_PORTAL_STATUS_CONTEXT. Factor tables Human-Verified in P2.3; package signed off in P2.4.",
 } as const;
 
 /**
- * Sign-off flag. Remains false until official scoring tables are verified (P2.4/P5).
+ * Package Human Verify sign-off (P2.4).
+ * True only after every active OWP Job Offer factor table is human-verified
+ * against the OWP stream Scoring factors page.
  */
-export const OINP_OWP_HUMAN_VERIFIED = false;
+export const OINP_OWP_HUMAN_VERIFIED = true;
 
 /**
- * Placeholder note until Sign-off.
+ * Sign-off note for Human Verify package review.
  */
 export const OINP_OWP_HUMAN_VERIFIED_NOTE =
-  "Not verified yet. P2.2 recorded official sources only. Numeric OWP EOI scoring factors must be Human-Verified against ontario.ca before treating calculator results as production-ready.";
+  "P2.4 package sign-off 2026-07-30. All nine active OWP Job Offer factor tables (job, wage, ontario-work-experience, earnings, status, education, canadian-credential, language, region) verified value-by-value against https://www.ontario.ca/page/ontario-workforce-priority-stream Scoring factors. No historical EJO values used. Calculator scorers / UI remain P3+.";
 
 /**
- * Build-time reminder: enter and verify band→points on ontario.ca (P2.3+).
+ * Retained for audit trail. Package values are signed off; re-check ontario.ca
+ * before production calculator release if the official page changes.
  */
 export const OINP_OWP_HUMAN_VERIFY_TODO =
-  "TODO: Human must enter and verify Ontario Workforce Priority EOI scoring factor options and points from the OWP stream Scoring factors page (value-by-value) before calculator use. Sources collected in P2.2; values not yet verified.";
+  "DONE (P2.4): Official OWP EOI scoring factor options and points Human-Verified against the OWP stream Scoring factors page. Re-verify if ontario.ca publishes scoring-factor changes before calculator release.";
