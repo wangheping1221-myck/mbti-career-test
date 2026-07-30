@@ -40,7 +40,7 @@ export {
   OINP_ONTARIO_WORK_EXPERIENCE_TABLE,
   OINP_ONTARIO_WORK_EXPERIENCE_TABLE_OPTIONS,
 } from "./ontario-work-experience";
-export { OINP_EARNINGS_TABLE } from "./earnings";
+export { OINP_EARNINGS_TABLE, OINP_EARNINGS_TABLE_OPTIONS } from "./earnings";
 export { OINP_STATUS_TABLE } from "./status";
 export { OINP_EDUCATION_TABLE } from "./education";
 export { OINP_CANADIAN_CREDENTIAL_TABLE } from "./canadian-credential";
