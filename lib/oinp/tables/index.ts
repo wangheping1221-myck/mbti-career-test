@@ -48,7 +48,7 @@ export {
   OINP_CANADIAN_CREDENTIAL_TABLE_OPTIONS,
 } from "./canadian-credential";
 export { OINP_LANGUAGE_TABLE, OINP_LANGUAGE_TABLE_OPTIONS } from "./language";
-export { OINP_REGION_TABLE } from "./region";
+export { OINP_REGION_TABLE, OINP_REGION_TABLE_OPTIONS } from "./region";
 
 export type { OinpOwpFactorSourceInventoryEntry } from "./sources";
 export {
