@@ -44,3 +44,20 @@ export const TOOL_CATALOG: readonly ToolCatalogItem[] = [
 export function getLiveTools(): readonly ToolCatalogItem[] {
   return TOOL_CATALOG.filter((tool) => tool.status === "live");
 }
+
+/**
+ * Returns live tools for cross-link surfaces.
+ *
+ * Used by:
+ * - Career Test results
+ * - Tool Related Tools
+ * - Future sitemap
+ *
+ * Pass `excludeIds` to omit the current tool (or others) when linking from a tool page.
+ */
+export function getRelatedTools(options?: {
+  excludeIds?: readonly string[];
+}): readonly ToolCatalogItem[] {
+  const exclude = new Set(options?.excludeIds ?? []);
+  return getLiveTools().filter((tool) => !exclude.has(tool.id));
+}

@@ -1,8 +1,10 @@
 "use client";
 
+import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { PlatformHome } from "@/components/home/platform-home";
+import { ToolCard } from "@/components/tools/tool-card";
 import { Button } from "@/components/ui/button";
 import {
   buildUserAnswers,
@@ -22,6 +24,7 @@ import {
   recommendCareers,
   type CareerRecommendation,
 } from "@/lib/recommend-careers";
+import { getRelatedTools } from "@/lib/tools/catalog";
 import { cn } from "@/lib/utils";
 
 type Phase = "home" | "quiz" | "results";
@@ -455,6 +458,33 @@ export function CareerTestFlow() {
                   </article>
                 ))}
               </div>
+
+              <section aria-label="相关工具" className="space-y-3">
+                <div className="flex flex-wrap items-end justify-between gap-2">
+                  <h2 className="text-base font-semibold text-slate-900">
+                    相关工具
+                  </h2>
+                  <Link
+                    href="/tools"
+                    className="text-sm font-medium text-emerald-700 transition-colors hover:text-emerald-800"
+                  >
+                    查看全部工具
+                  </Link>
+                </div>
+                <p className="text-xs leading-relaxed text-slate-500">
+                  用免费计算器估算工资、语言成绩或安省 OWP EOI 分数。
+                </p>
+                <div className="grid gap-2">
+                  {getRelatedTools().map((tool) => (
+                    <ToolCard
+                      key={tool.id}
+                      title={tool.title}
+                      description={tool.description}
+                      href={tool.href}
+                    />
+                  ))}
+                </div>
+              </section>
 
               <PremiumUnlockPanel
                 unlocked={premiumUnlocked}
