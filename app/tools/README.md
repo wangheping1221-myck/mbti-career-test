@@ -6,9 +6,9 @@
 
 | 路径 | 状态 |
 |------|------|
-| `/tools` | 尚未建立工具中心 `page.tsx` |
-| `/tools/salary-calculator` | ✅ V2.1 已上线 |
-| `/tools/clb-calculator` | 未建立 |
-| `/tools/oinp-eoi-calculator` | 未建立 |
+| `/tools` | ✅ P5.3 工具中心（消费 `lib/tools/catalog.ts`） |
+| `/tools/salary-calculator` | ✅ V2.1 |
+| `/tools/clb-calculator` | ✅ V2.3 |
+| `/tools/oinp-eoi-calculator` | ✅ V2.4 P4.2 |
 
-页面中不得编写计算算法；算法应放在 `lib/` 下对应模块。
+工具列表 SSOT：`lib/tools/catalog.ts`。页面中不得编写计算算法；算法应放在 `lib/` 下对应模块。
