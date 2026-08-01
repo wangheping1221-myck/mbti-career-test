@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils";
 
 /**
- * Universal page shell for all /tools/* pages.
- * Provides gradient background and max-width content column.
+ * Content-width shell for /tools/* pages.
+ * Site chrome (header/footer) lives in the root layout.
  */
 export function ToolLayout({
   children,
@@ -14,7 +14,7 @@ export function ToolLayout({
   return (
     <div
       className={cn(
-        "min-h-screen bg-gradient-to-b from-slate-50 to-white",
+        "bg-gradient-to-b from-slate-50 to-white",
         className,
       )}
     >
