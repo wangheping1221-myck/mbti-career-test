@@ -44,7 +44,10 @@ export function PlatformHome({ onStartTest }: { onStartTest: () => void }) {
         </div>
       </section>
 
-      <section className="mx-auto mt-8 max-w-3xl space-y-5">
+      <section
+        id="career-test"
+        className="mx-auto mt-8 max-w-3xl scroll-mt-20 space-y-5"
+      >
         <div className="space-y-2 text-center sm:text-left">
           <h2 className="text-xl font-semibold text-slate-900 sm:text-2xl">
             职业方向测试

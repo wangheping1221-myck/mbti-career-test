@@ -232,7 +232,7 @@ function PremiumUnlockPanel({
                 {loading ? "验证中…" : "解锁高级报告"}
               </Button>
               <p className="text-center text-xs text-slate-400">
-                在小红书购买后，自动发货消息中会提供解锁码
+                购买后，请输入收到的解锁码查看完整高级报告。
               </p>
             </div>
           </>
