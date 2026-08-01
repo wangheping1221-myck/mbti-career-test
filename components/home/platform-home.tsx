@@ -17,10 +17,16 @@ export function PlatformHome({ onStartTest }: { onStartTest: () => void }) {
         <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
           加拿大职业导航
         </h1>
-        <p className="text-base leading-relaxed text-slate-600 sm:text-lg">
-          3 分钟职业方向测试，以及工资、语言成绩与安省 OWP EOI
-          实用工具——面向华人新移民、留学生与工签持有人。
-        </p>
+        <div className="space-y-2">
+          <p className="text-base leading-relaxed text-slate-600 sm:text-lg">
+            3 分钟职业方向测试
+          </p>
+          <p className="text-sm leading-relaxed text-slate-500 sm:text-base">
+            工资计算器 · CLB 转换 · 安省 OWP EOI 打分
+            <br />
+            专为加拿大华人打造
+          </p>
+        </div>
         <div className="flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
           <Button
             size="lg"
@@ -38,11 +44,14 @@ export function PlatformHome({ onStartTest }: { onStartTest: () => void }) {
         </div>
       </section>
 
-      <section className="mx-auto mt-14 max-w-3xl space-y-5">
+      <section className="mx-auto mt-8 max-w-3xl space-y-5">
         <div className="space-y-2 text-center sm:text-left">
           <h2 className="text-xl font-semibold text-slate-900 sm:text-2xl">
-            Career Test
+            职业方向测试
           </h2>
+          <p className="text-sm font-medium tracking-wide text-emerald-700">
+            Career Test
+          </p>
           <p className="text-sm leading-relaxed text-slate-600 sm:text-base">
             旗舰产品：根据你的偏好匹配更适合的加拿大职业方向。
           </p>
@@ -64,14 +73,6 @@ export function PlatformHome({ onStartTest }: { onStartTest: () => void }) {
             </li>
           </ul>
         </div>
-
-        <Button
-          size="lg"
-          className="h-12 w-full text-base"
-          onClick={onStartTest}
-        >
-          Start Career Test
-        </Button>
       </section>
 
       <section className="mx-auto mt-14 max-w-3xl space-y-5">
