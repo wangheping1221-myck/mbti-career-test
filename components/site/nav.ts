@@ -13,7 +13,7 @@ export const SITE_NAV_ITEMS: SiteNavItem[] = [
 
 export const SITE_CTA = {
   href: "/",
-  label: "Start Test",
+  label: "Start Career Test",
 } as const;
 
 export const SITE_BRAND = {
