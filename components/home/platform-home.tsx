@@ -22,9 +22,7 @@ export function PlatformHome({ onStartTest }: { onStartTest: () => void }) {
             3 分钟职业方向测试
           </p>
           <p className="text-sm leading-relaxed text-slate-500 sm:text-base">
-            工资计算器 · CLB 转换 · 安省 OWP EOI 打分
-            <br />
-            专为加拿大华人打造
+            以职业测试为核心，并提供工资、语言与移民评分等加拿大实用工具，帮助华人、新移民与留学生规划发展方向。
           </p>
         </div>
         <div className="flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
@@ -33,13 +31,13 @@ export function PlatformHome({ onStartTest }: { onStartTest: () => void }) {
             className="h-12 text-base sm:min-w-48"
             onClick={onStartTest}
           >
-            Start Career Test
+            开始职业测试
           </Button>
           <Link
             href="/tools"
             className="inline-flex h-12 items-center justify-center rounded-lg border border-slate-200 bg-white px-4 text-base font-medium text-slate-700 transition-colors hover:bg-slate-50 sm:min-w-40"
           >
-            浏览工具
+            浏览全部工具
           </Link>
         </div>
       </section>
