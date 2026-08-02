@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 
 import { SiteFooter } from "@/components/site/site-footer";
 import { SiteHeader } from "@/components/site/site-header";
+import { absoluteUrl } from "@/lib/site";
 
 import "./globals.css";
 
@@ -16,20 +17,18 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const SITE_URL = "https://mbti-career-test.vercel.app";
-
 export const metadata: Metadata = {
   title: "加拿大职业导航 | Career Navigator Canada",
   description:
     "免费加拿大职业方向测试，以及年薪时薪转换、IELTS GT 转 CLB、安省 OWP EOI 打分等实用工具。面向华人新移民、留学生与工签持有人，结果仅供参考。",
   alternates: {
-    canonical: `${SITE_URL}/`,
+    canonical: absoluteUrl("/"),
   },
   openGraph: {
     title: "加拿大职业导航 | Career Navigator Canada",
     description:
       "免费加拿大职业方向测试，以及年薪时薪转换、IELTS GT 转 CLB、安省 OWP EOI 打分等实用工具。面向华人新移民、留学生与工签持有人，结果仅供参考。",
-    url: `${SITE_URL}/`,
+    url: absoluteUrl("/"),
     type: "website",
   },
 };

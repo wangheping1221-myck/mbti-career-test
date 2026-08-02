@@ -1,20 +1,19 @@
 import type { Metadata } from "next";
 
-const SITE_URL = "https://mbti-career-test.vercel.app";
-const canonicalPath = "/tools/clb-calculator";
+import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "CLB Calculator Canada | IELTS General to CLB Converter",
   description:
     "Convert IELTS General Training scores to Canadian Language Benchmark levels for listening, reading, writing and speaking.",
   alternates: {
-    canonical: `${SITE_URL}${canonicalPath}`,
+    canonical: absoluteUrl("/tools/clb-calculator"),
   },
   openGraph: {
     title: "CLB Calculator Canada | IELTS General to CLB Converter",
     description:
       "Convert IELTS General Training scores to Canadian Language Benchmark levels for listening, reading, writing and speaking.",
-    url: `${SITE_URL}${canonicalPath}`,
+    url: absoluteUrl("/tools/clb-calculator"),
     type: "website",
   },
 };
