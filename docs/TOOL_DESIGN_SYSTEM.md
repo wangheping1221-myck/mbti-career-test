@@ -395,15 +395,18 @@ Token 保证「换工具不换品牌感」。与 `app/globals.css` 中的 shadcn
 - 资格与分数区分（如 OINP）  
 - 未核实规则前不得上线正式算法  
 
-### 10.3 Example：下一批工具
+### 10.3 Example：工具映射
 
-| 工具 | 路由（规划） | 算法目录 | Primary Result 示例 |
-|------|--------------|----------|---------------------|
-| CLB | `/tools/clb-calculator` | `lib/clb/` | 综合 CLB 等级 |
-| OINP EOI | `/tools/oinp-eoi-calculator` | `lib/oinp/` | EOI 总分 |
-| CRS | `/tools/crs-calculator` | 未来 `lib/crs/` | CRS 总分 |
-| Tax | `/tools/tax-calculator` | 未来 `lib/tax/` | 估算税额 / 净收入 |
-| EI | `/tools/ei-calculator` | 未来 `lib/ei/` | 估算周给付 |
+| 工具 | 路由 | 状态 | 算法目录 | Primary Result 示例 |
+|------|------|------|----------|---------------------|
+| Salary | `/tools/salary-calculator` | ✅ 已上线 | `lib/salary/` | 时薪或年薪 |
+| CLB | `/tools/clb-calculator` | ✅ 已上线 | `lib/clb/` | 综合 CLB 等级 |
+| OINP / OWP EOI | `/tools/oinp-eoi-calculator` | ✅ 已上线 | `lib/oinp/` | EOI 总分 |
+| CRS | `/tools/crs-calculator` | 规划中 | 未来 `lib/crs/` | CRS 总分 |
+| Tax | `/tools/tax-calculator` | 规划中 | 未来 `lib/tax/` | 估算税额 / 净收入 |
+| EI | `/tools/ei-calculator` | 规划中 | 未来 `lib/ei/` | 估算周给付 |
+
+全站导航与平台首页见 [`ARCHITECTURE.md`](./ARCHITECTURE.md)。工具列表 SSOT：`lib/tools/catalog.ts`（hub / home / Career Test related；计算器页内 Related 数组迁移推迟）。
 
 ---
 
@@ -428,3 +431,4 @@ Token 保证「换工具不换品牌感」。与 `app/globals.css` 中的 shadcn
 | 2026-07-29 | 1.0 | 首版；以 Salary Calculator V2.1 为参考实现 |
 | 2026-07-29 | 1.0.1 | 审阅：补充权威说明与 Salary Last Updated 差距 |
 | 2026-07-29 | 1.1 | V2.2.1：落地 Universal Tool Template；抽象为 Tool 级术语（Primary Result / Result Data / Calculation Details） |
+| 2026-08-02 | 1.1.1 | P5.7A：§10.3 标注 Salary/CLB/OWP 已上线；引用 catalog SSOT |

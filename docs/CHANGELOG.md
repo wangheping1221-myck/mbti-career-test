@@ -13,45 +13,43 @@
 
 ## [Unreleased]
 
-### Added
+### Docs（P5.7A）
 
-- CLB core library
-- CLB validation
-- CLB calculator
-- CLB types
-- lib/clb README
-- CLB Calculator UI (/tools/clb-calculator)
-- CLB Calculator page route
-- Universal Tool Template integration
-- FAQ
-- Formula section
-- Related tools
-- Responsive calculator UI
-- OINP / OWP `lib/oinp` Human-Verified scoring tables + package sign-off
-- OINP / OWP `OwpScoringInput` validation + factor scorers + `calculateOwpEoi`
-
-### 文档
-
-- 将本文件调整为 `Unreleased` + `Released Versions` 结构
-- 新增 `docs/RELEASE_PROCESS.md`（版本发布流程）
-- **V2.4 P4.1 UI Design Review 完成**（OWP EOI Calculator 只读产品/UX/路由评审；下一步为 P4.2 UI Implementation；**尚未**创建工具页或 UI 代码）
+- 同步项目文档至 `p5.6-complete`：平台首页 `/`、Career Test `/career-test`、Tools hub、三计算器已上线、共享导航、unlock 兼容重定向、OWP HV 保护与未跟踪材料非 SSOT
 
 ### 计划中（尚未完成）
 
-- OINP / OWP EOI Calculator **UI**（P4.2：`/tools/oinp-eoi-calculator`）
-- `/tools` 工具中心页
-- `/career-test` 路由迁移（需单独确认）
+- **P5.7B**：共享 `SITE_URL` helper、`app/sitemap.ts`、`app/robots.ts`、canonical 一致性（仅 metadata；无 trailingSlash 路由重定向）
+- Related Tools 全面迁入 `lib/tools/catalog`（推迟至后续统一重构）
 - ToolConfig 文案配置层（按需再抽象）
+- 未跟踪 `app/canada-career-test/` 脏构建风险的未来清理
 
-### 仍在仓库外 / 未入库（按需单独发布）
+### 仍在仓库外 / 未入库（按需单独决策；非产品 SSOT）
 
 - `app/canada-career-test/` 营销落地页
 - `components/landing/`
 - `marketing/` 小红书等站外素材
+- 部分历史 PRD / Implementation Plan / 研究文档（本地未跟踪）
 
 ---
 
 ## Released Versions
+
+### Platformization milestones（Git tags）
+
+| Tag | Commit | 说明 |
+|-----|--------|------|
+| `p5.6-complete` | `536ea18` | Career Test 迁至 `/career-test`；`/` = PlatformHome；`/?unlock=` 临时重定向 |
+| `p5.5-complete` | （见 git） | Career Test 结果 Related Tools 等 |
+| `p5.2`–`p5.4` 相关提交 | `main` 历史 | 共享导航、Tools hub、平台首页组成 |
+
+#### P5.6 Highlights（`p5.6-complete`）
+
+- `/` → `PlatformHome` only
+- `/career-test` → `CareerTestFlow`（compact intro；phase 名仍为 `home`）
+- 导航：Home / Career Test / Tools
+- CLB / OWP Related Tools 中 Career Test 链接改为 `/career-test`
+- 解锁验证 / 评分 / 计算器逻辑未改
 
 ### [2.2.1] — 2026-07-29 — Universal Tool Template
 
@@ -80,8 +78,8 @@
 
 #### Not included
 
-- 未开发 CLB / OINP / CRS / Tax / EI
-- 未修改 Landing Page、Career Test、Marketing（仍可能为未跟踪文件）
+- 当时未开发 CLB / OINP / CRS / Tax / EI（其后已陆续上线 CLB / OWP）
+- 未修改 Landing Page、Marketing（仍可能为未跟踪文件）
 
 ---
 
@@ -100,8 +98,8 @@
 
 #### Not included
 
-- 未开发 CLB / OINP 计算器
-- 未修改 `app/page.tsx`、职业算法、解锁逻辑
+- 未开发 CLB / OINP 计算器（其后已上线）
+- 未修改职业算法、解锁逻辑
 
 ---
 

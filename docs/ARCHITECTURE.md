@@ -1,122 +1,97 @@
 # Career Navigator Canada — 架构说明
 
-最后更新：2026-07-29（V2.2.1 Universal Tool Template）
+最后更新：2026-08-02（P5.7A — 与 `p5.6-complete` 对齐）
 
-本文档区分「当前真实结构」与「Version 2 规划结构」。  
-规划内容未经确认前不得盲目移动现有文件。
+本文档描述 **当前真实结构**（以 git 跟踪代码为准）。  
+未跟踪的本地营销/落地页/历史 PRD **不是**产品 SSOT。
 
 ---
 
-## 1. 当前真实目录结构（已存在）
+## 1. 当前真实目录结构（已跟踪）
 
-以下为检查项目后的真实结构（已排除 `node_modules`、`.next`、`.git`、`marketing` 素材包）。
+以下为 `p5.6-complete` 之后的主要结构（已排除 `node_modules`、`.next`、`.git`；未列出全部文件）。
 
 ```
 MBTI-Career-Test/
 ├── app/
-│   ├── api/
-│   │   └── verify-unlock/
-│   │       └── route.ts          # 高级报告解锁码校验
-│   ├── canada-career-test/
-│   │   ├── layout.tsx            # 落地页 metadata
-│   │   └── page.tsx              # 营销落地页 /canada-career-test
+│   ├── api/verify-unlock/route.ts
+│   ├── career-test/
+│   │   ├── layout.tsx          # Career Test SEO metadata
+│   │   └── page.tsx            # → CareerTestFlow
+│   ├── tools/
+│   │   ├── layout.tsx          # /tools hub metadata
+│   │   ├── page.tsx            # Tools hub
+│   │   ├── salary-calculator/
+│   │   ├── clb-calculator/
+│   │   └── oinp-eoi-calculator/
 │   ├── favicon.ico
 │   ├── globals.css
-│   ├── layout.tsx                # 根布局
-│   └── page.tsx                  # 职业测试三合一（首页/答题/结果）→ /
+│   ├── layout.tsx              # 根布局 + SiteHeader / SiteFooter
+│   └── page.tsx                # PlatformHome；/?unlock= → /career-test
 ├── components/
-│   ├── landing/                  # 落地页区块组件
-│   └── ui/                       # shadcn：button / card / badge
-├── docs/                         # 项目文档与开发日志
-├── lib/                          # 职业测试数据与算法
-│   ├── career-data.ts
-│   ├── career-display.ts
-│   ├── premium-unlock.ts
-│   ├── questions.ts
-│   ├── recommend-careers.ts
-│   ├── unlock-codes.ts
+│   ├── site/                   # nav / header / footer / mobile-nav
+│   ├── home/platform-home.tsx
+│   ├── career-test/career-test-flow.tsx
+│   ├── tools/                  # Universal Tool Template
+│   └── ui/
+├── lib/
+│   ├── tools/catalog.ts        # 工具目录 SSOT
+│   ├── salary/ | clb/ | oinp/
+│   ├── career-data.ts | questions.ts | recommend-careers.ts …
+│   ├── premium-unlock.ts | unlock-codes.ts
 │   └── utils.ts
-├── public/
+├── docs/
 ├── env.example
-├── package.json
-└── …（配置文件）
+└── package.json
 ```
 
 ### 当前路由
 
 | 路由 | 状态 | 说明 |
 |------|------|------|
-| `/` | 已存在 | 职业测试（home / quiz / results 同页） |
-| `/canada-career-test` | 已存在 | 营销落地页（可能仍为未跟踪文件） |
-| `/api/verify-unlock` | 已存在 | 解锁码 API |
-| `/tools/salary-calculator` | ✅ V2.1 已上线 | 年薪 / 时薪转换器 |
-| `/career-test` | **未建立** | 规划中，暂不迁移 |
-| `/tools` 工具中心 | **未建立页面** | 仅有目录；子路由已有 salary |
+| `/` | ✅ | 平台首页（`PlatformHome` only） |
+| `/career-test` | ✅ | 职业测试 SPA（`CareerTestFlow`） |
+| `/tools` | ✅ | 工具中心（`getLiveTools()`） |
+| `/tools/salary-calculator` | ✅ | 年薪 / 时薪 |
+| `/tools/clb-calculator` | ✅ | IELTS GT → CLB |
+| `/tools/oinp-eoi-calculator` | ✅ | 安省 OWP EOI |
+| `/api/verify-unlock` | ✅ | 解锁码 API |
+| `/?unlock=*` | ✅ 兼容 | 临时重定向至 `/career-test?unlock=*`（保留全部 query） |
+
+### 未跟踪 / 非 SSOT（可能存在于本地工作区）
+
+| 路径 | 说明 |
+|------|------|
+| `app/canada-career-test/` | 营销落地页实验；**未入库**；脏构建可能生成路由 |
+| `components/landing/` | 仅服务上述落地页 |
+| `marketing/` | 站外素材 |
+| 部分 `docs/PRD_*` / `IMPLEMENTATION_PLAN_*` / 研究文档 | 历史草稿；状态横幅可能过时 |
+
+**P5.7 策略**：保持未跟踪、不删不改不 ignore（见 DECISIONS）。未来清理项：未跟踪 App Router 目录会影响脏本地 production build。
 
 ---
 
-## 2. Version 2 规划目录
-
-目标：在保留现有职业测试的前提下，扩展为「职业导航 + 实用工具」平台。
+## 2. 平台分层（P5.2–P5.6）
 
 ```
 app/
-├── page.tsx                      # 未来：平台首页（暂不改）
-├── career-test/                  # 未来：迁入现有测试（暂不建）
-├── tools/                        # ✅ 已建
-│   ├── README.md
-│   ├── salary-calculator/        # ✅ V2.1
-│   │   ├── layout.tsx            # SEO metadata
-│   │   └── page.tsx
-│   ├── page.tsx                  # 未来：工具中心
-│   ├── clb-calculator/           # 未来
-│   └── oinp-eoi-calculator/      # 未来
-├── canada-career-test/           # 已存在：落地页
-└── api/
+├── page.tsx                 # 平台首页 + unlock 兼容
+├── career-test/             # 职业测试独立入口（P5.6）
+└── tools/                   # hub（P5.3）+ 各计算器
 
 components/
-├── landing/                      # 已存在
-├── ui/                           # 已存在
-└── tools/                        # ✅ V2.2.1 Universal Tool Template
-    ├── tool-layout.tsx
-    ├── tool-hero.tsx
-    ├── calculator-panel.tsx
-    ├── calculator-layout.tsx     # 兼容：重导出 CalculatorPanel
-    ├── result-panel.tsx
-    ├── result-card.tsx
-    ├── calculation-details.tsx
-    ├── formula-section.tsx
-    ├── related-tools.tsx
-    ├── tool-card.tsx
-    ├── faq-section.tsx
-    ├── disclaimer.tsx
-    ├── last-updated.tsx
-    ├── salary-calculator.tsx     # 领域客户端（Salary）
-    └── README.md
+├── site/                    # 共享导航（P5.2）
+├── home/                    # PlatformHome（P5.4）
+├── career-test/             # CareerTestFlow（结果 Related Tools：P5.5）
+└── tools/                   # Universal Tool Template（V2.2.1）
 
 lib/
-├── …现有职业测试模块…            # 已存在，继续保留
-├── calculators/                  # README 规范
-├── salary/                       # ✅ V2.1 算法与格式化
-│   ├── calculator.ts
-│   ├── types.ts
-│   ├── constants.ts
-│   ├── format.ts
-│   └── README.md
-├── clb/                          # 占位
-└── oinp/                         # 占位
-
-docs/
-├── PROJECT_ROADMAP.md
-├── CHANGELOG.md
-├── TODO.md
-├── DECISIONS.md
-├── AI_CONTEXT.md
-├── PROJECT_NOTES.md              # MVP 历史记录
-├── ARCHITECTURE.md               # 本文件
-├── TOOL_DESIGN_SYSTEM.md         # 工具 UI 规范
-└── DEVELOPMENT_RULES.md          # 开发规范
+├── tools/catalog.ts         # hub / home / CT related 的 live 工具列表
+├── salary/ | clb/ | oinp/   # 各域算法（oinp HV 表受保护）
+└── …职业测试模块…
 ```
+
+计算器页内 Related Tools 仍可能使用页面级 content 数组；Career Test 结果使用 `getRelatedTools()`。完整 Related Tools → catalog 迁移 **不在 P5.7A**（推迟至后续统一重构）。
 
 ---
 
@@ -124,13 +99,13 @@ docs/
 
 | 路径 | 状态 | 说明 |
 |------|------|------|
-| `app/layout.tsx` | 已存在 | 全局布局 |
-| `app/page.tsx` | 已存在 | 当前职业测试入口；**未经确认勿改职责 / 勿迁走** |
-| `app/canada-career-test/` | 已存在 | 落地页（可能仍未 git 跟踪） |
-| `app/api/verify-unlock/` | 已存在 | 解锁 API |
-| `app/tools/` | 已存在 | 工具路由根；含 README |
-| `app/tools/salary-calculator/` | ✅ V2.1 | 年薪 / 时薪转换器 |
-| `app/career-test/` | 未建立 | 规划迁移目标；确认前禁止创建 |
+| `app/layout.tsx` | ✅ | 全局布局 + `SiteHeader` / `SiteFooter` |
+| `app/page.tsx` | ✅ | `PlatformHome`；含 `unlock` query 临时重定向 |
+| `app/career-test/` | ✅ | Career Test 路由与 metadata |
+| `app/tools/` | ✅ | hub + salary / clb / oinp-eoi |
+| `app/api/verify-unlock/` | ✅ | 解锁 API |
+
+**禁止**：未经产品批准撤销 P5.6（勿将 Career Test 迁回 `/`，勿删除 `/career-test`）。
 
 ---
 
@@ -138,9 +113,11 @@ docs/
 
 | 路径 | 状态 | 说明 |
 |------|------|------|
-| `components/ui/` | 已存在 | shadcn：button / card / badge |
-| `components/landing/` | 已存在 | 落地页组件（可能仍未 git 跟踪） |
-| `components/tools/` | ✅ V2.2.1 | Universal Tool Template + `salary-calculator.tsx` |
+| `components/site/` | ✅ | Home / Career Test / Tools 导航 |
+| `components/home/` | ✅ | 平台首页 |
+| `components/career-test/` | ✅ | 测试 SPA |
+| `components/tools/` | ✅ | Universal Tool Template |
+| `components/ui/` | ✅ | shadcn |
 
 UI 细节以 [`TOOL_DESIGN_SYSTEM.md`](./TOOL_DESIGN_SYSTEM.md) 为准。
 
@@ -150,11 +127,12 @@ UI 细节以 [`TOOL_DESIGN_SYSTEM.md`](./TOOL_DESIGN_SYSTEM.md) 为准。
 
 | 路径 | 状态 | 说明 |
 |------|------|------|
-| `lib/career-*.ts` 等 | 已存在 | 职业测试算法与数据 |
-| `lib/calculators/` | 已存在 | 算法层 README |
-| `lib/salary/` | ✅ V2.1 | 年薪时薪算法 / 类型 / 格式化 |
-| `lib/clb/` | 占位 | 未来 CLB |
-| `lib/oinp/` | 占位 | 未来 OINP |
+| `lib/tools/catalog.ts` | ✅ | `TOOL_CATALOG` / `getLiveTools` / `getRelatedTools` |
+| `lib/career-*.ts` 等 | ✅ | 职业测试算法与数据 |
+| `lib/salary/` | ✅ | 年薪时薪 |
+| `lib/clb/` | ✅ | IELTS GT → CLB |
+| `lib/oinp/` | ✅ | OWP EOI；**HV 表与计分逻辑受保护** |
+| `lib/premium-unlock.ts` / `unlock-codes.ts` | ✅ | 解锁（码仅来自环境变量） |
 
 分层规则以 [`DEVELOPMENT_RULES.md`](./DEVELOPMENT_RULES.md) §4 为准。
 
@@ -169,38 +147,39 @@ UI 细节以 [`TOOL_DESIGN_SYSTEM.md`](./TOOL_DESIGN_SYSTEM.md) 为准。
 | `TOOL_DESIGN_SYSTEM.md` | 工具设计规范 |
 | `DEVELOPMENT_RULES.md` | 开发规范 |
 | `TODO.md` / `CHANGELOG.md` / `DECISIONS.md` / `PROJECT_ROADMAP.md` | 任务与产品 |
-| `PROJECT_NOTES.md` | MVP 历史 |
+| `RELEASE_PROCESS.md` | 发版与 tag |
+| `PROJECT_NOTES.md` | **MVP 历史记录**（路由描述可能过时；以本文件为准） |
 
 ---
 
 ## 7. 工具相关（`tools/`）
-
-本项目不在仓库根目录建 `tools/`，工具相关分布在：
 
 | 位置 | 职责 |
 |------|------|
 | `app/tools/` | 路由与页面（SEO、布局） |
 | `components/tools/` | 共用 UI 组件 |
 | `lib/calculators/` + `lib/salary|clb|oinp/` | 纯计算与规则数据 |
+| `lib/tools/catalog.ts` | 工具列表 SSOT（hub / home / CT related；未来 sitemap） |
 
 原则：
 
 1. 页面只负责展示与交互状态。
 2. 算法与政策规则不得写在 `page.tsx`。
 3. 政策数据必须可独立更新，并标注来源与更新日期。
+4. **不得修改**已 Human-Verify 的 OWP option 分值 / ID。
 
 ---
 
-## 8. 后续扩展规划（未实施）
+## 8. 后续扩展（未实施）
 
-- 将 `/` 改为平台首页；职业测试迁至 `/career-test`（需单独确认）
-- `/tools` 工具中心页 + CLB / OINP 等计算器
-- 统一导航栏与页脚
-- 中英文双语结构预留
-- Blog / 学习中心、职业数据库、PDF 报告等（见 `PROJECT_ROADMAP.md`）
+- P5.7B：共享 `SITE_URL`、`sitemap.ts`、`robots.ts`、canonical 一致性（metadata only；无 trailingSlash 路由重定向）
+- Related Tools 全面迁入 catalog
+- `/about`、`/blog`、CRS / Tax / EI 等（见 `PROJECT_ROADMAP.md`）
+- 未跟踪落地页 CTA / 入库决策（未来清理项）
 
-### 当前仍需确认后才可做
+### 仍需确认后才可做
 
-- 修改 `app/page.tsx` 职责或迁移职业测试
-- 建立 `app/career-test`
-- 上线未核实规则的政策计算器正式算法
+- 撤销或大幅改动 P5.6 路由拓扑
+- 修改职业测试题目 / 评分 / 解锁行为
+- 修改 OWP HV 表或 `calculateOwpEoi` 业务逻辑
+- 将未跟踪 marketing / landing 混入功能 commit

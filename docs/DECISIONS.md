@@ -18,6 +18,8 @@
 - 首页未来改为平台型首页。
 - 工具与职业导航使用统一品牌。
 
+> **状态（2026-08-02）**：平台型首页与 `/career-test` 切流已落地（Decision 007 / tag `p5.6-complete`）。本条保留为历史动机，不改写原文。
+
 ---
 
 ## Decision 002：继续使用现有网站
@@ -103,3 +105,27 @@ OINP、CLB 等规则数据必须放入独立数据文件，不应直接写死在
 ### 原因
 
 政策或对照表更新时，只需要修改数据文件，减少出错和返工。
+
+---
+
+## Decision 007：平台路由切流（P5.6）与文档同步（P5.7A）
+
+日期：2026-08-02
+
+### 决定
+
+1. `/` 仅为平台首页（`PlatformHome`）；职业测试仅在 `/career-test`。
+2. `/?unlock=*` 使用**临时**重定向至 `/career-test?unlock=*`（保留全部 query）；不使用 middleware。
+3. 共享导航为 Home / Career Test / Tools；Career Test 为普通链接，非绿色 CTA。
+4. 稳定检查点 tag：`p5.6-complete`（commit `536ea18`）。**不得擅自撤销该路由拓扑。**
+5. 未跟踪的 `app/canada-career-test/`、`components/landing/`、`marketing/` 与历史 PRD/研究文档 **不是产品 SSOT**；P5.7 内保持未跟踪、不删不改。记录未来清理项：未跟踪 App Router 目录可影响脏本地 build。
+6. P5.7 拆为 A（文档同步）与 B（最小 SEO：SITE_URL / sitemap / robots / canonical）；Related Tools 全面 catalog 化推迟。
+
+### 原因
+
+平台化需要清晰入口与 SEO 边界；旧解锁链接不可断裂；文档若仍写「禁止创建 `/career-test`」会导致 AI 误回滚。
+
+### 影响
+
+- 权威现状以 `ARCHITECTURE.md` / `AI_CONTEXT.md` / `DEVELOPMENT_RULES.md` §2 为准。
+- Decision 001 中「首页未来改为平台型首页」已由本决策落地（001 保留为历史动机，不改写原文）。

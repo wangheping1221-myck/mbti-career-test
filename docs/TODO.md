@@ -1,6 +1,6 @@
 # 当前开发任务
 
-最后更新：2026-07-30
+最后更新：2026-08-02（P5.7A — 与 `p5.6-complete` 对齐）
 
 ## Priority 1：项目基础
 
@@ -9,57 +9,49 @@
 - [x] 确定继续使用当前 Next.js 项目
 - [x] 建立项目文档体系
 - [x] 检查当前项目目录和现有页面
-- [x] 确认现有职业测试首页结构（`app/page.tsx` 三合一）
+- [x] 确认现有职业测试结构（现为 `/career-test`；历史曾为 `/` 三合一）
 - [x] 建立 Version 2 基础架构文档与空目录（`ARCHITECTURE.md` + tools/calculators 占位）
 - [x] 建立 `TOOL_DESIGN_SYSTEM.md` 与 `DEVELOPMENT_RULES.md` 正式规范
-- [ ] 制定 Version 2.0 页面迁移方案（首页 / career-test；待确认后执行）
+- [x] Version 2.0 页面迁移：平台首页 `/` + Career Test `/career-test`（P5.4 / P5.6；tag `p5.6-complete`）
 
-## Priority 2：网站架构
+## Priority 2：网站架构（P5 平台化）
 
-- [x] 建立 `app/tools/`、`components/tools/`、`lib/calculators|salary|clb|oinp/` 目录占位
-- [x] 实现 ToolCard / CalculatorLayout / ResultCard / FAQ 公共组件（Salary 页首用）
-- [x] V2.2.1 落地 Universal Tool Template（ToolLayout / Hero / Panel / Formula / Related / Disclaimer / LastUpdated 等）
-- [ ] 设计新版首页
-- [ ] 创建 `/tools` 工具中心页面（目前仅空目录 + salary / clb 子路由）
-- [ ] 规划并实施 `/career-test` 路由迁移（**禁止在未确认前执行**）
-- [ ] 建立导航栏
-- [ ] 建立页脚
+- [x] 建立 `app/tools/`、`components/tools/`、`lib/calculators|salary|clb|oinp/` 目录
+- [x] 实现 ToolCard / CalculatorLayout / ResultCard / FAQ 等公共组件
+- [x] V2.2.1 落地 Universal Tool Template
+- [x] 共享导航栏与页脚（P5.2：`components/site/*`）
+- [x] `/tools` 工具中心（P5.3：`lib/tools/catalog.ts`）
+- [x] 平台首页（P5.4：`PlatformHome`）
+- [x] Career Test 结果 Related Tools（P5.5：`getRelatedTools()`）
+- [x] `/career-test` 路由切流 + `/?unlock=` 临时兼容重定向（P5.6）
 - [x] 按 Design System 为工具页补齐统一 Last Updated 组件
+- [x] **P5.7A** 文档同步（本提交；与 `p5.6-complete` 对齐）
+- [ ] **P5.7B** 最小 SEO：共享 SITE_URL、sitemap、robots、canonical 一致性（**尚未开始**）
+- [ ] 未来：未跟踪 `app/canada-career-test/` 脏构建风险清理（CTA / 入库 / 忽略策略待定）
+- [ ] 未来：Related Tools 全面迁入 catalog（非 P5.7）
 
 ## Priority 3：Salary Calculator
 
-- [x] 确定输入字段
-- [x] 确定年薪与时薪计算公式
-- [x] 支持每周 35、37.5、40 小时和自定义小时数
-- [x] 输出时薪、年薪、周薪、双周薪和月薪
-- [x] 增加免责声明
-- [x] 增加 SEO 和 FAQ
-- [x] 完成核心用例验证与 production build
-- [ ] 真机 / 浏览器手机端视觉复核（上线前建议再扫一眼）
-- [x] 按 Design System 补齐 Last Updated 显示（V2.2.1）
+- [x] 确定输入字段与公式；周小时 / 年周数；多周期输出
+- [x] 免责声明、SEO、FAQ、Last Updated
+- [x] 核心用例与 production build
+- [ ] 真机 / 浏览器手机端视觉复核（建议定期）
 
 ## Priority 4：CLB Calculator
 
 - [x] V2.3 IELTS GT → CLB 核心库、校验、UI（`/tools/clb-calculator`）
+- [x] Related Tools 指向 live OWP / Salary / Career Test（随工具上线已更新）
 - [ ] 评估扩展 CELPIP / PTE / TEF / TCF（非当前阻塞项）
-- [ ] Related Tools 在 OWP 上线后改为真实 OINP 链接（随 P4.2/发布）
 
 ## Priority 5：OINP / OWP EOI Calculator（V2.4）
 
 ### 已完成
 
-- [x] 确认现行流为 Ontario Workforce Priority（OWP）Job Offer 路径（非旧 EJO）
-- [x] 区分申请资格与 EOI 得分（PRD / 文案约束）
-- [x] P2 Human Verify + package Sign-off（`OINP_OWP_HUMAN_VERIFIED = true`）
-- [x] `lib/oinp`：`OwpScoringInput`、validation、factor scorers、`calculateOwpEoi`
-- [x] 可执行 validation / scoring selftests
-- [x] **P4.1 UI Design Review**（路由/表单/OWE 互斥/语言组合/SEO/合规；只读；**未写 UI 代码**）
-
-### 下一步
-
-- [ ] **P4.2 UI Implementation** — `/tools/oinp-eoi-calculator`（Universal Template + option-id 表单 → `calculateOwpEoi`）
-- [ ] 页面 SEO / FAQ / Disclaimer / Last Updated / Related Tools
-- [ ] 同步 Salary / CLB Related Tools 中的 OINP 链接（上线时）
+- [x] OWP Job Offer 路径产品确认；资格 ≠ 得分
+- [x] P2 Human Verify + Sign-off（`OINP_OWP_HUMAN_VERIFIED = true`）
+- [x] `lib/oinp` 引擎与 selftests
+- [x] P4.1 UI Design Review
+- [x] **P4.2 UI Implementation** — `/tools/oinp-eoi-calculator`
 
 ### 明确未做（勿标完成）
 
@@ -70,13 +62,12 @@
 
 ## 当前禁止事项
 
-- 不要删除现有职业测试。
-- 不要未经确认直接修改现有首页。
-- 不要让 AI 自行猜测 OINP 评分规则；不得改已 HV 的 option 分值 / ID。
-- 不要使用移民中介文章代替政府官方规则。
-- 不要在 UI 组件内硬编码 EOI 分值；唯一计分入口为 `calculateOwpEoi`。
-- 不要在测试通过前上线政策计算器。
+- 不要删除现有职业测试或破坏评分 / 题目 / 解锁逻辑。
+- **不要擅自撤销 P5.6**：勿把 Career Test 迁回 `/`，勿切断 `/career-test`。
+- 不要改已 HV 的 OWP option 分值 / ID；计分唯一入口 `calculateOwpEoi`。
+- 不要让 AI 自行猜测政策规则；不要用中介文章代替官方来源。
+- 不要在 UI 组件内硬编码 EOI 分值。
 - 不要宣传“保证获邀”或“保证移民成功”。
-- 未经确认不要创建 `/career-test` 或迁移首页。
 - 新工具必须遵循 `TOOL_DESIGN_SYSTEM.md` 与 `DEVELOPMENT_RULES.md`。
-- P4.1 仅为设计评审；**在 P4.2 完成前不要宣称 OWP 工具页已上线。**
+- 未跟踪的 landing / marketing / 历史 PRD **不是**产品 SSOT；P5.7 内勿增删入库。
+- 解锁码仅存环境变量（`.env.local` / Vercel）；勿写入源码。

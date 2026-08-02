@@ -1,7 +1,7 @@
 # Career Navigator Canada — 开发规范（Development Rules）
 
-**版本**：1.3  
-**生效日期**：2026-07-29  
+**版本**：1.4  
+**生效日期**：2026-07-29（§2 路由表于 2026-08-02 / P5.7A 与 `p5.6-complete` 对齐）  
 **适用范围**：本仓库全部功能开发（工具、职业测试维护、文档、营销素材入库）  
 **相关文档**：
 
@@ -45,8 +45,8 @@
 | 目录 | 用途 | 允许放入 | 禁止放入 |
 |------|------|----------|----------|
 | **`app/`** | Next.js App Router 路由、布局、metadata、Route Handlers | `page.tsx`、`layout.tsx`、`api/**/route.ts` | 重型业务算法、大段政策对照表 |
-| **`components/`** | 可复用 UI | `ui/`（shadcn）、`tools/`、`landing/` | 政策评分规则、薪资公式实现 |
-| **`lib/`** | 纯逻辑、数据、格式化、校验 | `salary/`、`clb/`、`oinp/`、职业推荐算法 | React 组件、页面 JSX |
+| **`components/`** | 可复用 UI | `ui/`（shadcn）、`tools/`、`site/`、`home/`、`career-test/` | 政策评分规则、薪资公式实现 |
+| **`lib/`** | 纯逻辑、数据、格式化、校验 | `salary/`、`clb/`、`oinp/`、`tools/catalog`、职业推荐算法 | React 组件、页面 JSX |
 | **`docs/`** | 项目文档与规范 | 路线图、决策、设计/开发规范 | 运行时依赖的业务数据（应放 `lib/`） |
 | **`public/`** | 静态资源 | favicon、公开静态图 | 密钥、未授权素材 |
 | **`marketing/`** | 小红书等站外素材 | 文案、海报图 | 与网站构建强耦合的 TS 源码 |
@@ -75,36 +75,40 @@
 
 ## 2. Route Rules
 
-### 2.1 规划中的正式路由
+### 2.1 正式路由（以 ARCHITECTURE 为准）
 
-| 路由 | 用途 | 状态（以 ARCHITECTURE 为准） |
-|------|------|------------------------------|
-| `/` | 未来平台首页；**当前**为职业测试三合一 | 已存在，迁移前勿擅自改职责 |
-| `/tools` | 工具中心 | 规划中 |
+| 路由 | 用途 | 状态 |
+|------|------|------|
+| `/` | 平台首页（`PlatformHome` only） | ✅ 已上线（P5.4 / P5.6） |
+| `/career-test` | 职业测试独立入口（`CareerTestFlow`） | ✅ 已上线（P5.6） |
+| `/tools` | 工具中心 | ✅ 已上线（P5.3） |
 | `/tools/salary-calculator` | 年薪时薪转换 | ✅ 已上线 |
-| `/tools/clb-calculator` | CLB 转换 | 规划中 |
-| `/tools/oinp-eoi-calculator` | OINP EOI | 规划中 |
-| `/career-test` | 职业测试独立入口 | 规划中，**未迁移前禁止创建空壳误导** |
+| `/tools/clb-calculator` | CLB 转换 | ✅ 已上线 |
+| `/tools/oinp-eoi-calculator` | OWP EOI | ✅ 已上线 |
+| `/api/verify-unlock` | 解锁码校验 | ✅ 已上线 |
+| `/?unlock=*` | 旧解锁链接兼容 | ✅ 临时重定向 → `/career-test?unlock=*` |
 | `/about` | 关于 | 规划中 |
 | `/blog` | 学习中心 / 博客 | 规划中 |
-| `/canada-career-test` | 营销落地页 | 已存在（可能未入库） |
-| `/api/verify-unlock` | 解锁码校验 | 已存在 |
+| `/canada-career-test` | 营销落地页（实验） | **未跟踪**；非产品 SSOT |
+
+导航标签：桌面/页脚 `Home` / `Career Test` / `Tools`；移动端 `首页` / `职业测试` / `工具`。
 
 ### 2.2 强制规则
 
 1. **禁止随意创建顶层路由目录**（如 `/calc`、`/oinp`、`/salary`）——工具一律挂在 `/tools/*`  
-2. **未经确认不得**把 `/` 改成平台首页，或创建 `/career-test` 并切断旧入口  
+2. **不得擅自撤销 P5.6 路由拓扑**：勿把 Career Test 迁回 `/`，勿切断或清空 `/career-test`，勿移除 `/?unlock=` 临时兼容重定向（除非产品明确批准）  
 3. 新工具路由命名：`kebab-case`，与文件夹名一致  
 4. API 仅用于服务端能力（校验、未来 webhook 等），不把页面业务塞进 API  
+5. 未跟踪的 `app/canada-career-test/` 等 **不得**在未批准时入库、删除或写入 `.gitignore`（P5.7 锁定）；注意脏本地 build 可能生成额外路由  
 
 ### 2.3 Why
 
-统一前缀有利于 SEO（工具中心内链）与权限/导航扩展。
+统一前缀有利于 SEO（工具中心内链）与权限/导航扩展。P5.6 切流后，平台首页与测试入口分离，旧解锁链接仍须可用。
 
 ### 2.4 Best Practice
 
 - 新增路由前在 `TODO.md` 或 `DECISIONS.md` 留记录  
-- 旧路径若需兼容，使用明确 redirect，并写进 CHANGELOG  
+- 旧路径若需兼容，使用明确 **临时** redirect（非永久，除非 SEO 确认），并写进 CHANGELOG  
 
 ---
 
@@ -615,3 +619,4 @@ Open Canada.ca IRCC tables → compare every CLB floor one by one
 | 2026-07-29 | 1.1 | 新增 §13 Feature Development Workflow（PRD → Plan → Changelog → Release） |
 | 2026-07-29 | 1.2 | §13 正式固化：分 Phase、Release 顺序、End-of-Phase Rule（须停下等批准） |
 | 2026-07-29 | 1.3 | 新增 §14 Official Data Human Verification；§13 默认流程纳入 Human Verify / Sign-off |
+| 2026-08-02 | 1.4 | P5.7A：§2 路由表与强制规则对齐 `p5.6-complete`（平台首页 + `/career-test`） |

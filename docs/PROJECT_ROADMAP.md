@@ -8,33 +8,35 @@
 
 ## 当前版本
 
-Version 2.3 进行中（Salary + CLB 已上线；OINP/OWP 引擎已就绪，UI 未上线）
+**平台化检查点**：`p5.6-complete`（2026-08-02）— `/` 平台首页 + `/career-test` + `/tools` hub；Salary / CLB / OWP 均已上线。
 
-启动日期：2026-07-29（Version 2.0 平台化启动）
+进行中：**P5.7**（文档同步 → 最小 SEO 基建）。
 
 规范文档：
 
 - [`TOOL_DESIGN_SYSTEM.md`](./TOOL_DESIGN_SYSTEM.md)
 - [`DEVELOPMENT_RULES.md`](./DEVELOPMENT_RULES.md)
+- [`ARCHITECTURE.md`](./ARCHITECTURE.md)
 
 ## 第一阶段：网站平台化
 
-- [ ] 将网站定位从单一职业测试升级为 Career Navigator Canada（品牌/首页仍待完成）
-- [ ] 设计新版首页
-- [ ] 建立工具中心页面（`/tools` 列表页）
-- [ ] 建立统一导航栏
-- [ ] 将现有职业测试保留为独立模块（规划 `/career-test`，尚未迁移）
-- [x] 建立可复用的计算器组件（V2.1：`components/tools/*`）
-- [x] 建立工具设计规范与开发规范
+- [x] 将网站定位升级为 Career Navigator Canada（平台首页 P5.4）
+- [x] 建立统一导航栏与页脚（P5.2）
+- [x] 建立工具中心页面 `/tools`（P5.3）
+- [x] 职业测试独立模块 `/career-test`（P5.6；`/?unlock=` 临时兼容）
+- [x] Career Test 结果 Related Tools（P5.5）
+- [x] 可复用计算器组件与设计/开发规范（V2.1–V2.2.1）
+- [ ] P5.7 文档同步 + 最小 SEO（sitemap / robots / SITE_URL）
+- [ ] 首页与导航的持续体验打磨（非阻塞）
 
 ## 第一批核心工具
 
 - [x] 年薪 / 时薪转换计算器（`/tools/salary-calculator`）
 - [x] CLB 语言成绩转换计算器（`/tools/clb-calculator`）
-- [ ] OINP / OWP EOI 打分计算器（`/tools/oinp-eoi-calculator`）
-  - [x] V2.4 数据 HV + Sign-off；`lib/oinp` 计分引擎（P2–P3）
-  - [x] P4.1 UI Design Review（只读评审；**未**实现 UI）
-  - [ ] **P4.2 UI Implementation**（下一步）
+- [x] OINP / OWP EOI 打分计算器（`/tools/oinp-eoi-calculator`）
+  - [x] V2.4 数据 HV + Sign-off；`lib/oinp` 计分引擎
+  - [x] P4.1 UI Design Review
+  - [x] P4.2 UI Implementation
 
 ## 第二阶段工具
 
@@ -52,7 +54,7 @@ Version 2.3 进行中（Salary + CLB 已上线；OINP/OWP 引擎已就绪，UI �
 - [ ] 保存计算结果
 - [ ] 分享结果
 - [ ] 生成 PDF 报告
-- [ ] 高级职业报告
+- [ ] 高级职业报告（支付链路增强）
 - [ ] 职业数据库
 - [ ] Blog / 学习中心
 
@@ -66,3 +68,4 @@ Version 2.3 进行中（Salary + CLB 已上线；OINP/OWP 引擎已就绪，UI �
 6. 免费工具负责流量，职业导航负责深度价值。
 7. 不提供获邀、移民成功或就业成功保证。
 8. 所有政策工具必须显示免责声明和规则更新时间。
+9. **不得擅自撤销已封存的平台路由拓扑**（以 `p5.6-complete` 为准）。

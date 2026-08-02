@@ -50,9 +50,13 @@ v2.2.1-universal-tool-template
 
 ### 1.3 当前已发布 tag
 
-| Tag | 版本 | 说明 |
-|-----|------|------|
+| Tag | 版本 / 里程碑 | 说明 |
+|-----|----------------|------|
 | `v2.2.1-universal-tool-template` | 2.2.1 | Universal Tool Template + Salary 合入发布 |
+| `p5.5-complete` | P5.5 | 平台化：结果页 Related Tools 等 |
+| **`p5.6-complete`** | **P5.6（当前稳定检查点）** | Career Test → `/career-test`；`/` = PlatformHome |
+
+平台化里程碑 tag（`p5.*-complete`）与产品 semver tag（`vX.Y.Z-*`）并存；恢复点优先使用最近的 `p5.*-complete`。
 
 ---
 
@@ -232,3 +236,4 @@ Highlights:
 | 日期 | 说明 |
 |------|------|
 | 2026-07-29 | 首版：固化 Unreleased / Released、annotated tag、仅 push 指定 tag 的流程 |
+| 2026-08-02 | P5.7A：补充 `p5.5-complete` / `p5.6-complete` 里程碑 tag 说明 |

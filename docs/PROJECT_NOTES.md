@@ -1,5 +1,11 @@
 # 加拿大职业导航 MVP — 项目记录
 
+> **历史文档（MVP 时期）**  
+> 本文档记录平台化之前的 Career Test MVP 实现细节，**其中路由描述已过时**。  
+> 当前权威结构见 [`ARCHITECTURE.md`](./ARCHITECTURE.md) 与 [`AI_CONTEXT.md`](./AI_CONTEXT.md)：  
+> `/` = 平台首页，`/career-test` = 职业测试（tag `p5.6-complete`）。  
+> 下文「`app/page.tsx` = 首页/答题/结果」等表述仅反映 **当时** 实现，请勿据此改回路由。
+
 > 本文档汇总项目开发过程中的需求、实现、测试与部署信息，便于后续维护与迭代。
 
 ---
