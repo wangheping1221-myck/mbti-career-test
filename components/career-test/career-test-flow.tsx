@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { PlatformHome } from "@/components/home/platform-home";
 import { ToolCard } from "@/components/tools/tool-card";
@@ -254,6 +254,7 @@ export function CareerTestFlow() {
   >({});
   const [results, setResults] = useState<CareerRecommendation[]>([]);
   const [premiumUnlocked, setPremiumUnlocked] = useState(false);
+  const scrollHomeToTopRef = useRef(false);
 
   useEffect(() => {
     if (readPremiumUnlocked()) {
@@ -318,11 +319,22 @@ export function CareerTestFlow() {
   };
 
   const restart = () => {
+    scrollHomeToTopRef.current = true;
     setPhase("home");
     setCurrentIndex(0);
     setSelections({});
     setResults([]);
   };
+
+  useEffect(() => {
+    if (phase !== "home" || !scrollHomeToTopRef.current) {
+      return;
+    }
+    scrollHomeToTopRef.current = false;
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    });
+  }, [phase]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
