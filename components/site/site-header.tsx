@@ -19,6 +19,9 @@ function isNavActive(pathname: string, item: SiteNavItem): boolean {
   if (item.href === "/") {
     return pathname === "/";
   }
+  if (item.href === "/career-test") {
+    return pathname === "/career-test";
+  }
   return pathname === item.href || pathname.startsWith(`${item.href}/`);
 }
 

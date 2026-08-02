@@ -2,10 +2,9 @@ import Link from "next/link";
 
 import { Disclaimer } from "@/components/tools/disclaimer";
 import { ToolCard } from "@/components/tools/tool-card";
-import { Button } from "@/components/ui/button";
 import { getLiveTools } from "@/lib/tools/catalog";
 
-export function PlatformHome({ onStartTest }: { onStartTest: () => void }) {
+export function PlatformHome() {
   const tools = getLiveTools();
 
   return (
@@ -26,13 +25,12 @@ export function PlatformHome({ onStartTest }: { onStartTest: () => void }) {
           </p>
         </div>
         <div className="flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
-          <Button
-            size="lg"
-            className="h-12 text-base sm:min-w-48"
-            onClick={onStartTest}
+          <Link
+            href="/career-test"
+            className="inline-flex h-12 items-center justify-center rounded-lg bg-primary px-4 text-base font-medium text-primary-foreground transition-colors hover:bg-primary/80 sm:min-w-48"
           >
             开始职业测试
-          </Button>
+          </Link>
           <Link
             href="/tools"
             className="inline-flex h-12 items-center justify-center rounded-lg border border-slate-200 bg-white px-4 text-base font-medium text-slate-700 transition-colors hover:bg-slate-50 sm:min-w-40"
@@ -42,19 +40,29 @@ export function PlatformHome({ onStartTest }: { onStartTest: () => void }) {
         </div>
       </section>
 
-      <section
-        id="career-test"
-        className="mx-auto mt-8 max-w-3xl scroll-mt-20 space-y-5"
-      >
+      <section className="mx-auto mt-8 max-w-3xl space-y-5">
         <div className="space-y-2 text-center sm:text-left">
           <h2 className="text-xl font-semibold text-slate-900 sm:text-2xl">
-            职业方向测试
+            <Link
+              href="/career-test"
+              className="transition-colors hover:text-emerald-800"
+            >
+              职业方向测试
+            </Link>
           </h2>
           <p className="text-sm font-medium tracking-wide text-emerald-700">
             Career Test
           </p>
           <p className="text-sm leading-relaxed text-slate-600 sm:text-base">
             旗舰产品：根据你的偏好匹配更适合的加拿大职业方向。
+          </p>
+          <p>
+            <Link
+              href="/career-test"
+              className="text-sm font-medium text-emerald-700 transition-colors hover:text-emerald-800"
+            >
+              前往职业测试 →
+            </Link>
           </p>
         </div>
 

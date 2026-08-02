@@ -65,7 +65,7 @@ export const CLB_RELATED_TOOLS = [
   {
     title: "职业方向测试",
     description: "3 分钟了解更适合你的加拿大职业方向（职业方向参考）。",
-    href: "/",
+    href: "/career-test",
   },
 ] as const;
 

@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import { PlatformHome } from "@/components/home/platform-home";
 import { ToolCard } from "@/components/tools/tool-card";
 import { Button } from "@/components/ui/button";
 import {
@@ -243,7 +242,7 @@ function PremiumUnlockPanel({
 }
 
 /**
- * Career Test SPA: platform home + quiz + results + unlock.
+ * Career Test SPA on /career-test: intro (phase home) + quiz + results + unlock.
  * Business logic is unchanged from the pre-P5.4 page implementation.
  */
 export function CareerTestFlow() {
@@ -338,12 +337,50 @@ export function CareerTestFlow() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
-      {phase === "home" ? (
-        <PlatformHome onStartTest={startTest} />
-      ) : (
-        <div className="mx-auto flex min-h-screen w-full max-w-lg flex-col px-4 py-8 sm:px-6">
-          {phase === "quiz" && currentQuestion && (
-            <main className="flex flex-1 flex-col gap-6">
+      <div className="mx-auto flex min-h-screen w-full max-w-lg flex-col px-4 py-8 sm:px-6">
+        {phase === "home" && (
+          <main className="flex flex-1 flex-col justify-center gap-8">
+            <div className="space-y-4 text-center">
+              <p className="text-sm font-medium tracking-wide text-emerald-700">
+                Career Test
+              </p>
+              <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+                加拿大职业方向测试
+              </h1>
+              <p className="text-base leading-relaxed text-slate-600">
+                3 分钟找到更适合你的加拿大工作方向
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+              <ul className="space-y-3 text-sm text-slate-600">
+                <li className="flex items-start gap-2">
+                  <span className="mt-1 size-1.5 shrink-0 rounded-full bg-emerald-500" />
+                  10 道简单选择题，约 3 分钟完成
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="mt-1 size-1.5 shrink-0 rounded-full bg-emerald-500" />
+                  根据你的偏好匹配适合的职业方向
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="mt-1 size-1.5 shrink-0 rounded-full bg-emerald-500" />
+                  免费查看 Top 5；解锁码可开启完整高级报告
+                </li>
+              </ul>
+            </div>
+
+            <Button
+              size="lg"
+              className="h-12 w-full text-base"
+              onClick={startTest}
+            >
+              开始职业测试
+            </Button>
+          </main>
+        )}
+
+        {phase === "quiz" && currentQuestion && (
+          <main className="flex flex-1 flex-col gap-6">
               <div className="space-y-3">
                 <div className="flex items-center justify-between text-sm text-slate-500">
                   <span>
@@ -401,11 +438,11 @@ export function CareerTestFlow() {
                   返回上一题
                 </Button>
               )}
-            </main>
-          )}
+          </main>
+        )}
 
-          {phase === "results" && (
-            <main className="flex flex-1 flex-col gap-6">
+        {phase === "results" && (
+          <main className="flex flex-1 flex-col gap-6">
               <div className="space-y-2 text-center">
                 <p className="text-sm font-medium text-emerald-700">测试完成</p>
                 <h2 className="text-2xl font-bold text-slate-900">
@@ -513,8 +550,7 @@ export function CareerTestFlow() {
               </Button>
             </main>
           )}
-        </div>
-      )}
+      </div>
     </div>
   );
 }

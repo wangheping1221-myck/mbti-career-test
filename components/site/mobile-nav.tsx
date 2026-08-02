@@ -18,12 +18,16 @@ type MobileNavProps = {
 /** Mobile-only labels — desktop / footer keep SITE_NAV_ITEMS English labels. */
 const MOBILE_NAV_LABELS: Record<string, string> = {
   "/": "首页",
+  "/career-test": "职业测试",
   "/tools": "工具",
 };
 
 function isNavActive(pathname: string, item: SiteNavItem): boolean {
   if (item.href === "/") {
     return pathname === "/";
+  }
+  if (item.href === "/career-test") {
+    return pathname === "/career-test";
   }
   return pathname === item.href || pathname.startsWith(`${item.href}/`);
 }

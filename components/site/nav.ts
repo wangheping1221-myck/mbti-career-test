@@ -6,6 +6,7 @@ export type SiteNavItem = {
 /** Primary destinations shown in header, mobile nav, and footer. */
 export const SITE_NAV_ITEMS: SiteNavItem[] = [
   { href: "/", label: "Home" },
+  { href: "/career-test", label: "Career Test" },
   { href: "/tools", label: "Tools" },
 ];
 
