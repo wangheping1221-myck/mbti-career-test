@@ -9,11 +9,6 @@ export const SITE_NAV_ITEMS: SiteNavItem[] = [
   { href: "/tools", label: "Tools" },
 ];
 
-export const SITE_CTA = {
-  href: "/#career-test",
-  label: "Career Test",
-} as const;
-
 export const SITE_BRAND = {
   href: "/",
   name: "Career Navigator Canada",

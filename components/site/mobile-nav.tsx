@@ -7,12 +7,18 @@ import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-import { SITE_CTA, SITE_NAV_ITEMS, type SiteNavItem } from "@/components/site/nav";
+import { SITE_NAV_ITEMS, type SiteNavItem } from "@/components/site/nav";
 
 type MobileNavProps = {
   open: boolean;
   onClose: () => void;
   pathname: string;
+};
+
+/** Mobile-only labels — desktop / footer keep SITE_NAV_ITEMS English labels. */
+const MOBILE_NAV_LABELS: Record<string, string> = {
+  "/": "首页",
+  "/tools": "工具",
 };
 
 function isNavActive(pathname: string, item: SiteNavItem): boolean {
@@ -48,16 +54,14 @@ export function MobileNav({ open, onClose, pathname }: MobileNavProps) {
 
   return (
     <div
-      className={cn(
-        "fixed inset-0 z-50 md:hidden",
-        open ? "pointer-events-auto" : "pointer-events-none",
-      )}
+      className={cn("md:hidden", open ? "pointer-events-auto" : "pointer-events-none")}
       aria-hidden={!open}
     >
+      {/* Backdrop: below panel, above page content */}
       <button
         type="button"
         className={cn(
-          "absolute inset-0 bg-slate-900/40 transition-opacity",
+          "fixed inset-x-0 bottom-0 top-14 z-40 bg-slate-900/45 transition-opacity duration-200",
           open ? "opacity-100" : "opacity-0",
         )}
         aria-label="Close menu"
@@ -65,65 +69,56 @@ export function MobileNav({ open, onClose, pathname }: MobileNavProps) {
         onClick={onClose}
       />
 
+      {/* Full-width solid panel directly below sticky header */}
       <div
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
         className={cn(
-          "absolute inset-y-0 right-0 flex w-[min(100%,20rem)] flex-col border-l border-slate-200 bg-white shadow-xl transition-transform duration-200 ease-out",
-          open ? "translate-x-0" : "translate-x-full",
+          "fixed inset-x-0 top-14 z-50 border-b border-slate-200 bg-white shadow-lg transition-all duration-200 ease-out",
+          open
+            ? "translate-y-0 opacity-100"
+            : "pointer-events-none -translate-y-2 opacity-0",
         )}
       >
-        <div className="flex items-center justify-between border-b border-slate-200 px-4 py-3">
-          <p id={titleId} className="text-sm font-semibold text-slate-900">
-            Menu
+        <div className="flex items-center justify-end px-3 pt-2">
+          <p id={titleId} className="sr-only">
+            网站导航
           </p>
           <Button
             type="button"
             variant="ghost"
             size="icon"
+            className="size-11"
             aria-label="Close menu"
             onClick={onClose}
           >
-            <X />
+            <X className="size-5" />
           </Button>
         </div>
 
-        <nav className="flex flex-1 flex-col gap-1 p-3" aria-label="Mobile">
+        <nav className="flex flex-col gap-1 px-4 pb-5 pt-1" aria-label="Mobile">
           {SITE_NAV_ITEMS.map((item) => {
             const active = isNavActive(pathname, item);
+            const label = MOBILE_NAV_LABELS[item.href] ?? item.label;
             return (
               <Link
-                key={`${item.label}-${item.href}`}
+                key={item.href}
                 href={item.href}
                 onClick={onClose}
                 className={cn(
-                  "rounded-lg px-3 py-3 text-base font-medium transition-colors",
+                  "rounded-xl px-4 py-3.5 text-base font-medium transition-colors",
                   active
                     ? "bg-emerald-50 text-emerald-800"
-                    : "text-slate-700 hover:bg-slate-50",
+                    : "text-slate-800 hover:bg-slate-50",
                 )}
                 aria-current={active ? "page" : undefined}
               >
-                {item.label}
+                {label}
               </Link>
             );
           })}
         </nav>
-
-        <div className="border-t border-slate-200 p-3">
-          <Link
-            href={SITE_CTA.href}
-            onClick={onClose}
-            className={cn(
-              "flex h-11 w-full items-center justify-center rounded-lg bg-emerald-600 px-4 text-sm font-medium text-white",
-              "transition-colors hover:bg-emerald-700",
-              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/40",
-            )}
-          >
-            {SITE_CTA.label}
-          </Link>
-        </div>
       </div>
     </div>
   );

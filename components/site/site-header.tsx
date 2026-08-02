@@ -11,7 +11,6 @@ import { cn } from "@/lib/utils";
 import { MobileNav } from "@/components/site/mobile-nav";
 import {
   SITE_BRAND,
-  SITE_CTA,
   SITE_NAV_ITEMS,
   type SiteNavItem,
 } from "@/components/site/nav";
@@ -28,7 +27,13 @@ export function SiteHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-slate-200/80 bg-white/90 backdrop-blur-md">
+    <header
+      className={cn(
+        "sticky top-0 z-[60] border-b border-slate-200/80",
+        // Solid white on mobile so opened menu never blends with page content.
+        "bg-white md:bg-white/90 md:backdrop-blur-md",
+      )}
+    >
       <div className="mx-auto flex h-14 w-full max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
         <Link
           href={SITE_BRAND.href}
@@ -62,31 +67,18 @@ export function SiteHeader() {
           })}
         </nav>
 
-        <div className="flex items-center gap-2">
-          <Link
-            href={SITE_CTA.href}
-            className={cn(
-              "hidden h-9 items-center justify-center rounded-lg bg-emerald-600 px-3.5 text-sm font-medium text-white md:inline-flex",
-              "transition-colors hover:bg-emerald-700",
-              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/40",
-            )}
-          >
-            {SITE_CTA.label}
-          </Link>
-
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
-            className="md:hidden"
-            aria-label="Open menu"
-            aria-expanded={mobileOpen}
-            aria-controls="site-mobile-nav"
-            onClick={() => setMobileOpen(true)}
-          >
-            <Menu />
-          </Button>
-        </div>
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          className="md:hidden"
+          aria-label="Open menu"
+          aria-expanded={mobileOpen}
+          aria-controls="site-mobile-nav"
+          onClick={() => setMobileOpen(true)}
+        >
+          <Menu />
+        </Button>
       </div>
 
       <div id="site-mobile-nav">
