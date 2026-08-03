@@ -18,7 +18,7 @@
 - 首页未来改为平台型首页。
 - 工具与职业导航使用统一品牌。
 
-> **状态（2026-08-02）**：平台型首页与 `/career-test` 切流已落地（Decision 007 / tag `p5.6-complete`）。本条保留为历史动机，不改写原文。
+> **状态（2026-08-02）**：平台型首页与 `/career-test` 切流已落地（Decision 007 / tag `p5.6-complete`；当前恢复点 `p5.7-complete`）。本条保留为历史动机，不改写原文。
 
 ---
 
@@ -117,9 +117,10 @@ OINP、CLB 等规则数据必须放入独立数据文件，不应直接写死在
 1. `/` 仅为平台首页（`PlatformHome`）；职业测试仅在 `/career-test`。
 2. `/?unlock=*` 使用**临时**重定向至 `/career-test?unlock=*`（保留全部 query）；不使用 middleware。
 3. 共享导航为 Home / Career Test / Tools；Career Test 为普通链接，非绿色 CTA。
-4. 稳定检查点 tag：`p5.6-complete`（commit `536ea18`）。**不得擅自撤销该路由拓扑。**
-5. 未跟踪的 `app/canada-career-test/`、`components/landing/`、`marketing/` 与历史 PRD/研究文档 **不是产品 SSOT**；P5.7 内保持未跟踪、不删不改。记录未来清理项：未跟踪 App Router 目录可影响脏本地 build。
-6. P5.7 拆为 A（文档同步）与 B（最小 SEO：SITE_URL / sitemap / robots / canonical）；Related Tools 全面 catalog 化推迟。
+4. 当时稳定检查点 tag：`p5.6-complete`（commit `536ea18`）。**不得擅自撤销该路由拓扑。**  
+   > **后续**：`p5.7-complete`（`f1e1040`）为当前恢复点（含 SEO）；路由拓扑仍以 P5.6 为准不得回滚。
+5. 未跟踪的 `app/canada-career-test/`、`components/landing/`、`marketing/` 与历史 PRD/研究文档 **不是产品 SSOT**；P5.7 / P5.8 内保持未跟踪、不删不改。记录未来清理项：未跟踪 App Router 目录可影响脏本地 build。
+6. P5.7 已拆为 A（文档同步）与 B（最小 SEO）并完成。P5.8 为平台一致性（文档封印 + Related Tools catalog）；**下一大产品方向**为 Career Test 深度与职业覆盖扩展。
 
 ### 原因
 

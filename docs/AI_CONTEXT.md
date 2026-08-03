@@ -2,7 +2,7 @@
 
 所有参与本项目的 AI 编程助手，在修改代码前必须阅读本文件。
 
-**文档同步**：P5.7A（2026-08-02）— 与 tag `p5.6-complete` @ `536ea18` 对齐。
+**文档同步**：P5.8A（2026-08-02）— 与 tag `p5.7-complete` @ `f1e1040` 对齐。
 
 ## 项目名称
 
@@ -57,7 +57,8 @@ http://localhost:3000
 | Tag | 含义 |
 |-----|------|
 | `p5.5-complete` | 结果页 Related Tools 等平台化增量 |
-| **`p5.6-complete`** | **当前稳定检查点**：Career Test 路由迁至 `/career-test` |
+| `p5.6-complete` | Career Test 路由迁至 `/career-test`；`/` = PlatformHome |
+| **`p5.7-complete`** | **当前稳定检查点**：文档同步（P5.7A）+ 共享 `SITE_URL` / sitemap / robots（P5.7B） |
 
 **不得擅自撤销 P5.6 路由拓扑**（勿把 Career Test 迁回 `/`，勿切断 `/career-test`）。
 
@@ -75,7 +76,7 @@ http://localhost:3000
 
 ## 当前开发目标
 
-平台化 **P5.2–P5.6 已完成**（导航 → Tools hub → 平台首页 → 结果页交叉链接 → `/career-test` 切流）。
+平台化 **P5.2–P5.7 已完成**（导航 → Tools hub → 平台首页 → 结果页交叉链接 → `/career-test` 切流 → 文档同步 → 最小 SEO）。
 
 第一批工具：
 
@@ -86,8 +87,9 @@ http://localhost:3000
 
 进行中 / 下一步：
 
-- **P5.7**：文档同步（本阶段 A）+ 最小 SEO 基建（sitemap / robots / 共享 SITE_URL，阶段 B，待批准后实施）
-- 后续：CRS / Tax / EI 等第二批工具（见路线图）；未开始
+- **P5.8（当前活跃阶段）**：平台一致性封存 — A 文档封印；B Related Tools 全面迁入 catalog（live only + Career Test 页面级附加链接；尚未实现）
+- **P5.8 之后的下一大产品方向**：Career Test 深度与职业覆盖扩展（题目 / 职业库；需单独 PRD）
+- 更后：CRS / Tax / EI 等第二批工具（见路线图）；未开始
 
 ## 正式路由（已上线）
 
@@ -125,11 +127,14 @@ http://localhost:3000
 app/page.tsx              # 平台首页 + unlock 兼容重定向
 app/career-test/          # 职业测试路由（已建立）
 app/tools/                # hub + salary / clb / oinp-eoi
+app/sitemap.ts            # 站点地图（live 路由 + catalog）
+app/robots.ts             # robots.txt
 components/site/          # 共享 Header / Footer / nav
 components/home/          # PlatformHome
 components/career-test/   # CareerTestFlow
 components/tools/         # Universal Tool Template
-lib/tools/catalog.ts      # 工具目录 SSOT（hub / home / CT related）
+lib/site.ts               # SITE_URL / absoluteUrl
+lib/tools/catalog.ts      # 工具目录 SSOT（hub / home / CT related / sitemap）
 lib/salary|clb|oinp/
 docs/
 ```
@@ -196,7 +201,7 @@ docs/
 
 工具页 SEO 完整清单以 [`TOOL_DESIGN_SYSTEM.md`](./TOOL_DESIGN_SYSTEM.md) §7 为准。最低要求：独立 title / description / canonical / Open Graph / H1 / FAQ / 相关工具 / 规则更新时间；结构化数据须内容稳定后再加。
 
-P5.7B 计划补充共享 `SITE_URL`、sitemap、robots（**尚未实施**；勿在本文件假设已存在）。
+已落地（P5.7B / tag `p5.7-complete`）：共享 `lib/site.ts`（`SITE_URL` / `absoluteUrl`）、`app/sitemap.ts`、`app/robots.ts`。布局 metadata 经 `absoluteUrl` 统一构造 canonical / OG URL。
 
 ## 合规原则
 

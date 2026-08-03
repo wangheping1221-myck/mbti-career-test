@@ -13,16 +13,16 @@
 
 ## [Unreleased]
 
-### Docs（P5.7A）
+### Docs（P5.8A — 进行中）
 
-- 同步项目文档至 `p5.6-complete`：平台首页 `/`、Career Test `/career-test`、Tools hub、三计算器已上线、共享导航、unlock 兼容重定向、OWP HV 保护与未跟踪材料非 SSOT
+- 文档封印：对齐 `p5.7-complete`；标明 P5.8 为当前活跃阶段；下一大产品方向为 Career Test 深度与职业覆盖扩展
 
 ### 计划中（尚未完成）
 
-- **P5.7B**：共享 `SITE_URL` helper、`app/sitemap.ts`、`app/robots.ts`、canonical 一致性（仅 metadata；无 trailingSlash 路由重定向）
-- Related Tools 全面迁入 `lib/tools/catalog`（推迟至后续统一重构）
+- **P5.8B**：计算器 Related Tools → `getRelatedTools()`（live only；Career Test 为页面级附加链接；不加 Coming Soon catalog 行）
 - ToolConfig 文案配置层（按需再抽象）
 - 未跟踪 `app/canada-career-test/` 脏构建风险的未来清理
+- Career Test 深度与职业覆盖扩展（P5.8 之后；须 PRD）
 
 ### 仍在仓库外 / 未入库（按需单独决策；非产品 SSOT）
 
@@ -39,9 +39,16 @@
 
 | Tag | Commit | 说明 |
 |-----|--------|------|
+| **`p5.7-complete`** | `f1e1040` | **当前稳定检查点**：P5.7A 文档同步 + P5.7B `lib/site.ts` / sitemap / robots |
 | `p5.6-complete` | `536ea18` | Career Test 迁至 `/career-test`；`/` = PlatformHome；`/?unlock=` 临时重定向 |
 | `p5.5-complete` | （见 git） | Career Test 结果 Related Tools 等 |
 | `p5.2`–`p5.4` 相关提交 | `main` 历史 | 共享导航、Tools hub、平台首页组成 |
+
+#### P5.7 Highlights（`p5.7-complete`）
+
+- P5.7A：跟踪文档与 P5.2–P5.6 架构对齐
+- P5.7B：共享 `SITE_URL`（`lib/site.ts`）、`/sitemap.xml`、`/robots.txt`；布局 canonical 经 `absoluteUrl` 统一
+- 未改 Career Test / 计算器业务逻辑；未入库未跟踪落地页
 
 #### P5.6 Highlights（`p5.6-complete`）
 

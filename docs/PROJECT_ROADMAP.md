@@ -8,9 +8,11 @@
 
 ## 当前版本
 
-**平台化检查点**：`p5.6-complete`（2026-08-02）— `/` 平台首页 + `/career-test` + `/tools` hub；Salary / CLB / OWP 均已上线。
+**稳定检查点**：`p5.7-complete`（2026-08-02）— 平台路由拓扑 + 文档同步 + 共享 SITE_URL / sitemap / robots。
 
-进行中：**P5.7**（文档同步 → 最小 SEO 基建）。
+**当前活跃阶段**：**P5.8**（平台一致性封存：文档封印 → Related Tools catalog 统一）。
+
+**下一大产品方向（P5.8 之后）**：Career Test 深度与职业覆盖扩展。
 
 规范文档：
 
@@ -26,7 +28,8 @@
 - [x] 职业测试独立模块 `/career-test`（P5.6；`/?unlock=` 临时兼容）
 - [x] Career Test 结果 Related Tools（P5.5）
 - [x] 可复用计算器组件与设计/开发规范（V2.1–V2.2.1）
-- [ ] P5.7 文档同步 + 最小 SEO（sitemap / robots / SITE_URL）
+- [x] P5.7 文档同步 + 最小 SEO（sitemap / robots / SITE_URL；tag `p5.7-complete`）
+- [ ] P5.8 平台一致性（文档封印 + Related Tools → live catalog）
 - [ ] 首页与导航的持续体验打磨（非阻塞）
 
 ## 第一批核心工具
@@ -37,6 +40,10 @@
   - [x] V2.4 数据 HV + Sign-off；`lib/oinp` 计分引擎
   - [x] P4.1 UI Design Review
   - [x] P4.2 UI Implementation
+
+## 旗舰产品深化（P5.8 之后）
+
+- [ ] Career Test 深度与职业覆盖扩展（题目 / 职业库 / 推荐质量；须单独 PRD）
 
 ## 第二阶段工具
 
@@ -68,4 +75,4 @@
 6. 免费工具负责流量，职业导航负责深度价值。
 7. 不提供获邀、移民成功或就业成功保证。
 8. 所有政策工具必须显示免责声明和规则更新时间。
-9. **不得擅自撤销已封存的平台路由拓扑**（以 `p5.6-complete` 为准）。
+9. **不得擅自撤销已封存的平台路由拓扑**（以 `p5.6-complete` 起的切流为准；当前恢复点优先 `p5.7-complete`）。

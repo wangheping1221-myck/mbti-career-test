@@ -1,6 +1,6 @@
 # 当前开发任务
 
-最后更新：2026-08-02（P5.7A — 与 `p5.6-complete` 对齐）
+最后更新：2026-08-02（P5.8A — 与 `p5.7-complete` 对齐）
 
 ## Priority 1：项目基础
 
@@ -25,10 +25,20 @@
 - [x] Career Test 结果 Related Tools（P5.5：`getRelatedTools()`）
 - [x] `/career-test` 路由切流 + `/?unlock=` 临时兼容重定向（P5.6）
 - [x] 按 Design System 为工具页补齐统一 Last Updated 组件
-- [x] **P5.7A** 文档同步（本提交；与 `p5.6-complete` 对齐）
-- [ ] **P5.7B** 最小 SEO：共享 SITE_URL、sitemap、robots、canonical 一致性（**尚未开始**）
-- [ ] 未来：未跟踪 `app/canada-career-test/` 脏构建风险清理（CTA / 入库 / 忽略策略待定）
-- [ ] 未来：Related Tools 全面迁入 catalog（非 P5.7）
+- [x] **P5.7A** 文档同步（tag `p5.7-complete` 含此提交）
+- [x] **P5.7B** 最小 SEO：`lib/site.ts`、`app/sitemap.ts`、`app/robots.ts`、canonical 一致性（tag `p5.7-complete`）
+
+### P5.8（当前活跃阶段）— 平台一致性封存
+
+- [ ] **P5.8A** 文档封印（进行中 / 本工作区；对齐 `p5.7-complete`）
+- [ ] **P5.8B** Related Tools → live catalog（`getRelatedTools` + Career Test 页面级附加链接；**不**加 Coming Soon catalog 行）
+- [ ] 真机 / 浏览器复核（建议）
+
+### 未来（P5.8 之后）
+
+- [ ] **下一大产品方向**：Career Test 深度与职业覆盖扩展（题目 / 职业库；须 PRD，非本阶段）
+- [ ] 未跟踪 `app/canada-career-test/` 脏构建风险清理（CTA / 入库 / 忽略策略待定；P5.8 内保持不动）
+- [ ] CRS / Tax / EI 等第二批工具
 
 ## Priority 3：Salary Calculator
 
@@ -40,7 +50,7 @@
 ## Priority 4：CLB Calculator
 
 - [x] V2.3 IELTS GT → CLB 核心库、校验、UI（`/tools/clb-calculator`）
-- [x] Related Tools 指向 live OWP / Salary / Career Test（随工具上线已更新）
+- [x] Related Tools 指向 live OWP / Salary / Career Test（随工具上线已更新；P5.8B 将改由 catalog 驱动计算器侧）
 - [ ] 评估扩展 CELPIP / PTE / TEF / TCF（非当前阻塞项）
 
 ## Priority 5：OINP / OWP EOI Calculator（V2.4）
@@ -69,5 +79,6 @@
 - 不要在 UI 组件内硬编码 EOI 分值。
 - 不要宣传“保证获邀”或“保证移民成功”。
 - 新工具必须遵循 `TOOL_DESIGN_SYSTEM.md` 与 `DEVELOPMENT_RULES.md`。
-- 未跟踪的 landing / marketing / 历史 PRD **不是**产品 SSOT；P5.7 内勿增删入库。
+- 未跟踪的 landing / marketing / 历史 PRD **不是**产品 SSOT；P5.8 内勿增删入库。
 - 解锁码仅存环境变量（`.env.local` / Vercel）；勿写入源码。
+- 当前稳定检查点为 **`p5.7-complete`**；勿再把「P5.7B 未做」当作现状。

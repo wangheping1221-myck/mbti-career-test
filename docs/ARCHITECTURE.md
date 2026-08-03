@@ -1,6 +1,6 @@
 # Career Navigator Canada — 架构说明
 
-最后更新：2026-08-02（P5.7A — 与 `p5.6-complete` 对齐）
+最后更新：2026-08-02（P5.8A — 与 `p5.7-complete` 对齐）
 
 本文档描述 **当前真实结构**（以 git 跟踪代码为准）。  
 未跟踪的本地营销/落地页/历史 PRD **不是**产品 SSOT。
@@ -9,7 +9,7 @@
 
 ## 1. 当前真实目录结构（已跟踪）
 
-以下为 `p5.6-complete` 之后的主要结构（已排除 `node_modules`、`.next`、`.git`；未列出全部文件）。
+以下为 `p5.7-complete` 之后的主要结构（已排除 `node_modules`、`.next`、`.git`；未列出全部文件）。
 
 ```
 MBTI-Career-Test/
@@ -24,6 +24,8 @@ MBTI-Career-Test/
 │   │   ├── salary-calculator/
 │   │   ├── clb-calculator/
 │   │   └── oinp-eoi-calculator/
+│   ├── sitemap.ts              # /sitemap.xml（live 路由 + catalog）
+│   ├── robots.ts               # /robots.txt
 │   ├── favicon.ico
 │   ├── globals.css
 │   ├── layout.tsx              # 根布局 + SiteHeader / SiteFooter
@@ -35,6 +37,7 @@ MBTI-Career-Test/
 │   ├── tools/                  # Universal Tool Template
 │   └── ui/
 ├── lib/
+│   ├── site.ts                 # SITE_URL / absoluteUrl
 │   ├── tools/catalog.ts        # 工具目录 SSOT
 │   ├── salary/ | clb/ | oinp/
 │   ├── career-data.ts | questions.ts | recommend-careers.ts …
@@ -67,7 +70,7 @@ MBTI-Career-Test/
 | `marketing/` | 站外素材 |
 | 部分 `docs/PRD_*` / `IMPLEMENTATION_PLAN_*` / 研究文档 | 历史草稿；状态横幅可能过时 |
 
-**P5.7 策略**：保持未跟踪、不删不改不 ignore（见 DECISIONS）。未来清理项：未跟踪 App Router 目录会影响脏本地 production build。
+**P5.7 / P5.8 策略**：未跟踪落地页与 marketing 保持未跟踪、不删不改（见 DECISIONS）。未来清理项：未跟踪 App Router 目录会影响脏本地 production build。
 
 ---
 
@@ -91,7 +94,7 @@ lib/
 └── …职业测试模块…
 ```
 
-计算器页内 Related Tools 仍可能使用页面级 content 数组；Career Test 结果使用 `getRelatedTools()`。完整 Related Tools → catalog 迁移 **不在 P5.7A**（推迟至后续统一重构）。
+计算器页内 Related Tools 仍可能使用页面级 content 数组；Career Test 结果使用 `getRelatedTools()`。完整 Related Tools → catalog 迁移为 **P5.8B**（live catalog only；Career Test 为页面级附加链接；Coming Soon 不入 catalog）。
 
 ---
 
@@ -159,7 +162,8 @@ UI 细节以 [`TOOL_DESIGN_SYSTEM.md`](./TOOL_DESIGN_SYSTEM.md) 为准。
 | `app/tools/` | 路由与页面（SEO、布局） |
 | `components/tools/` | 共用 UI 组件 |
 | `lib/calculators/` + `lib/salary|clb|oinp/` | 纯计算与规则数据 |
-| `lib/tools/catalog.ts` | 工具列表 SSOT（hub / home / CT related；未来 sitemap） |
+| `lib/tools/catalog.ts` | 工具列表 SSOT（hub / home / CT related / sitemap） |
+| `lib/site.ts` | `SITE_URL` / `absoluteUrl`（canonical / OG / sitemap / robots） |
 
 原则：
 
@@ -170,16 +174,23 @@ UI 细节以 [`TOOL_DESIGN_SYSTEM.md`](./TOOL_DESIGN_SYSTEM.md) 为准。
 
 ---
 
-## 8. 后续扩展（未实施）
+## 8. 后续扩展
 
-- P5.7B：共享 `SITE_URL`、`sitemap.ts`、`robots.ts`、canonical 一致性（metadata only；无 trailingSlash 路由重定向）
-- Related Tools 全面迁入 catalog
+### 已完成（勿再规划为未做）
+
+- ~~P5.7B：共享 `SITE_URL`、`sitemap.ts`、`robots.ts`、canonical 一致性~~ → tag `p5.7-complete`
+
+### 当前 / 下一步
+
+- **P5.8A**：文档封印（本阶段）
+- **P5.8B**：Related Tools → live catalog（Career Test 为页面级附加链接；无 Coming Soon 占位行）
+- **P5.8 之后**：Career Test 深度与职业覆盖扩展（下一大产品方向；需 PRD）
 - `/about`、`/blog`、CRS / Tax / EI 等（见 `PROJECT_ROADMAP.md`）
-- 未跟踪落地页 CTA / 入库决策（未来清理项）
+- 未跟踪落地页 CTA / 入库决策（未来清理项；P5.8 内保持不动）
 
 ### 仍需确认后才可做
 
 - 撤销或大幅改动 P5.6 路由拓扑
-- 修改职业测试题目 / 评分 / 解锁行为
+- 修改职业测试题目 / 评分 / 解锁行为 / 职业库扩展（须经批准的独立阶段）
 - 修改 OWP HV 表或 `calculateOwpEoi` 业务逻辑
 - 将未跟踪 marketing / landing 混入功能 commit
