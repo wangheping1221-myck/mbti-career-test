@@ -1,5 +1,5 @@
 /**
- * Career Test V2 — public barrel (V2.4B + V2.4C1 bank + V2.4C2 validation).
+ * Career Test V2 — public barrel (V2.4B–V2.4C3).
  * Re-exports only. Do not import this module from sibling v2 modules.
  */
 
@@ -57,6 +57,8 @@ export {
   type ValidateAnswersResultV2,
   type ValidateAnswersV2Fn,
 } from "./answers";
+
+export { buildUserProfileV2 } from "./normalize";
 
 export {
   HARD_FILTER_ACTIVATORS_V2,
