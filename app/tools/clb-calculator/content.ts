@@ -46,28 +46,12 @@ export const CLB_FAQ_ITEMS = [
   },
 ] as const;
 
-export const CLB_RELATED_TOOLS = [
-  {
-    title: "年薪 / 时薪转换器",
-    description: "加拿大税前年薪与时薪互算，查看周薪、双周薪和月薪。",
-    href: "/tools/salary-calculator",
-  },
-  {
-    title: "安省 OWP EOI 打分计算器",
-    description: "按 Ontario Workforce Priority 公开评分因素估算 EOI 分数。",
-    href: "/tools/oinp-eoi-calculator",
-  },
-  {
-    title: "CRS Calculator",
-    description: "Express Entry CRS 综合评分估算。",
-    comingSoon: true,
-  },
-  {
-    title: "职业方向测试",
-    description: "3 分钟了解更适合你的加拿大职业方向（职业方向参考）。",
-    href: "/career-test",
-  },
-] as const;
+/** Page-local Career Test link — not part of the calculator catalog. */
+export const CAREER_TEST_RELATED_LINK = {
+  title: "职业方向测试",
+  description: "3 分钟了解更适合你的加拿大职业方向（职业方向参考）。",
+  href: "/career-test",
+} as const;
 
 export const CLB_FORMULA_NOTES = [
   "换算依据 IRCC 官方成绩 ↔ CLB 对照表，逐项查表，不是把四项 IELTS 分数做数学平均。",

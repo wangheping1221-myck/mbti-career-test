@@ -50,14 +50,22 @@ export function getLiveTools(): readonly ToolCatalogItem[] {
  *
  * Used by:
  * - Career Test results
- * - Tool Related Tools
- * - Future sitemap
+ * - Calculator Related Tools
+ * - Future sitemap consumers
  *
- * Pass `excludeIds` to omit the current tool (or others) when linking from a tool page.
+ * - `excludeIds`: omit the current tool (or others)
+ * - `limit`: max live tools to return (catalog order). Omit for no cap.
  */
 export function getRelatedTools(options?: {
   excludeIds?: readonly string[];
+  limit?: number;
 }): readonly ToolCatalogItem[] {
   const exclude = new Set(options?.excludeIds ?? []);
-  return getLiveTools().filter((tool) => !exclude.has(tool.id));
+  const related = getLiveTools().filter((tool) => !exclude.has(tool.id));
+
+  if (options?.limit === undefined) {
+    return related;
+  }
+
+  return related.slice(0, Math.max(0, options.limit));
 }

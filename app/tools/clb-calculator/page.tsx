@@ -7,12 +7,25 @@ import { RelatedTools } from "@/components/tools/related-tools";
 import { ToolHero } from "@/components/tools/tool-hero";
 import { ToolLayout } from "@/components/tools/tool-layout";
 import { IELTS_GT_CLB_SOURCE } from "@/lib/clb/constants";
+import { getRelatedTools } from "@/lib/tools/catalog";
 
 import {
+  CAREER_TEST_RELATED_LINK,
   CLB_FAQ_ITEMS,
   CLB_FORMULA_NOTES,
-  CLB_RELATED_TOOLS,
 } from "./content";
+
+const relatedTools = [
+  ...getRelatedTools({
+    excludeIds: ["clb-calculator"],
+    limit: 3,
+  }).map((tool) => ({
+    title: tool.title,
+    description: tool.description,
+    href: tool.href,
+  })),
+  CAREER_TEST_RELATED_LINK,
+];
 
 export default function ClbCalculatorPage() {
   return (
@@ -41,7 +54,7 @@ export default function ClbCalculatorPage() {
         </p>
       </FormulaSection>
 
-      <RelatedTools tools={CLB_RELATED_TOOLS} />
+      <RelatedTools tools={relatedTools} />
 
       <div className="mx-auto mt-12 max-w-3xl">
         <FaqSection items={CLB_FAQ_ITEMS} />

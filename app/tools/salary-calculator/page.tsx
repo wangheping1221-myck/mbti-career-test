@@ -6,6 +6,7 @@ import { RelatedTools } from "@/components/tools/related-tools";
 import { SalaryCalculator } from "@/components/tools/salary-calculator";
 import { ToolHero } from "@/components/tools/tool-hero";
 import { ToolLayout } from "@/components/tools/tool-layout";
+import { getRelatedTools } from "@/lib/tools/catalog";
 
 const FAQ_ITEMS = [
   {
@@ -60,18 +61,14 @@ const FAQ_ITEMS = [
   },
 ] as const;
 
-const RELATED_TOOLS = [
-  {
-    title: "CLB 转换计算器",
-    description: "将 IELTS General Training 成绩转换为 CLB 等级。",
-    href: "/tools/clb-calculator",
-  },
-  {
-    title: "安省 OWP EOI 打分计算器",
-    description: "按 Ontario Workforce Priority 公开评分因素估算 EOI 分数。",
-    href: "/tools/oinp-eoi-calculator",
-  },
-] as const;
+const relatedTools = getRelatedTools({
+  excludeIds: ["salary-calculator"],
+  limit: 3,
+}).map((tool) => ({
+  title: tool.title,
+  description: tool.description,
+  href: tool.href,
+}));
 
 export default function SalaryCalculatorPage() {
   return (
@@ -105,7 +102,7 @@ export default function SalaryCalculatorPage() {
         </p>
       </FormulaSection>
 
-      <RelatedTools tools={RELATED_TOOLS} />
+      <RelatedTools tools={relatedTools} />
 
       <div className="mx-auto mt-12 max-w-3xl">
         <FaqSection items={FAQ_ITEMS} />

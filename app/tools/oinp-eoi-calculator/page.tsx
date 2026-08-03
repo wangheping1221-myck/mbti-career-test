@@ -7,12 +7,25 @@ import { RelatedTools } from "@/components/tools/related-tools";
 import { ToolHero } from "@/components/tools/tool-hero";
 import { ToolLayout } from "@/components/tools/tool-layout";
 import { OINP_OWP_SOURCE } from "@/lib/oinp/constants";
+import { getRelatedTools } from "@/lib/tools/catalog";
 
 import {
+  CAREER_TEST_RELATED_LINK,
   OWP_FAQ_ITEMS,
   OWP_FORMULA_NOTES,
-  OWP_RELATED_TOOLS,
 } from "./content";
+
+const relatedTools = [
+  ...getRelatedTools({
+    excludeIds: ["oinp-eoi-calculator"],
+    limit: 3,
+  }).map((tool) => ({
+    title: tool.title,
+    description: tool.description,
+    href: tool.href,
+  })),
+  CAREER_TEST_RELATED_LINK,
+];
 
 export default function OinpEoiCalculatorPage() {
   return (
@@ -55,7 +68,7 @@ export default function OinpEoiCalculatorPage() {
         </p>
       </FormulaSection>
 
-      <RelatedTools tools={OWP_RELATED_TOOLS} />
+      <RelatedTools tools={relatedTools} />
 
       <div className="mx-auto mt-12 max-w-3xl">
         <FaqSection items={OWP_FAQ_ITEMS} />

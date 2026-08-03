@@ -51,28 +51,12 @@ export const OWP_FAQ_ITEMS = [
   },
 ] as const;
 
-export const OWP_RELATED_TOOLS = [
-  {
-    title: "CLB 语言成绩转换器",
-    description: "将 IELTS General Training 成绩转换为 CLB，便于填写语言能力档。",
-    href: "/tools/clb-calculator",
-  },
-  {
-    title: "年薪 / 时薪转换器",
-    description: "把年薪换算成时薪后，再对照 OWP 时薪评分档。",
-    href: "/tools/salary-calculator",
-  },
-  {
-    title: "CRS Calculator",
-    description: "Express Entry CRS 综合评分估算。",
-    comingSoon: true,
-  },
-  {
-    title: "职业方向测试",
-    description: "3 分钟了解更适合你的加拿大职业方向（职业方向参考）。",
-    href: "/career-test",
-  },
-] as const;
+/** Page-local Career Test link — not part of the calculator catalog. */
+export const CAREER_TEST_RELATED_LINK = {
+  title: "职业方向测试",
+  description: "3 分钟了解更适合你的加拿大职业方向（职业方向参考）。",
+  href: "/career-test",
+} as const;
 
 export const OWP_FORMULA_NOTES = [
   "估算总分 = 各适用评分因素得分之和（Job Offer 路径）。",
