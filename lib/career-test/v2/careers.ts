@@ -465,3 +465,113 @@ export const BUILDING_OPERATIONS_FACILITIES_PILOT_CAREERS_V2 = [
     similarityGroupId: "sim-admin-vs-facilities-coord",
   },
 ] as const satisfies readonly CareerProfileV2[];
+
+/**
+ * Exact three public-sector-institutional pilot records in canonical
+ * CAREER_IDS_V2 order for this family. Incomplete catalog — do not treat as CAREERS_V2.
+ */
+export const PUBLIC_SECTOR_INSTITUTIONAL_PILOT_CAREERS_V2 = [
+  {
+    id: "v2-municipal-maintenance-worker",
+    titleEn: "Municipal Maintenance Worker",
+    titleZh: "市政设施维护员",
+    primaryFamily: "public-sector-institutional",
+    crossCuttingTags: [],
+    constraints: {
+      nightRotatingExposure: "not-typical",
+      heavyPhysicalExposure: "frequent-high",
+    },
+    dimensionProfile: {
+      workStyleFit: {
+        independentTeam: lvl(7500),
+        handsOnDesk: lvl(10000),
+        structureJudgment: lvl(5000),
+        routineVariety: lvl(5000),
+        leadershipResponsibility: lvl(0),
+      },
+      physicalDemandTolerance: lvl(7500),
+      indoorOutdoorPreference: lvl(5000),
+      customerFacingTolerance: lvl(2500),
+      englishReadiness: lvl(5000),
+      trainingDurationTolerance: lvl(2500),
+      formalEntryWillingness: lvl(2500),
+      shiftScheduleTolerance: lvl(2500),
+      stabilityVersusUpside: lvl(5000),
+      detailVersusCoordination: lvl(2500),
+      careerEntryPracticality: "learn-on-job",
+    },
+    descriptionZh: "在公共部门场景下维护市政或公共设施。",
+    verification: { status: "editorial-only" },
+    mismatchNotesZh:
+      "偏公共部门市政设施维护场景，不同于商业或住宅物业的单元现场维修。",
+  },
+  {
+    id: "v2-school-custodian",
+    titleEn: "School Custodian",
+    titleZh: "学校清洁与设施维护",
+    primaryFamily: "public-sector-institutional",
+    crossCuttingTags: [],
+    constraints: {
+      nightRotatingExposure: "not-typical",
+      heavyPhysicalExposure: "moderate",
+    },
+    dimensionProfile: {
+      workStyleFit: {
+        independentTeam: lvl(5000),
+        handsOnDesk: lvl(7500),
+        structureJudgment: lvl(2500),
+        routineVariety: lvl(2500),
+        leadershipResponsibility: lvl(0),
+      },
+      physicalDemandTolerance: lvl(5000),
+      indoorOutdoorPreference: lvl(0),
+      customerFacingTolerance: lvl(2500),
+      englishReadiness: lvl(5000),
+      trainingDurationTolerance: lvl(0),
+      formalEntryWillingness: lvl(0),
+      shiftScheduleTolerance: lvl(2500),
+      stabilityVersusUpside: lvl(5000),
+      detailVersusCoordination: lvl(2500),
+      careerEntryPracticality: "learn-on-job",
+    },
+    descriptionZh: "在学校场景提供清洁与轻度设施维护支持。",
+    verification: { status: "editorial-only" },
+    mismatchNotesZh:
+      "学校董事会环境下的学校清洁与设施维护，不同于商业楼宇清洁后勤场景。",
+    similarityGroupId: "sim-custodial-context",
+  },
+  {
+    id: "v2-security-guard",
+    titleEn: "Security Guard",
+    titleZh: "保安",
+    primaryFamily: "public-sector-institutional",
+    crossCuttingTags: [],
+    constraints: {
+      nightRotatingExposure: "common-or-required",
+      heavyPhysicalExposure: "moderate",
+    },
+    dimensionProfile: {
+      workStyleFit: {
+        independentTeam: lvl(7500),
+        handsOnDesk: lvl(5000),
+        structureJudgment: lvl(5000),
+        routineVariety: lvl(5000),
+        leadershipResponsibility: lvl(0),
+      },
+      physicalDemandTolerance: lvl(5000),
+      indoorOutdoorPreference: lvl(2500),
+      customerFacingTolerance: lvl(5000),
+      englishReadiness: lvl(5000),
+      trainingDurationTolerance: lvl(2500),
+      formalEntryWillingness: lvl(5000),
+      shiftScheduleTolerance: lvl(7500),
+      stabilityVersusUpside: lvl(5000),
+      detailVersusCoordination: lvl(2500),
+      careerEntryPracticality: "learn-on-job",
+    },
+    descriptionZh: "负责场地出入管控、巡查与安保值守（常含轮班）。",
+    verification: { status: "editorial-only" },
+    mismatchNotesZh:
+      "偏现场安保与出入管控，不同于设施维修或清洁维护岗位。",
+  },
+] as const satisfies readonly CareerProfileV2[];
