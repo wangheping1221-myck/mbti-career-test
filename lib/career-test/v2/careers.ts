@@ -1391,3 +1391,148 @@ export const SALES_CUSTOMER_SERVICE_PILOT_CAREERS_V2 = [
       "偏协助客户买卖或租赁房产，不同于卖场零售销售。",
   },
 ] as const satisfies readonly CareerProfileV2[];
+
+/**
+ * Exact four education-community-services pilot records in canonical
+ * CAREER_IDS_V2 order for this family. Incomplete catalog — do not treat as CAREERS_V2.
+ */
+export const EDUCATION_COMMUNITY_SERVICES_PILOT_CAREERS_V2 = [
+  {
+    id: "v2-early-childhood-educator",
+    titleEn: "Early Childhood Educator",
+    titleZh: "幼教老师",
+    primaryFamily: "education-community-services",
+    crossCuttingTags: [],
+    constraints: {
+      nightRotatingExposure: "not-typical",
+      heavyPhysicalExposure: "moderate",
+    },
+    dimensionProfile: {
+      workStyleFit: {
+        independentTeam: lvl(2500),
+        handsOnDesk: lvl(7500),
+        structureJudgment: lvl(7500),
+        routineVariety: lvl(5000),
+        leadershipResponsibility: lvl(0),
+      },
+      physicalDemandTolerance: lvl(5000),
+      indoorOutdoorPreference: lvl(2500),
+      customerFacingTolerance: lvl(10000),
+      englishReadiness: lvl(7500),
+      trainingDurationTolerance: lvl(7500),
+      formalEntryWillingness: lvl(5000),
+      shiftScheduleTolerance: lvl(2500),
+      stabilityVersusUpside: lvl(5000),
+      detailVersusCoordination: lvl(5000),
+      careerEntryPracticality: "short-prep",
+    },
+    descriptionZh: "在儿童照护环境中教育并照护幼儿。",
+    verification: { status: "editorial-only" },
+    mismatchNotesZh:
+      "偏托幼照护环境中的幼儿教育与照护，不同于中小学教育助理。",
+  },
+  {
+    id: "v2-educational-assistant",
+    titleEn: "Educational Assistant",
+    titleZh: "教育助理",
+    primaryFamily: "education-community-services",
+    crossCuttingTags: [],
+    constraints: {
+      nightRotatingExposure: "not-typical",
+      heavyPhysicalExposure: "low",
+    },
+    dimensionProfile: {
+      workStyleFit: {
+        independentTeam: lvl(5000),
+        handsOnDesk: lvl(2500),
+        structureJudgment: lvl(5000),
+        routineVariety: lvl(5000),
+        leadershipResponsibility: lvl(0),
+      },
+      physicalDemandTolerance: lvl(2500),
+      indoorOutdoorPreference: lvl(0),
+      customerFacingTolerance: lvl(10000),
+      englishReadiness: lvl(7500),
+      trainingDurationTolerance: lvl(2500),
+      formalEntryWillingness: lvl(2500),
+      shiftScheduleTolerance: lvl(0),
+      stabilityVersusUpside: lvl(5000),
+      detailVersusCoordination: lvl(5000),
+      careerEntryPracticality: "short-prep",
+    },
+    descriptionZh: "在中小学环境中协助教师与学生。",
+    verification: { status: "editorial-only" },
+    mismatchNotesZh:
+      "偏中小学环境中协助教师与学生，不同于托幼幼儿教育。",
+  },
+  {
+    id: "v2-community-support-worker",
+    titleEn: "Community Support Worker",
+    titleZh: "社区支持工作者",
+    primaryFamily: "education-community-services",
+    crossCuttingTags: [],
+    constraints: {
+      nightRotatingExposure: "possible",
+      heavyPhysicalExposure: "low",
+    },
+    dimensionProfile: {
+      workStyleFit: {
+        independentTeam: lvl(7500),
+        handsOnDesk: lvl(5000),
+        structureJudgment: lvl(5000),
+        routineVariety: lvl(7500),
+        leadershipResponsibility: lvl(0),
+      },
+      physicalDemandTolerance: lvl(2500),
+      indoorOutdoorPreference: lvl(2500),
+      customerFacingTolerance: lvl(10000),
+      englishReadiness: lvl(7500),
+      trainingDurationTolerance: lvl(2500),
+      formalEntryWillingness: lvl(2500),
+      shiftScheduleTolerance: lvl(5000),
+      stabilityVersusUpside: lvl(5000),
+      detailVersusCoordination: lvl(7500),
+      careerEntryPracticality: "short-prep",
+    },
+    descriptionZh: "支持社区成员的日常生活与社区参与目标。",
+    verification: { status: "editorial-only" },
+    mismatchNotesZh:
+      "偏社区成员日常生活与社区参与支持，不同于新移民安置导向与转介。",
+    similarityGroupId: "sim-community-settlement",
+  },
+  {
+    id: "v2-settlement-worker",
+    titleEn: "Settlement Worker",
+    titleZh: "新移民安置工作者",
+    primaryFamily: "education-community-services",
+    crossCuttingTags: [],
+    constraints: {
+      nightRotatingExposure: "not-typical",
+      heavyPhysicalExposure: "low",
+    },
+    dimensionProfile: {
+      workStyleFit: {
+        independentTeam: lvl(5000),
+        handsOnDesk: lvl(0),
+        structureJudgment: lvl(5000),
+        routineVariety: lvl(5000),
+        leadershipResponsibility: lvl(0),
+      },
+      physicalDemandTolerance: lvl(0),
+      indoorOutdoorPreference: lvl(0),
+      customerFacingTolerance: lvl(10000),
+      englishReadiness: lvl(7500),
+      trainingDurationTolerance: lvl(2500),
+      formalEntryWillingness: lvl(0),
+      shiftScheduleTolerance: lvl(0),
+      stabilityVersusUpside: lvl(5000),
+      detailVersusCoordination: lvl(7500),
+      careerEntryPracticality: "learn-on-job",
+    },
+    descriptionZh: "帮助新移民获取安置导向、转介及相关服务。",
+    verification: { status: "editorial-only" },
+    mismatchNotesZh:
+      "偏新移民安置导向、转介及相关服务，不同于一般社区生活支持。",
+    similarityGroupId: "sim-community-settlement",
+  },
+] as const satisfies readonly CareerProfileV2[];
