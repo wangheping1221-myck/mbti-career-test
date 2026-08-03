@@ -1248,3 +1248,146 @@ export const TECHNOLOGY_PILOT_CAREERS_V2 = [
       "偏品牌与媒体视觉设计，不同于软件开发或IT支持运维。",
   },
 ] as const satisfies readonly CareerProfileV2[];
+
+/**
+ * Exact four sales-customer-service pilot records in canonical
+ * CAREER_IDS_V2 order for this family. Incomplete catalog — do not treat as CAREERS_V2.
+ */
+export const SALES_CUSTOMER_SERVICE_PILOT_CAREERS_V2 = [
+  {
+    id: "v2-customer-service-representative",
+    titleEn: "Customer Service Representative",
+    titleZh: "客服代表",
+    primaryFamily: "sales-customer-service",
+    crossCuttingTags: [],
+    constraints: {
+      nightRotatingExposure: "not-typical",
+      heavyPhysicalExposure: "low",
+    },
+    dimensionProfile: {
+      workStyleFit: {
+        independentTeam: lvl(5000),
+        handsOnDesk: lvl(0),
+        structureJudgment: lvl(5000),
+        routineVariety: lvl(5000),
+        leadershipResponsibility: lvl(0),
+      },
+      physicalDemandTolerance: lvl(0),
+      indoorOutdoorPreference: lvl(0),
+      customerFacingTolerance: lvl(10000),
+      englishReadiness: lvl(7500),
+      trainingDurationTolerance: lvl(0),
+      formalEntryWillingness: lvl(0),
+      shiftScheduleTolerance: lvl(2500),
+      stabilityVersusUpside: lvl(5000),
+      detailVersusCoordination: lvl(5000),
+      careerEntryPracticality: "learn-on-job",
+    },
+    descriptionZh: "通过电话、聊天或邮件处理客户问询。",
+    verification: { status: "editorial-only" },
+    mismatchNotesZh:
+      "偏电话、聊天或邮件客户问询处理，不同于卖场零售销售或结果导向的内部销售。",
+  },
+  {
+    id: "v2-retail-sales-associate",
+    titleEn: "Retail Sales Associate",
+    titleZh: "零售销售员",
+    primaryFamily: "sales-customer-service",
+    crossCuttingTags: [],
+    constraints: {
+      nightRotatingExposure: "possible",
+      heavyPhysicalExposure: "low",
+    },
+    dimensionProfile: {
+      workStyleFit: {
+        independentTeam: lvl(5000),
+        handsOnDesk: lvl(2500),
+        structureJudgment: lvl(5000),
+        routineVariety: lvl(7500),
+        leadershipResponsibility: lvl(0),
+      },
+      physicalDemandTolerance: lvl(2500),
+      indoorOutdoorPreference: lvl(0),
+      customerFacingTolerance: lvl(10000),
+      englishReadiness: lvl(5000),
+      trainingDurationTolerance: lvl(0),
+      formalEntryWillingness: lvl(0),
+      shiftScheduleTolerance: lvl(5000),
+      stabilityVersusUpside: lvl(5000),
+      detailVersusCoordination: lvl(5000),
+      careerEntryPracticality: "learn-on-job",
+    },
+    descriptionZh: "在零售卖场销售商品并协助顾客。",
+    verification: { status: "editorial-only" },
+    mismatchNotesZh:
+      "偏零售卖场销售与顾客协助，不同于电话客服或房产销售。",
+  },
+  {
+    id: "v2-inside-sales-representative",
+    titleEn: "Inside Sales Representative",
+    titleZh: "内部销售代表",
+    primaryFamily: "sales-customer-service",
+    crossCuttingTags: [],
+    constraints: {
+      nightRotatingExposure: "not-typical",
+      heavyPhysicalExposure: "low",
+    },
+    dimensionProfile: {
+      workStyleFit: {
+        independentTeam: lvl(7500),
+        handsOnDesk: lvl(0),
+        structureJudgment: lvl(7500),
+        routineVariety: lvl(7500),
+        leadershipResponsibility: lvl(0),
+      },
+      physicalDemandTolerance: lvl(0),
+      indoorOutdoorPreference: lvl(0),
+      customerFacingTolerance: lvl(7500),
+      englishReadiness: lvl(7500),
+      trainingDurationTolerance: lvl(2500),
+      formalEntryWillingness: lvl(0),
+      shiftScheduleTolerance: lvl(0),
+      stabilityVersusUpside: lvl(5000),
+      detailVersusCoordination: lvl(5000),
+      careerEntryPracticality: "learn-on-job",
+    },
+    descriptionZh: "在办公室或远程销售渠道推进销售结果。",
+    verification: { status: "editorial-only" },
+    mismatchNotesZh:
+      "偏办公室或远程渠道推进销售结果，不同于服务型客户问询处理。",
+  },
+  {
+    id: "v2-real-estate-salesperson",
+    titleEn: "Real Estate Salesperson",
+    titleZh: "房地产销售人员",
+    primaryFamily: "sales-customer-service",
+    crossCuttingTags: [],
+    constraints: {
+      nightRotatingExposure: "possible",
+      heavyPhysicalExposure: "low",
+    },
+    dimensionProfile: {
+      workStyleFit: {
+        independentTeam: lvl(7500),
+        handsOnDesk: lvl(2500),
+        structureJudgment: lvl(7500),
+        routineVariety: lvl(7500),
+        leadershipResponsibility: lvl(0),
+      },
+      physicalDemandTolerance: lvl(2500),
+      indoorOutdoorPreference: lvl(2500),
+      customerFacingTolerance: lvl(7500),
+      englishReadiness: lvl(7500),
+      trainingDurationTolerance: lvl(5000),
+      formalEntryWillingness: lvl(5000),
+      shiftScheduleTolerance: lvl(5000),
+      stabilityVersusUpside: lvl(5000),
+      detailVersusCoordination: lvl(7500),
+      careerEntryPracticality: "short-prep",
+    },
+    descriptionZh: "协助客户买卖或租赁房产。",
+    verification: { status: "editorial-only" },
+    mismatchNotesZh:
+      "偏协助客户买卖或租赁房产，不同于卖场零售销售。",
+  },
+] as const satisfies readonly CareerProfileV2[];
