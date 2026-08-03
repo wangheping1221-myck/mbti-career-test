@@ -1,5 +1,5 @@
 /**
- * Career Test V2 — public barrel (V2.4B).
+ * Career Test V2 — public barrel (V2.4B + V2.4C1 question bank).
  * Re-exports only. Do not import this module from sibling v2 modules.
  */
 
@@ -39,6 +39,15 @@ export type {
   AnswerOptionV2,
   QuestionV2,
 } from "./questions";
+
+export {
+  QUESTION_BANK_V2,
+  QUESTION_BANK_BY_ID_V2,
+  getQuestionV2,
+  getAnswerOptionV2,
+  assertQuestionBankStructureV2,
+  type QuestionBankV2,
+} from "./question-bank";
 
 export type {
   PartialAnswersV2,
